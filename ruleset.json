@@ -1,0 +1,3979 @@
+{
+  "keywords": [
+    {
+      "id": "kmt1ywt3xv6u",
+      "name": "Arcane",
+      "description": "If this weapons wound roll would beat the targets armor value, add +1 to the wound result."
+    },
+    {
+      "id": "kmt1ywxyw8lh",
+      "name": "Poison",
+      "description": "If this weapons wound roll would beat the targets armor value, add +1 to the wound result."
+    },
+    {
+      "id": "kmt1yx2bzu9n",
+      "name": "Elemental",
+      "description": "If this weapons wound roll would beat the targets armor value, add +1 to the wound result."
+    },
+    {
+      "id": "kmt1yxnqybek",
+      "name": "Brutal",
+      "description": "Brutal weapons add +1 wound when beating targets armor."
+    },
+    {
+      "id": "kmt1z27eyq8o",
+      "name": "Dual",
+      "description": "A unit may carry two of this weapon and make an attack roll with each one using one attack action. Modifiers from Mastery and Body may not be applied to the second attack."
+    },
+    {
+      "id": "kmt20o7o8653",
+      "name": "Reload",
+      "description": "This weapon requires a LOAD bonus action before it can be used. Weapons with this keyword cannot be used to make reactions."
+    },
+    {
+      "id": "kmt21f4nw1hu",
+      "name": "Stunned",
+      "description": "Unit is fatigued, and has disadvantage on skill checks. Attacks against stunned units have advantage."
+    },
+    {
+      "id": "kmt2248t93dp",
+      "name": "Two-Handed",
+      "description": "This weapon requires both hands to use"
+    },
+    {
+      "id": "kmt225dzlf96",
+      "name": "Shield",
+      "description": "+1 Armor to bearer."
+    },
+    {
+      "id": "kmt2dkp4wrnh",
+      "name": "Fatigued",
+      "description": "Fatigued units cannot make reactions."
+    },
+    {
+      "id": "kmt2dlr69ord",
+      "name": "Frightened",
+      "description": "Frightened units are Stunned and must move 6\" towards the nearest board edge upon being Frightened. "
+    },
+    {
+      "id": "kmt2dmka9c44",
+      "name": "Bonus",
+      "description": "may be used as a bonus action."
+    },
+    {
+      "id": "kmt2dr7pxlsl",
+      "name": "Reinforced",
+      "description": "Bearer ignores the first wound that would be applied by a weapon critical."
+    },
+    {
+      "id": "kmt33bw7cmpm",
+      "name": "Reach",
+      "description": "You may make a melee attack with a range of 3\", attacks made this way have disadvantage"
+    },
+    {
+      "id": "kmt34cz6qk9m",
+      "name": "Healing",
+      "description": "Items and Spells allow the user to regain wounds."
+    },
+    {
+      "id": "kmt3hmkpc762",
+      "name": "Advantage",
+      "description": "May Roll two dice and choose the highest option."
+    },
+    {
+      "id": "kmt3hmwdar3r",
+      "name": "Disadvantage",
+      "description": "Must roll two dice and choose the lowest option."
+    },
+    {
+      "id": "kmt3kfnljcm0",
+      "name": "Poison Resistance",
+      "description": "A character with this keyword negates poison damage."
+    },
+    {
+      "id": "kmt3kg2lfx39",
+      "name": "Arcane Resistance",
+      "description": "A character with this keyword negates Arcane damage."
+    },
+    {
+      "id": "kmt3kgiuotcm",
+      "name": "Elemental Resistance",
+      "description": "A character with this keyword negates elemental damage"
+    },
+    {
+      "id": "kmt5h8ghtsk6",
+      "name": "Beast",
+      "description": "This creature is of the wilderness"
+    },
+    {
+      "id": "kmt5h9et9rwt",
+      "name": "Elite",
+      "description": "This unit is stronger than most, nearing a heroes might"
+    },
+    {
+      "id": "kmt7j35rao8i",
+      "name": "Offhand",
+      "description": "This can be carried in a heros other hand."
+    },
+    {
+      "id": "kmt7z51ibt3v",
+      "name": "Renegade",
+      "description": "Renegade units may deploy at the beginning of turn one, anywhere on the battlefield out of line of sight of enemy units."
+    },
+    {
+      "id": "kmt9exwc6xbm",
+      "name": "Cumbersome",
+      "description": "Weapons with this trait cause fatigue when used to make attack actions."
+    },
+    {
+      "id": "kmtbhmm61p2c",
+      "name": "Riposte",
+      "description": "If  user equipped with this weapon succeeds in a parry action, they may immediately make a wound roll with this weapon."
+    },
+    {
+      "id": "kmtczhtlagix",
+      "name": "Critical",
+      "description": "Critical hits from this attack deal extra wounds equal to this keyword's value.",
+      "parameterized": true,
+      "value_min": 1,
+      "value_max": 3,
+      "value_default": 1,
+      "value_suffix": ""
+    },
+    {
+      "id": "kmthf2lgdq93",
+      "name": "Monster",
+      "description": "Since the ascension, Some creatures have begun to emerge that bend all reason."
+    },
+    {
+      "id": "kmthp5vptorm",
+      "name": "Stunning Hits",
+      "description": "Hits from this attack Stun"
+    },
+    {
+      "id": "kmthp637nf2k",
+      "name": "Stunning Wounds",
+      "description": "Wounds from this attack Stun"
+    },
+    {
+      "id": "kmthp6j0wr6e",
+      "name": "Frightening Wounds",
+      "description": "Wounds from this attack Frighten"
+    },
+    {
+      "id": "kmthp6vrwobc",
+      "name": "Fatiguing Wounds",
+      "description": "Wounds from this attack cause Fatigue"
+    },
+    {
+      "id": "kmthzf1225ee",
+      "name": "Aegis",
+      "description": "Aegis rolls are made every time 1 wound would apply to a unit. Roll a D20 for every wound, if it meets the aegis value negate that wound.",
+      "parameterized": true,
+      "value_min": 2,
+      "value_max": 20,
+      "value_default": 10,
+      "value_suffix": "+"
+    }
+  ],
+  "factions": [
+    {
+      "id": "fmt1ygkuhwdn",
+      "name": "BarrowMoor Kingdoms",
+      "description": "The dwindling remnants of BarrowMoor hold their lineage with steel and might."
+    },
+    {
+      "id": "fmt1zprswgf7",
+      "name": "Willow Enclave",
+      "description": "Dense forests can be found all across AldMarke, watchful eyes and careful steps ensure the woods stay unbothered."
+    },
+    {
+      "id": "fmt1zviucpcj",
+      "name": "Red Banner",
+      "description": "Though some of their denizens may be considered 'lesser' the ragtag factions of the Red Banner would have you "
+    },
+    {
+      "id": "fmtkci4752yw",
+      "name": "The UnderClans",
+      "description": ""
+    }
+  ],
+  "classes": [
+    {
+      "id": "cmt1ykznv7cm",
+      "name": "Warrior",
+      "description": "A vanguard who fights on the front lines. Prioritizes heavy armor and heavy weaponry to hold the line for their comrades.",
+      "signature_ability": "When a warrior drops to zero body, they cling to the veil and become unwavering. Whenever a warrior in this state activates, or takes a wound, make a morale check. If the check is successful, the warrior is not removed from the game. For every wound received while in this state, -3 to the warrior's morale saves.",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": false,
+      "stats": {
+        "haste": 12,
+        "move": 6,
+        "body": 5,
+        "mind": 4,
+        "spirit": 6
+      },
+      "skills": [
+        "Simple Melee",
+        "Simple Ranged",
+        "Martial Melee",
+        "Martial Ranged",
+        "Heavy Melee",
+        "Heavy Ranged",
+        "Medium Armor",
+        "Heavy Armor"
+      ],
+      "mastery_skills": [
+        "Simple Melee",
+        "Simple Ranged",
+        "Martial Melee",
+        "Martial Ranged",
+        "Heavy Melee",
+        "Heavy Ranged"
+      ],
+      "signature_ability_label": "Unwavering",
+      "school_focus": false,
+      "allowed_schools": [],
+      "keywords": [],
+      "has_pact": false,
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt1yo3sij8m",
+      "name": "Rogue",
+      "description": "Stalking ruins and woods, rogues lie in wait for the opportunity to kill without a trace.",
+      "signature_ability": "A Rogue may make a bonus HIDE action if  they are within 1\" of a piece of a terrain and not within line of sight of any enemy unit. a Rogue may not be the target of an attack unless a unit within 6\" makes a successful DC15 mind check. If a Rogue begins its activation hidden, its attacks have advantage. \n\nWhile hidden the rogue gains the following reaction:  Sneak Attack: while hidden if an enemy ends it's movement within 6\" of the rogue, the rogue may immediately charge and attack that unit with advantage.",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": false,
+      "stats": {
+        "haste": 15,
+        "move": 6,
+        "body": 4,
+        "mind": 4,
+        "spirit": 5
+      },
+      "skills": [
+        "Simple Melee",
+        "Simple Ranged",
+        "Light Armor"
+      ],
+      "mastery_skills": [
+        "Simple Melee",
+        "Simple Ranged"
+      ],
+      "signature_ability_label": "Hide",
+      "school_focus": false,
+      "allowed_schools": [],
+      "keywords": [
+        "kmt7z51ibt3v"
+      ],
+      "has_pact": false,
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt1ypdwalh2",
+      "name": "Wizard",
+      "description": "",
+      "signature_ability": "Choose a school of magic to be your focus gain the following in the chosen school\n- Reduce the spell slot level of a spell. (lvl 3 spell would only take 2 slots)\n- Choose a spell from that school as your signature spell. Reduce its mana cost by 1.\n- You may craft scrolls of that chosen school at half the cost. (in a one off skirmish game, you may add 1 of these to your parties inventory)",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": true,
+      "school_focus": true,
+      "stats": {
+        "haste": 14,
+        "move": 6,
+        "body": 3,
+        "mind": 6,
+        "spirit": 5
+      },
+      "skills": [
+        "Magi Melee",
+        "Magi Ranged",
+        "Light Armor"
+      ],
+      "mastery_skills": [
+        "Magi Melee",
+        "Magi Ranged"
+      ],
+      "signature_ability_label": "Study The Arcane",
+      "allowed_schools": [
+        "Destruction",
+        "Conjuration",
+        "Transmutation"
+      ],
+      "keywords": [],
+      "has_pact": false,
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt1yrzdvdwh",
+      "name": "Ranger",
+      "description": "Scouts and scavengers, once a ranger has marked their prey, the only thing left is time.",
+      "signature_ability": "Predator: At the beginning of a turn, name a unit on the battlefield. This is the rangers prey. All attacks against the chosen unit have advantage while the Ranger has visibility of the chosen unit. If a unit marked as prey is taken out, they grant Valor and Veil.",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": false,
+      "stats": {
+        "haste": 15,
+        "move": 7,
+        "body": 4,
+        "mind": 5,
+        "spirit": 4
+      },
+      "skills": [
+        "Simple Melee",
+        "Simple Ranged",
+        "Martial Ranged",
+        "Heavy Ranged",
+        "Light Armor"
+      ],
+      "mastery_skills": [
+        "Martial Ranged"
+      ],
+      "signature_ability_label": "",
+      "school_focus": false,
+      "allowed_schools": [],
+      "keywords": [
+        "kmt7z51ibt3v"
+      ],
+      "has_pact": false,
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt1yu3wj5sl",
+      "name": "Bard",
+      "description": "Feasting on the emotions of others, Bards cast powerful magics capable of empowering even the most demoralized allies.",
+      "signature_ability": "as a free action, roll a D4-D20\n- Crits: For every crit, you may add 1 Valor.\n- d20 crit: heal 1 wound from a friendly unit within 6\"\n- Doubles: a Target unit within 6\" may move 3\"\n- Triple: All enemy units within 12\" are stunned.\n- Quad: All enemy units within 12\" take 1D4 damage and make a morale check",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": true,
+      "stats": {
+        "haste": 14,
+        "move": 6,
+        "body": 4,
+        "mind": 4,
+        "spirit": 6
+      },
+      "skills": [
+        "Simple Melee",
+        "Simple Ranged",
+        "Magi Melee",
+        "Magi Ranged",
+        "Light Armor",
+        "Medium Armor"
+      ],
+      "mastery_skills": [],
+      "signature_ability_label": "Performance",
+      "school_focus": false,
+      "keywords": [],
+      "has_pact": false,
+      "allowed_schools": [
+        "Restoration",
+        "Conjuration"
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt2a5vwinpr",
+      "name": "Berzerker",
+      "description": "\"RAWWWWAHAHAHAHA\"",
+      "signature_ability": "The Berzerker takes 1 wound and creates 2 Veil, and enters rage until the end of their activation. While in rage you gain the following:\n- When you make a melee attack action, you may make another\n- You may re-roll wound rolls\n- You cannot be fatigued.",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": false,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 6,
+        "mind": 2,
+        "spirit": 5
+      },
+      "skills": [
+        "Simple Melee",
+        "Martial Melee",
+        "Heavy Melee",
+        "Light Armor"
+      ],
+      "mastery_skills": [
+        "Martial Melee",
+        "Heavy Melee"
+      ],
+      "signature_ability_label": "Rage",
+      "school_focus": false,
+      "allowed_schools": [],
+      "keywords": [],
+      "has_pact": false,
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt2a7xiucb2",
+      "name": "Cleric",
+      "description": "\"Keep screaming the wound is almost shut!\"",
+      "signature_ability": "At the beginning of the game, choose a point on the battlefield, everything within 4\" of this area is your sanctuary. Units inside your sanctuary gain Aegis 15+. ",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": true,
+      "stats": {
+        "haste": 11,
+        "move": 6,
+        "body": 5,
+        "mind": 4,
+        "spirit": 6
+      },
+      "skills": [
+        "Simple Melee",
+        "Martial Melee",
+        "Magi Melee",
+        "Magi Ranged",
+        "Light Armor",
+        "Medium Armor",
+        "Heavy Armor"
+      ],
+      "mastery_skills": [],
+      "signature_ability_label": "Sanctuary",
+      "school_focus": false,
+      "keywords": [],
+      "has_pact": false,
+      "allowed_schools": [
+        "Restoration",
+        "Transmutation"
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "cmt2ahfasbmg",
+      "name": "Warlock",
+      "description": "Most of the denizens would rather avoid areas strong in veil ether, Warlocks however, seek it out.",
+      "signature_ability": "The warlocks manifests their pain in various ways, summoning apparitions to aid them in battle\n- Pact Materna: A healing sprite\n- Pact Fraterna: A brawling tank\n- Pact Apprenta: A minion spellcaster",
+      "gold_cost": 25,
+      "max_feats": 2,
+      "can_use_magic": true,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 4,
+        "mind": 5,
+        "spirit": 6
+      },
+      "skills": [
+        "Simple Melee",
+        "Martial Melee",
+        "Magi Melee",
+        "Magi Ranged",
+        "Light Armor",
+        "Medium Armor"
+      ],
+      "mastery_skills": [],
+      "signature_ability_label": "Familial Pact",
+      "school_focus": false,
+      "keywords": [],
+      "has_pact": true,
+      "allowed_schools": [
+        "Destruction",
+        "Conjuration"
+      ],
+      "keyword_values": {}
+    }
+  ],
+  "guilds": [
+    {
+      "id": "gmt2czhxt2kb",
+      "name": "Cult of the Five Eyes",
+      "faction_id": "fmt1ygkuhwdn",
+      "gold_cost": 5,
+      "ability_description": "Members of the Cult of the Five Eyes are trained in the oldest techniques of stealth and assassination. They gain the Five Eyes feat, allowing them to add the POISON keyword to their attacks.",
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": "fmt3446aa8ao"
+    },
+    {
+      "id": "gmt2d27ly0mf",
+      "name": "Church of the Lost King",
+      "faction_id": "fmt1ygkuhwdn",
+      "gold_cost": 5,
+      "ability_description": "The Lost King may have gone mad, but his study of the veil allowed him to strike any who opposed, followers of this Guild gain the SMITE feat.",
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yu3wj5sl",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": "fmt3hvdwfw99"
+    },
+    {
+      "id": "gmt2dkbaff4f",
+      "name": "College of Constellation",
+      "faction_id": "fmt1zprswgf7",
+      "gold_cost": 10,
+      "ability_description": "Members of the College of Constellation may cast Blink and Teleport as a BONUS action.",
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": ""
+    },
+    {
+      "id": "gmt3487n6owa",
+      "name": "Pact of the Wild Roots",
+      "faction_id": "fmt1zprswgf7",
+      "gold_cost": 5,
+      "ability_description": "Guild members gain access to the \"Healing Roots\" feat.",
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yrzdvdwh",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": "fmt3487n6xe6"
+    },
+    {
+      "id": "gmt4p99zg8fg",
+      "name": "Wyrm Hunters Guild",
+      "faction_id": "fmt1zprswgf7",
+      "gold_cost": 5,
+      "ability_description": "Wyrm hunters train to keep pace with the mighty beasts of the willow",
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 2,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": ""
+    },
+    {
+      "id": "gmt89aimxl4r",
+      "name": "Marauders Guild",
+      "faction_id": "fmt1zviucpcj",
+      "gold_cost": 5,
+      "ability_description": "Mauraders are adept at group tactics and gain access to the pack leader feat.",
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": "fmt89aimx24d"
+    },
+    {
+      "id": "gmthncg4ljqh",
+      "name": "Way of the forbidden past",
+      "faction_id": "fmt1zviucpcj",
+      "gold_cost": 10,
+      "ability_description": "As a bonus action this unit may deal 2 wounds to a friendly unit within 6\" Gain 1 Veil and 1 temporary Mana.",
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": ""
+    },
+    {
+      "id": "gmthnj3gvhvo",
+      "name": "Sailors Guild",
+      "faction_id": "fmt1zviucpcj",
+      "gold_cost": 5,
+      "ability_description": "Members of the sailor's guild sport superior sea legs. Gain advantage on jump and climb actions and ignore movement penalties for difficult terrain. Sailors guild members are also a merry crew, gain +1 to your spirit.",
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 1
+      },
+      "equip_override": [],
+      "feat_id": ""
+    },
+    {
+      "id": "gmthnrp0glsp",
+      "name": "Black Spire Watchers",
+      "faction_id": "fmt1zviucpcj",
+      "gold_cost": 10,
+      "ability_description": "Black Spire members are adept at long ranged engagements. Add +6\" to the range characteristic of spells and attacks from members.",
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": ""
+    },
+    {
+      "id": "gmthnvht5rb7",
+      "name": "BattleMages Guild",
+      "faction_id": "fmt1ygkuhwdn",
+      "gold_cost": 10,
+      "ability_description": "Battlemages may equip plate armor.",
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": -1,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [
+        "Heavy Armor"
+      ],
+      "feat_id": ""
+    },
+    {
+      "id": "gmtho3zoyjr6",
+      "name": "Order of the Barrows",
+      "faction_id": "fmt1ygkuhwdn",
+      "gold_cost": 5,
+      "ability_description": "Anytime an order of the barrows unit is eliminated, any unit within 6\" may make one action.",
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": ""
+    },
+    {
+      "id": "gmthod7pz28a",
+      "name": "Cult of Bog",
+      "faction_id": "fmt1zprswgf7",
+      "gold_cost": 10,
+      "ability_description": "Enemy units within 6\" of cult of bog units are fatigued.",
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "feat_id": ""
+    }
+  ],
+  "weapons": [
+    {
+      "id": "wmt1z35fsbp8",
+      "name": "Dagger",
+      "category": "Simple",
+      "type": "Melee",
+      "range": null,
+      "damage": "d4",
+      "gold_cost": 10,
+      "keywords": [
+        "kmt1z27eyq8o",
+        "kmtczhtlagix"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "keyword_values": {
+        "kmtczhtlagix": 2
+      }
+    },
+    {
+      "id": "wmt20bivm8lw",
+      "name": "Longbow",
+      "category": "Martial",
+      "type": "Ranged",
+      "range": 24,
+      "damage": "d10",
+      "gold_cost": 20,
+      "keywords": [
+        "kmt2248t93dp"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt20jq62wlh",
+      "name": "LongSword (2H)",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "d10",
+      "gold_cost": 20,
+      "keywords": [
+        "kmt2248t93dp"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt20oqnznc2",
+      "name": "Short Crossbow",
+      "category": "Simple",
+      "type": "Ranged",
+      "range": 18,
+      "damage": "d8",
+      "gold_cost": 15,
+      "keywords": [
+        "kmt20o7o8653",
+        "kmt2248t93dp"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt21xj74ru5",
+      "name": "Sword",
+      "category": "Simple",
+      "type": "Melee",
+      "range": null,
+      "damage": "d6",
+      "gold_cost": 10,
+      "keywords": [
+        "kmt1z27eyq8o"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt21y1cmxqg",
+      "name": "Maul",
+      "category": "Heavy",
+      "type": "Melee",
+      "range": null,
+      "damage": "d12",
+      "gold_cost": 30,
+      "keywords": [
+        "kmt1yxnqybek",
+        "kmt2248t93dp",
+        "kmt9exwc6xbm",
+        "kmtczhtlagix"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": "",
+      "keyword_values": {
+        "kmtczhtlagix": 1
+      }
+    },
+    {
+      "id": "wmt220ka1a4u",
+      "name": "Pike",
+      "category": "Simple",
+      "type": "Melee",
+      "range": 3,
+      "damage": "d6",
+      "gold_cost": 15,
+      "keywords": [
+        "kmt33bw7cmpm"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt221142461",
+      "name": "Halberd",
+      "category": "Martial",
+      "type": "Melee",
+      "range": 3,
+      "damage": "d8",
+      "gold_cost": 20,
+      "keywords": [
+        "kmt2248t93dp",
+        "kmt33bw7cmpm"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt221m7l57l",
+      "name": "Shortbow",
+      "category": "Simple",
+      "type": "Ranged",
+      "range": 18,
+      "damage": "d6",
+      "gold_cost": 10,
+      "keywords": [
+        "kmt2248t93dp"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": "",
+      "keyword_values": {}
+    },
+    {
+      "id": "wmt222uut9oa",
+      "name": "Heavy Crossbow",
+      "category": "Heavy",
+      "type": "Ranged",
+      "range": 18,
+      "damage": "d12",
+      "gold_cost": 25,
+      "keywords": [
+        "kmt1yxnqybek",
+        "kmt20o7o8653",
+        "kmt2248t93dp",
+        "kmt9exwc6xbm"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "wmt223ixgkyv",
+      "name": "Flail",
+      "category": "Simple",
+      "type": "Melee",
+      "range": null,
+      "damage": "d8",
+      "gold_cost": 15,
+      "keywords": [
+        "kmthp637nf2k"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "wmt2cqjwnr0k",
+      "name": "Shield",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "",
+      "gold_cost": 20,
+      "keywords": [
+        "kmt225dzlf96",
+        "kmt7j35rao8i"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "wmt2mgstaff1",
+      "name": "Staff",
+      "category": "Magi",
+      "type": "Melee",
+      "range": null,
+      "damage": "d6",
+      "gold_cost": 10,
+      "rarity": "common",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "wmt33diwnsi8",
+      "name": "LongSword (1H)",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "d8",
+      "gold_cost": 15,
+      "rarity": "common",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "wmt33qeguvqf",
+      "name": "Warhammer",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "d10",
+      "gold_cost": 25,
+      "rarity": "common",
+      "keywords": [
+        "kmt1yxnqybek",
+        "kmt2248t93dp",
+        "kmt9exwc6xbm",
+        "kmthp637nf2k"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "wmt4p14bgi9o",
+      "name": "Wand of destruction",
+      "category": "Magi",
+      "type": "Ranged",
+      "range": 0,
+      "damage": "",
+      "gold_cost": 20,
+      "rarity": "rare",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 1,
+      "abilities": "Add 6\" to range of destruction spells."
+    },
+    {
+      "id": "wmt55u30py6d",
+      "name": "Poison Dagger",
+      "category": "Simple",
+      "type": "Melee",
+      "range": null,
+      "damage": "d4",
+      "gold_cost": 20,
+      "rarity": "rare",
+      "keywords": [
+        "kmt1ywxyw8lh",
+        "kmt1z27eyq8o",
+        "kmtczhtlagix"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7",
+      "party_limit": 0,
+      "abilities": "",
+      "keyword_values": {
+        "kmtczhtlagix": 2
+      }
+    },
+    {
+      "id": "wmt55wx3sjsf",
+      "name": "BarrowHammer",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "d8",
+      "gold_cost": 25,
+      "rarity": "rare",
+      "keywords": [
+        "kmt1z27eyq8o"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
+    },
+    {
+      "id": "wmt55xnbehkt",
+      "name": "FickleWood Bow",
+      "category": "Simple",
+      "type": "Ranged",
+      "range": 18,
+      "damage": "d6",
+      "gold_cost": 20,
+      "rarity": "rare",
+      "keywords": [
+        "kmt1ywxyw8lh"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
+    },
+    {
+      "id": "wmt7z66gn2bj",
+      "name": "Orb of intellect",
+      "category": "Magi",
+      "type": "Melee",
+      "range": null,
+      "damage": "",
+      "gold_cost": 20,
+      "rarity": "rare",
+      "keywords": [
+        "kmt7j35rao8i"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 1,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": "This item opens the mind of its user. Add +1 to their mind stat."
+    },
+    {
+      "id": "wmtggui6mxcv",
+      "name": "Hunting Knife",
+      "category": "Simple",
+      "type": "Melee",
+      "range": null,
+      "damage": "d4",
+      "gold_cost": 5,
+      "rarity": "common",
+      "keywords": [
+        "kmt1z27eyq8o"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    }
+  ],
+  "armor": [
+    {
+      "id": "amt1z8wpx9oj",
+      "name": "Cloth Armor",
+      "category": "Light",
+      "armor_value": 6,
+      "gold_cost": 10,
+      "keywords": [],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amt1z97ril6n",
+      "name": "Leather Armor",
+      "category": "Medium",
+      "armor_value": 8,
+      "gold_cost": 20,
+      "keywords": [],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amt1z9hhlh7q",
+      "name": "Plate Armor",
+      "category": "Heavy",
+      "armor_value": 10,
+      "gold_cost": 35,
+      "keywords": [],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": -2,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amt2drnddkh4",
+      "name": "Reinforced Leather Armor",
+      "category": "Medium",
+      "armor_value": 6,
+      "gold_cost": 25,
+      "keywords": [
+        "kmt2dr7pxlsl"
+      ],
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amt3kh4672o7",
+      "name": "Barrow Rags",
+      "category": "Light",
+      "armor_value": 6,
+      "gold_cost": 15,
+      "rarity": "rare",
+      "keywords": [
+        "kmt3kfnljcm0"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "amt3ki2b8he7",
+      "name": "Armor of the willow pact",
+      "category": "Heavy",
+      "armor_value": 10,
+      "gold_cost": 75,
+      "rarity": "legendary",
+      "keywords": [
+        "kmt3kfnljcm0",
+        "kmt3kg2lfx39",
+        "kmt3kgiuotcm"
+      ],
+      "stat_modifiers": {
+        "haste": -2,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amt8tra9p8ke",
+      "name": "Anti-Magic Plate",
+      "category": "Heavy",
+      "armor_value": 10,
+      "gold_cost": 45,
+      "rarity": "rare",
+      "keywords": [
+        "kmt3kg2lfx39"
+      ],
+      "stat_modifiers": {
+        "haste": -2,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amtbz18dwpes",
+      "name": "Aether Plate",
+      "category": "Heavy",
+      "armor_value": 10,
+      "gold_cost": 50,
+      "rarity": "rare",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amtbz257pq5l",
+      "name": "+1 Cloth Armor",
+      "category": "Light",
+      "armor_value": 7,
+      "gold_cost": 20,
+      "rarity": "rare",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "amtbz2r9myyb",
+      "name": "+2 Cloth Armor",
+      "category": "Light",
+      "armor_value": 8,
+      "gold_cost": 30,
+      "rarity": "legendary",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0,
+      "abilities": ""
+    },
+    {
+      "id": "amtbz3w56wuj",
+      "name": "+1 SwiftLeather",
+      "category": "Medium",
+      "armor_value": 9,
+      "gold_cost": 40,
+      "rarity": "rare",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 1,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "amtbz5nmjs4k",
+      "name": "Gargantua Plate",
+      "category": "Heavy",
+      "armor_value": 12,
+      "gold_cost": 70,
+      "rarity": "legendary",
+      "keywords": [],
+      "stat_modifiers": {
+        "haste": -3,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    }
+  ],
+  "items": [
+    {
+      "id": "imt21uq3oh43",
+      "name": "Healing Potion",
+      "slots": 1,
+      "gold_cost": 10,
+      "abilities": "Remove 1 Wound",
+      "rarity": "common",
+      "requires_hand": false,
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imt21vt4jsxi",
+      "name": "Scroll of Firebolt",
+      "slots": 1,
+      "gold_cost": 20,
+      "abilities": "May immediately cast the Firebolt  spell, add +5 to hit roll.",
+      "rarity": "common",
+      "requires_hand": false,
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imt21wx4a2xa",
+      "name": "Mana Potion",
+      "slots": 1,
+      "gold_cost": 35,
+      "abilities": "Temporarily raise the units mana by 1 for their activation.",
+      "rarity": "rare",
+      "requires_hand": false,
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imt2dnwegh46",
+      "name": "Poison Vial",
+      "slots": 1,
+      "gold_cost": 20,
+      "requires_hand": false,
+      "abilities": "1 equipped weapon gains Poison until the end of your activation.",
+      "rarity": "common",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imt2dprpi63e",
+      "name": "Necklace of  Unheard Bravery",
+      "slots": 1,
+      "gold_cost": 25,
+      "requires_hand": false,
+      "abilities": "Bearer has advantage on spirit skill checks.",
+      "rarity": "rare",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imt3kjnd45v4",
+      "name": "Jug of Healing",
+      "slots": 2,
+      "gold_cost": 25,
+      "rarity": "rare",
+      "requires_hand": false,
+      "abilities": "Removes 2 wounds upon consumption.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imt3kl63ue7o",
+      "name": "Crown of the Lost King",
+      "slots": 1,
+      "gold_cost": 65,
+      "rarity": "legendary",
+      "requires_hand": false,
+      "abilities": "Add +5 t0 this units spirit stat. This unit generates +1 veil when they activate.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0
+    },
+    {
+      "id": "imtczldsg5mh",
+      "name": "Potion of invisibility",
+      "slots": 1,
+      "gold_cost": 100,
+      "rarity": "legendary",
+      "requires_hand": false,
+      "abilities": "Upon Consumption user cannot be targeted by actions of other units until the next activation of this unit.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imtczmjp7hru",
+      "name": "Stamina Potion",
+      "slots": 1,
+      "gold_cost": 20,
+      "rarity": "common",
+      "requires_hand": false,
+      "abilities": "Upon consumption increases movement of this unit by 2 for its activation.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0
+    },
+    {
+      "id": "imtczr9w4tsn",
+      "name": "Veil Crystal",
+      "slots": 1,
+      "gold_cost": 25,
+      "rarity": "common",
+      "requires_hand": false,
+      "abilities": "Crushing this crystal in your hand releases a burst of veil energy. Gain 1 veil.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imtczsgzm86w",
+      "name": "Scroll of healing word",
+      "slots": 1,
+      "gold_cost": 30,
+      "rarity": "rare",
+      "requires_hand": false,
+      "abilities": "User may cast the healing word spell",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imtczxw7a8up",
+      "name": "Ring of haste",
+      "slots": 1,
+      "gold_cost": 30,
+      "rarity": "rare",
+      "requires_hand": false,
+      "abilities": "Increase wearers haste by 1",
+      "stat_modifiers": {
+        "haste": 1,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imtd0c4w37tu",
+      "name": "Climbing Rope",
+      "slots": 1,
+      "gold_cost": 5,
+      "rarity": "common",
+      "requires_hand": false,
+      "abilities": "Gain advantage on climbing checks",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0
+    },
+    {
+      "id": "imtd0hl1arcb",
+      "name": "Potion of Poison Resistance",
+      "slots": 1,
+      "gold_cost": 20,
+      "rarity": "common",
+      "requires_hand": false,
+      "abilities": "User gains  Poison Resistance for the rest of the game",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0
+    },
+    {
+      "id": "imtd0iljs14i",
+      "name": "Acid Vial",
+      "slots": 1,
+      "gold_cost": 10,
+      "rarity": "common",
+      "requires_hand": false,
+      "abilities": "May make a ranged attack against target creature within 6\". 1D6+1D8 Damage.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_limit": 0
+    },
+    {
+      "id": "imtivrqzl6ry",
+      "name": "Barrow War Horn",
+      "slots": 1,
+      "gold_cost": 25,
+      "rarity": "rare",
+      "party_limit": 1,
+      "requires_hand": false,
+      "abilities": "As a bonus action, this unit may blow on the war horn to generate 1 Valor.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
+    },
+    {
+      "id": "imtivsvk1fil",
+      "name": "Veil Shard",
+      "slots": 1,
+      "gold_cost": 50,
+      "rarity": "rare",
+      "party_limit": 0,
+      "requires_hand": false,
+      "abilities": "This shard echoes untold pain in your hands. Crush it to gain 3 veil.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
+    }
+  ],
+  "feats": [
+    {
+      "id": "fmt1z7n52e7j",
+      "name": "SlipKnife",
+      "ability_description": "Add a +1D6 modifier to your wound roll.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yu3wj5sl",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt1z8ish7gm",
+      "name": "Arcane Strike",
+      "ability_description": "Add the ARCANE keyword to this wound roll.",
+      "gold_cost": 5,
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 2,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt218egkaek",
+      "name": "ShieldBash",
+      "ability_description": "If this unit wins a clash, attacker gains FATIGUED and takes 1 wound.",
+      "gold_cost": 5,
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yu3wj5sl",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 1,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt21e7rr9ip",
+      "name": "Violent Charge",
+      "ability_description": "Unit makes a charge movement action. For your charge bonus, On a 1-2, target unit is fatigued. On a 3-5, target unit is stunned. On a 6, target unit is stunned and takes 1 wound.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt3446aa8ao",
+      "name": "Five Eyes",
+      "ability_description": "Add the Poison keyword to this attack",
+      "gold_cost": 0,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt3487n6xe6",
+      "name": "Healing Roots",
+      "ability_description": "Once per activation, whenever you generate Veil, you may use this ability to heal 1 wound.",
+      "gold_cost": 0,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt349jbmv7y",
+      "name": "SharpShooter",
+      "ability_description": "Remove negative modifiers for intervening terrain.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 1,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt3hvdwfw99",
+      "name": "Smite",
+      "ability_description": "If your attack wounds, you may expend a Veil to smite the target. Roll 1D10, if the result is higher than the targets spirit stat, they take 1 wound.",
+      "gold_cost": 0,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt3i31jsztg",
+      "name": "OverCharge",
+      "ability_description": "Before making a cast attack action, you may choose to overcharge. until the end of this activation you may roll to hit with advantage, and re-roll your wound roll.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 2,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt3k4ke86nd",
+      "name": "Leap",
+      "ability_description": "As a bonus action, a hero may jump back 3\" from a units zone of control, attacks of opportunity have disadvantage.",
+      "gold_cost": 5,
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 1
+    },
+    {
+      "id": "fmt3k9j7i9iy",
+      "name": "Shadow Step",
+      "ability_description": "As a reaction, you may move 3\" out of an opponents zone of control after they enter yours. ",
+      "gold_cost": 5,
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt3kdst6o1i",
+      "name": "QuickCast",
+      "ability_description": "If an attack generates veil, you may cast another spell as a bonus action.",
+      "gold_cost": 15,
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 2,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt55iszoupc",
+      "name": "Foresight",
+      "ability_description": "Caster may make a Spell attack action as a reaction",
+      "gold_cost": 15,
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 2,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt59uk5osbj",
+      "name": "Riposte",
+      "ability_description": "May use melee attack modifiers when making a clash reaction.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt2a5vwinpr",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 2
+    },
+    {
+      "id": "fmt59v8uecj3",
+      "name": "Aimed Shot",
+      "ability_description": "May add shoot attack modifiers when making a sentry reaction.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt5f6w73pgu",
+      "name": "Inverse Suffering",
+      "ability_description": "When this unit would cast a restoration spell. Add +1 to the healing value of the spell.",
+      "gold_cost": 5,
+      "allowed_classes": [
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt5fatp9jtu",
+      "name": "Vitality Siphon",
+      "ability_description": "Once per activation, When a melee attack from this unit causes at least 1 wound. Target unit within 6\" may regain +1 wound.",
+      "gold_cost": 5,
+      "allowed_classes": [
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt883w1lip3",
+      "name": "Unshakeable",
+      "ability_description": "If this unit is frightened, remove the condition and heal 1 wound.",
+      "gold_cost": 15,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "faction_id": ""
+    },
+    {
+      "id": "fmt884jsd39d",
+      "name": "Overzealous Assault",
+      "ability_description": "This unit may make a free attack action",
+      "gold_cost": 20,
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 0,
+      "valor_cost": 3
+    },
+    {
+      "id": "fmt889c9yndl",
+      "name": "Arcane Affliction",
+      "ability_description": "Raise your mana by 1",
+      "gold_cost": 20,
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 2,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt88cn2pj4c",
+      "name": "Unmaking",
+      "ability_description": "If this unit would be incapaciated but it has not activated yet, it may activate before being removed from the battlefield",
+      "gold_cost": 20,
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1ypdwalh2",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 3,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt88lzahfhk",
+      "name": "Miasma Guard",
+      "ability_description": "Instant: This unit gains Aegis 10+ until end of turn.",
+      "gold_cost": 20,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 3,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt88vsuvlwx",
+      "name": "Unnatural Speed",
+      "ability_description": "When declaring a charge, automatically gain a charge bonus of 6.",
+      "gold_cost": 10,
+      "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
+        "cmt2a5vwinpr",
+        "cmt2a7xiucb2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 1,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt88y5ciy5k",
+      "name": "Piercing Arcana",
+      "ability_description": "If a spell attack has the Arcane or Elemental keyword, it automatically deals 1 wound to the target on hit.",
+      "gold_cost": 15,
+      "allowed_classes": [
+        "cmt1ypdwalh2",
+        "cmt1yu3wj5sl",
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "veil_cost": 2,
+      "valor_cost": 0
+    },
+    {
+      "id": "fmt89aimx24d",
+      "name": "Pack Leader",
+      "ability_description": "friendly non-elite units within 3\"  may make a melee attack against the target.",
+      "gold_cost": 0,
+      "allowed_classes": [],
+      "veil_cost": 0,
+      "valor_cost": 2
+    },
+    {
+      "id": "fmtkcb8hb3o2",
+      "name": "Superior stamina",
+      "ability_description": "May run as a bonus action",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 1,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": [],
+      "faction_id": ""
+    },
+    {
+      "id": "fmtkcd40oh7p",
+      "name": "Anti-matter dash",
+      "ability_description": "Unit may use a move action to move through solid wall terrain as if it were difficult terrain.",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "valor_cost": 0,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkpuaswuc5",
+      "name": "Arrow Storm",
+      "ability_description": "Select 3 willow enclave units. Each selected unit may make a shoot action.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 3,
+      "faction_id": "fmt1zprswgf7",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkq404929u",
+      "name": "Hidden in plain site",
+      "ability_description": "When a  willow enclave unit would be the target of a ranged spell or shoot action, you may use this ability if the targeted unit has the benefit of obscuring terrain and is within 1\" of a piece of terrain. The targeted unit cannot be made the target of the attack.",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "valor_cost": 0,
+      "faction_id": "fmt1zprswgf7",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkq51jkt90",
+      "name": "Healing sprouts",
+      "ability_description": "Choose a point on the battlefield. Every unit within 3\" of that point regains 1 wound.",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "valor_cost": 0,
+      "faction_id": "fmt1zprswgf7",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkq7w40eub",
+      "name": "Stalking from the veil",
+      "ability_description": "You may select a willow enclave unit who is within 1\" of a piece of terrain. Remove that unit from the battlefield and re-deploy them anywhere on the battlefield within 1\" of a piece of terrain.",
+      "gold_cost": 0,
+      "veil_cost": 4,
+      "valor_cost": 0,
+      "faction_id": "fmt1zprswgf7",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkqaiit2im",
+      "name": "Quickfire bow",
+      "ability_description": "After a willow enclave unit has made a shoot action, if this attack hits, may immediately make a free shoot action against a unit within 3\" of the original target.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 1,
+      "faction_id": "fmt1zprswgf7",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkqk2cpqpo",
+      "name": "Swift Footed charge",
+      "ability_description": "After a willow enclave unit makes a melee attack action, you may use this feat to make a free retreat action.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 1,
+      "faction_id": "fmt1zprswgf7",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkr2t9hr20",
+      "name": "For the lost king!",
+      "ability_description": "When a barrow moor kingdom unit ends a charge move, they may use this ability to add advantage to their hit roll and Brutal to their wound roll.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "faction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkr6v1ibro",
+      "name": "SHOW NO FEAR!",
+      "ability_description": "Remove all negative conditions from all Barrowmorr Kingdoms units on the battlefield.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 3,
+      "faction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtkrab2l5k2",
+      "name": "Spirit of the lost king",
+      "ability_description": "Choose a veil rift on the battlefield. All friendly units within that rift regain 1 wound and may make a free attack action.",
+      "gold_cost": 0,
+      "veil_cost": 4,
+      "valor_cost": 0,
+      "faction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtliqc2k3nf",
+      "name": "Veils Bite",
+      "ability_description": "When a friendly Barrowmoor Kingdoms unit is incapacitated, you may use this ability to make an attack action with them before removing them from the battlefield",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "valor_cost": 1,
+      "faction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtljfvtnqe0",
+      "name": "Veil Aegis",
+      "ability_description": "Target a veil rift. Friendly barrow moor Kingdoms units gain Aegis 15+ until end of turn while standing in the selected veil rift.",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "valor_cost": 0,
+      "faction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtljkoscq7y",
+      "name": "Counter Assault",
+      "ability_description": "When a friendly Barrowmoor Kingdoms unit is made the target of a charge, you may use this ability to declare a charge  with the target unit against the charging unit.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 1,
+      "faction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    }
+  ],
+  "spellSchools": [
+    {
+      "id": "sch1destruct",
+      "name": "Destruction"
+    },
+    {
+      "id": "sch2restore1",
+      "name": "Restoration"
+    },
+    {
+      "id": "sch3conjure1",
+      "name": "Conjuration"
+    },
+    {
+      "id": "sch4transmut",
+      "name": "Transmutation"
+    }
+  ],
+  "spells": [
+    {
+      "id": "smt1z671pdru",
+      "name": "Firebolt",
+      "level": 1,
+      "school": "Destruction",
+      "type": "Ranged Attack",
+      "damage": "d8",
+      "range": 18,
+      "allowed_classes": [],
+      "description": "",
+      "keywords": [
+        "kmt1yx2bzu9n"
+      ],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32oa9flfu",
+      "name": "Arcane Missile",
+      "level": 1,
+      "school": "Destruction",
+      "range": 12,
+      "type": "Ranged Attack",
+      "damage": "d4",
+      "description": "This attack automatically hits the target",
+      "keywords": [
+        "kmt1ywt3xv6u"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32pvnagza",
+      "name": "FrostBall",
+      "level": 1,
+      "school": "Destruction",
+      "range": 18,
+      "type": "Ranged Attack",
+      "damage": "d6",
+      "description": "",
+      "keywords": [
+        "kmt1yx2bzu9n"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32rf32diy",
+      "name": "Poison Spray",
+      "level": 2,
+      "school": "Destruction",
+      "range": 12,
+      "type": "Ranged Attack",
+      "damage": "d10",
+      "description": "Target must pass a DC14+Body skillcheck or become fatigued.",
+      "keywords": [
+        "kmt1ywxyw8lh"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32u7m3d6u",
+      "name": "Ice Shard",
+      "level": 2,
+      "school": "Destruction",
+      "range": 12,
+      "type": "Ranged Attack",
+      "damage": "d8",
+      "description": "If this attack hits, make another wound roll with 1D10+1D6 basic damage for any unit within 3\" of target. (this does not create Valor or Veil) ",
+      "keywords": [
+        "kmt1yx2bzu9n"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32v8kvjgh",
+      "name": "Rock Spike",
+      "level": 2,
+      "school": "Destruction",
+      "range": 18,
+      "type": "Ranged Attack",
+      "damage": "d10",
+      "description": "",
+      "keywords": [
+        "kmt1yxnqybek"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32wnb3uwy",
+      "name": "Shocking Grasp",
+      "level": 2,
+      "school": "Destruction",
+      "range": 0,
+      "type": "Melee Attack",
+      "damage": "d10",
+      "description": "Target must take a DC15+Body check or be stunned.",
+      "keywords": [
+        "kmt1yx2bzu9n"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt32zxz9m8g",
+      "name": "Fireball",
+      "level": 3,
+      "school": "Destruction",
+      "range": 24,
+      "type": "Cast",
+      "damage": "d8",
+      "description": "Choose a point on the battlefield, any unit within 6\" and visible to that point take a wound roll. When you cast fireball, roll a D20, on a 10+, replace the damage die of this attack with a D10. On a 15+ replace the damage die of this attack with a D12.",
+      "keywords": [
+        "kmt1yx2bzu9n"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt333q99ynw",
+      "name": "Lightning Bolt",
+      "level": 3,
+      "school": "Destruction",
+      "range": 18,
+      "type": "Ranged Attack",
+      "damage": "d10",
+      "description": "If this attack hits, after the wound roll, you may choose another target within 3\" of the current target and roll to wound. repeat this process as many times as elligible.",
+      "keywords": [
+        "kmt1yx2bzu9n"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt335ves864",
+      "name": "Arcane Beam",
+      "level": 3,
+      "school": "Destruction",
+      "range": 24,
+      "type": "Cast",
+      "damage": "d12",
+      "description": "This spell automatically hits any creature within a straight line emanating from the caster. This weapons damage is reduced by 2 for every unit beyond the first it hits, and for every piece of intervening terrain. (ex: A piece of terrain is in between the caster and two units. the first unit suffers 1D10 damage, the other 1D8.)",
+      "keywords": [
+        "kmt1ywt3xv6u"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt338igqw32",
+      "name": "Power Word Kill",
+      "level": 4,
+      "school": "Destruction",
+      "range": 24,
+      "type": "Cast",
+      "damage": "d6",
+      "description": "Roll a D6, target unit takes wounds equal to the result rolled.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt34c4wdbms",
+      "name": "Healing Touch",
+      "level": 1,
+      "school": "Restoration",
+      "range": 2,
+      "type": "Cast",
+      "damage": "",
+      "description": "Target unit in your zone of control regains 1 wound",
+      "keywords": [
+        "kmt34cz6qk9m"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3hlxmrbog",
+      "name": "Ward",
+      "level": 1,
+      "school": "Restoration",
+      "range": 6,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "If the caster or a unit within 6\" of the caster is the target of an attack or ability you may use a reaction to cast Ward and give the attack disdvantage.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3hp7zw36s",
+      "name": "OakFlesh",
+      "level": 1,
+      "school": "Restoration",
+      "range": 0,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "As a reaction to an attack that hit, may raise the armor value of the castor or a friendly unit within 6\" by 1d4.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3hqdl1tu3",
+      "name": "Healing Word",
+      "level": 2,
+      "school": "Restoration",
+      "range": 12,
+      "type": "Bonus Cast",
+      "damage": "",
+      "description": "Target unit within 12\" regains 1 wound",
+      "keywords": [
+        "kmt34cz6qk9m"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Bonus Action"
+      ]
+    },
+    {
+      "id": "smt3hrc5hrw8",
+      "name": "Greater Healing Touch",
+      "level": 2,
+      "school": "Restoration",
+      "range": 2,
+      "type": "Cast",
+      "damage": "",
+      "description": "Target unit within 2\" of caster, that unit regains 2 wounds.",
+      "keywords": [
+        "kmt34cz6qk9m"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3i63qshfj",
+      "name": "Restore",
+      "level": 2,
+      "school": "Restoration",
+      "range": 12,
+      "type": "Bonus Cast",
+      "damage": "",
+      "description": "Target unit within 12\" is no longer stunned",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Bonus Action"
+      ]
+    },
+    {
+      "id": "smt3i7f0tli0",
+      "name": "Greater Healing Word",
+      "level": 3,
+      "school": "Restoration",
+      "range": 12,
+      "type": "Cast ",
+      "damage": "",
+      "description": "Target unit within 12\" regains 2 wounds.",
+      "keywords": [
+        "kmt34cz6qk9m"
+      ],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Bonus Action"
+      ]
+    },
+    {
+      "id": "smt3i8vcxfgh",
+      "name": "Calm",
+      "level": 3,
+      "school": "Restoration",
+      "range": 12,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "If an allied unit within 12\" would become frightened, you may react with calm and negate the affect.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action",
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3iaxf6vfm",
+      "name": "Greater Ward",
+      "level": 3,
+      "school": "Restoration",
+      "range": 6,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "If an allied unit would be the target of an action, negate the affect.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3iclxw167",
+      "name": "Revivify",
+      "level": 4,
+      "school": "Restoration",
+      "range": 0,
+      "type": "Cast",
+      "damage": "",
+      "description": "Choose an allied unit that was removed from the battlefield this game. Return them to the battlefield within 3\" of the caster with 1D4 wounds remaining.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3ifmk57h3",
+      "name": "Mage Hand",
+      "level": 1,
+      "school": "Conjuration",
+      "range": 12,
+      "type": "Cast",
+      "damage": "",
+      "description": "Summon a magical hand to hold or move units up to 3\" with. units held in place count as being stunned. Enemy units must make a DC12+Body check to ignore the hands affects. Allies may be moved willingly.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3ii4sy2go",
+      "name": "CounterSpell",
+      "level": 1,
+      "school": "Conjuration",
+      "range": 6,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "If the caster is within 6\" or is the target of a cast action, bonus action, or reaction,  They may make a DC13+Mind check and negate the spell.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3ijheonus",
+      "name": "Flick",
+      "level": 1,
+      "school": "Conjuration",
+      "range": null,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "If the caster is the target of a shoot action. they may make a DC12+Mind Check and negate the attack.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3il3oq67h",
+      "name": "Misty Veil",
+      "level": 2,
+      "school": "Conjuration",
+      "range": 6,
+      "type": "Cast",
+      "damage": "",
+      "description": "Choose a point on the board, the area within 6\" of that point is consumed by fog. Shoot and cast actions targeting units  wholly within the area have disadvantage.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3imtubdhh",
+      "name": "Cast Familiar",
+      "level": 2,
+      "school": "Conjuration",
+      "range": 3,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "The caster summons a ghostly familiar within 3\" of them. The familiar has 10 Haste, 6\" Move, D6 Armor and attack, and 2 Body, Mind, And Spirit.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3ionjjmul",
+      "name": "Wall",
+      "level": 2,
+      "school": "Conjuration",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Summon a 1x3 wall 3\" tall that cannot be traversed or seen through, even by other magical affects.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3irga3nyb",
+      "name": "Poison Cloud",
+      "level": 2,
+      "school": "Conjuration",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Choose a point on the battlefield. A cloud of Poison gas emanates 6\" from that point on the battlefield. Units in the cloud are fatigued, and units who begin their activation in the poison cloud must make a DC12+Body save or recieve 1 wound and be fatigued.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3iv1pdcze",
+      "name": "Guiding Light",
+      "level": 3,
+      "school": "Conjuration",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Choose a point on the battlefield. A guiding light erupts from the center of that point out 6\". All attacks against units wholly within this area have advantage. Units inside the area  cannot target units outside of it.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3iwvfzf1i",
+      "name": "Eldritch Apparition",
+      "level": 3,
+      "school": "Conjuration",
+      "range": 12,
+      "type": "Bonus Cast",
+      "damage": "",
+      "description": "Summon a terrifying visage in front of  a creature you can see within 12\". They must immediately make a morale check.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Bonus Action"
+      ]
+    },
+    {
+      "id": "smt3j2rx6ey6",
+      "name": "Mind Shatter",
+      "level": 3,
+      "school": "Conjuration",
+      "range": 18,
+      "type": "Bonust Cast",
+      "damage": "d10",
+      "description": "Target creature with a display of lights sounds and senses. Roll 1D10, if the result is higher than the targets Mind stat, they take 1 wound.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Bonus Action"
+      ]
+    },
+    {
+      "id": "smt3j5tif360",
+      "name": "Conjure Abomination",
+      "level": 4,
+      "school": "Conjuration",
+      "range": 18,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Choose a point on the battlefield. The area within 6\" of this point is consumed by darkness. Eldritch tentacles lash out for 1D10+1D6 damage and stun creatures who begin or end their movement in the area.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3j8fmwwj2",
+      "name": "Blink",
+      "level": 1,
+      "school": "Transmutation",
+      "range": 6,
+      "type": "Cast",
+      "damage": "",
+      "description": "Caster chooses a point visible to them up to 6\" away. Remove them from the battlefield and re-deploy them at the chosen point.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3jao2lrts",
+      "name": "Acidic Armor",
+      "level": 1,
+      "school": "Transmutation",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "d10",
+      "description": "Choose a target creature and slowly turn their armor to acid. Roll a D10 and add +1 for every armor point above 6. If this beats their armor save they take a wound.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3jdl4us8i",
+      "name": "Mudify",
+      "level": 1,
+      "school": "Transmutation",
+      "range": 0,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "When the caster becomes the target of a charge, they may fuse the ground with water in front of them.  Charging unit must treat the entirety of the charge as if it were over difficult terrain.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3jmz2vdie",
+      "name": "Teleport",
+      "level": 2,
+      "school": "Transmutation",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Caster may choose a point within 12\". Target unit within 2\" of caster may be removed from the battlefield, and re-deployed at that point.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3jozuy64l",
+      "name": "Alter Self",
+      "level": 2,
+      "school": "Transmutation",
+      "range": null,
+      "type": "Cast Reaction",
+      "damage": "",
+      "description": "When made the target of an attack. Caster may attempt to disguise themselves as an ally of the attacker. Attacker must pass a DC15 mind check or they remain tricked and must choose a new target.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Reaction"
+      ]
+    },
+    {
+      "id": "smt3jrcrr148",
+      "name": "Gaseous Form",
+      "level": 2,
+      "school": "Transmutation",
+      "range": 18,
+      "type": "Cast Action / Reaction",
+      "damage": "",
+      "description": "Target becomes a gaseous cloud and may move freely through terrain until the finish a move action.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3ju4elqu7",
+      "name": "Set Ablaze",
+      "level": 2,
+      "school": "Transmutation",
+      "range": 18,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Target a piece of terrain that is no larger than 6\"x6\" the piece of terrain catches fire with arcane flames. Any unit within 1\" of the terrain must immediately take environmental+1d6 damage.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3jvbsf0ur",
+      "name": "Animate Object",
+      "level": 2,
+      "school": "Transmutation",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Target a piece of terrain no larger than 3\"x3\". Grant it sentience. it gains the stat block of a familiar.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3jz8eh4xi",
+      "name": "Water incantation",
+      "level": 3,
+      "school": "Transmutation",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Target a piece of terrain no bigger than 6\"x6\". It splashes out in all directions as its form is transfused into liquid. all units within 6\" of the terrain piece are swept away to an area wholly outside of 6\" of the terrain piece.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3k0pzsf28",
+      "name": "Portal",
+      "level": 3,
+      "school": "Transmutation",
+      "range": 24,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "The caster and any creature within 3\" of them are removed from the battlefield and re-deployed anywhere on the battlefield wholly within 24\" of their last location.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3k1lo2rbe",
+      "name": "Polymorph",
+      "level": 4,
+      "school": "Transmutation",
+      "range": 12,
+      "type": "Cast Action",
+      "damage": "",
+      "description": "Target a creature visible to the caster. They become a goat. Bahhh.",
+      "keywords": [],
+      "allowed_classes": [],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action"
+      ]
+    },
+    {
+      "id": "smt3k34jl8py",
+      "name": "Veil Bolt",
+      "level": 0,
+      "school": "Destruction",
+      "range": 12,
+      "type": "Ranged Attack / Reaction",
+      "damage": "d10",
+      "description": "The warlocks signature spell, if a wound from this spell rolls a critical hit, target is moved back 3\"",
+      "keywords": [],
+      "allowed_classes": [
+        "cmt2ahfasbmg"
+      ],
+      "restriction_type": "none",
+      "restriction_id": "",
+      "action_types": [
+        "Action",
+        "Reaction"
+      ]
+    }
+  ],
+  "hirelings": [
+    {
+      "id": "hmt20lgvlh3b",
+      "name": "Man-at-Arms",
+      "faction_id": "fmt1ygkuhwdn",
+      "weapon_id": "wmt33diwnsi8",
+      "gold_cost": 75,
+      "armor_value": 10,
+      "stats": {
+        "haste": 9,
+        "move": 6,
+        "body": 3,
+        "mind": 2,
+        "spirit": 4
+      },
+      "abilities": "MordHau Grip (1 Valor) : Add +2 to the units hit roll and change its attack die to a D10.",
+      "description": "\"My empire is my blood, and I will see yours spilled before I fall\"",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "spell_ids": [],
+      "weapon_proficiency": "skilled",
+      "keywords": [
+        "kmt5h9et9rwt"
+      ],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "MordHau Grip (1 Valor)",
+          "description": "Add +2 to the units hit roll and change its attack die to a D10."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt20qanmco6",
+      "name": "Crossbowmen",
+      "faction_id": "fmt1ygkuhwdn",
+      "weapon_id": "wmt20oqnznc2",
+      "gold_cost": 45,
+      "armor_value": 6,
+      "stats": {
+        "haste": 11,
+        "move": 6,
+        "body": 2,
+        "mind": 2,
+        "spirit": 3
+      },
+      "abilities": "Leg Shot(1 Valor): Shoot actions stun their targets if they hit.",
+      "description": "\"Beats a guard post at East-Rock\"",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "spell_ids": [],
+      "weapon_proficiency": "skilled",
+      "keywords": [],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "Tower Lookouts",
+          "description": "Crossbowmen gain double the benefit from highground when making shoot actions."
+        }
+      ],
+      "customFeats": [],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmt34wwc6rq9",
+      "name": "Armorer",
+      "faction_id": "fmt1ygkuhwdn",
+      "weapon_id": "wmt223ixgkyv",
+      "gold_cost": 70,
+      "armor_value": 10,
+      "stats": {
+        "haste": 10,
+        "move": 6,
+        "body": 3,
+        "mind": 2,
+        "spirit": 3
+      },
+      "abilities": "Steel intervention(x Valor): If a unit within 3\" of an armorer would be wounded. you may spend x valor, for every valor spent roll a D20. on a 15+ negate 1 wound.",
+      "description": "\"stand strong m'lord!\"",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "spell_ids": [],
+      "weapon_proficiency": "skilled",
+      "keywords": [],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "Steel intervention(x Valor)",
+          "description": "If a unit within 3\" of an armorer would be wounded. you may spend x valor, for every valor spent roll a D20. on a 15+ negate 1 wound."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt350gp3lj6",
+      "name": "Pikemen",
+      "faction_id": "fmt1ygkuhwdn",
+      "weapon_id": "wmt220ka1a4u",
+      "gold_cost": 35,
+      "armor_value": 8,
+      "stats": {
+        "haste": 10,
+        "move": 6,
+        "body": 2,
+        "mind": 1,
+        "spirit": 3
+      },
+      "abilities": "For the Lost King!(1 Valor): Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge.",
+      "description": "\"one foot in front of the other!\"",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "spell_ids": [],
+      "weapon_proficiency": "skilled",
+      "keywords": [],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "For the Lost King!(1 Valor)",
+          "description": "Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge."
+        }
+      ],
+      "customFeats": [
+        {
+          "name": "For the Lost King!",
+          "description": "Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge.",
+          "veil_cost": 0,
+          "valor_cost": 1
+        }
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmt3531huum5",
+      "name": "Gryphon",
+      "faction_id": "fmt1ygkuhwdn",
+      "weapon_id": "wmt21xj74ru5",
+      "gold_cost": 80,
+      "armor_value": 8,
+      "stats": {
+        "haste": 16,
+        "move": 10,
+        "body": 3,
+        "mind": 3,
+        "spirit": 5
+      },
+      "abilities": "Guardian(1 Valor): When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in combat with an enemy unit.",
+      "description": "",
+      "custom_weapon_name": "Claws",
+      "custom_weapon_damage": "d8",
+      "spell_ids": [],
+      "weapon_proficiency": "mastery",
+      "keywords": [
+        "kmt5h8ghtsk6"
+      ],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "Guardian(1 Valor)",
+          "description": "When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in combat with an enemy unit."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt354wi4t8m",
+      "name": "Willow Ranger",
+      "faction_id": "fmt1zprswgf7",
+      "weapon_id": "wmt20bivm8lw",
+      "gold_cost": 75,
+      "armor_value": 6,
+      "stats": {
+        "haste": 15,
+        "move": 8,
+        "body": 3,
+        "mind": 3,
+        "spirit": 4
+      },
+      "abilities": "Spotter(1 Valor): As a reaction, this unit may grant another unit within 3\" making a shoot action a +2 to their hit roll.",
+      "description": "",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "spell_ids": [],
+      "weapon_proficiency": "mastery",
+      "keywords": [
+        "kmt5h9et9rwt"
+      ],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "Spotter(1 Valor)",
+          "description": "As a reaction, this unit may grant another unit within 3\" making a shoot action a +2 to their hit roll."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt516geko9y",
+      "name": "Beast Hunter",
+      "faction_id": "fmt1zprswgf7",
+      "weapon_id": "wmt221m7l57l",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "gold_cost": 30,
+      "armor_value": 6,
+      "stats": {
+        "haste": 12,
+        "move": 6,
+        "body": 2,
+        "mind": 3,
+        "spirit": 3
+      },
+      "abilities": "Swift Footed (1 Valor): This unit may shoot in a turn it also made a run action.",
+      "description": "",
+      "spell_ids": [],
+      "weapon_proficiency": "mastery",
+      "keywords": [],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "Swift Footed (1 Valor)",
+          "description": "This unit may shoot in a turn it also made a run action."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt55yxmz7w7",
+      "name": "Halfling Levy",
+      "faction_id": "fmt1zprswgf7",
+      "weapon_id": "wmt55u30py6d",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 25,
+      "armor_value": 6,
+      "stats": {
+        "haste": 11,
+        "move": 8,
+        "body": 2,
+        "mind": 3,
+        "spirit": 3
+      },
+      "abilities": "Duck (1 Valor): If a halfling levy is within 1\" of terrain and is the target of a ranged cast or shoot action, they may use this ability to duck and no longer be an eligible target for the rest of that units activation.",
+      "description": "As brave as they are hungry, halflings are usually coaxed into service with copious amounts of food.",
+      "spell_ids": [],
+      "keywords": [
+        "kmt3kfnljcm0"
+      ],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "Duck (1 Valor)",
+          "description": "If a halfling levy is within 1\" of terrain and is the target of a ranged cast or shoot action, they may use this ability to duck and no longer be an eligible target for the rest of that units activation."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt560up4fce",
+      "name": "Druid",
+      "faction_id": "fmt1zprswgf7",
+      "weapon_id": "wmt2mgstaff1",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "none",
+      "gold_cost": 70,
+      "armor_value": 6,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 3,
+        "mind": 3,
+        "spirit": 3
+      },
+      "abilities": "The Druid may shapeshift into a bear form as a Bonus action. They lose the ability to spellcast. However their armor value becomes 10, and their weapon value is Dual Claws with Mastery and 1d8 damage.",
+      "description": "",
+      "spell_ids": [
+        "smt34c4wdbms",
+        "smt3jdl4us8i",
+        "smt32rf32diy"
+      ],
+      "keywords": [
+        "kmt5h9et9rwt"
+      ],
+      "is_warlock_minion": false,
+      "customAbilities": [
+        {
+          "name": "",
+          "description": "The Druid may shapeshift into a bear form as a Bonus action. They lose the ability to spellcast. However their armor value becomes 10, and their weapon value is Dual Claws with Mastery and 1d8 damage."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt5hi6faoi6",
+      "name": "Willow Titan",
+      "faction_id": "fmt1zprswgf7",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt20jq62wlh",
+      "custom_weapon_name": "Titans Fists(Dual)",
+      "custom_weapon_damage": "d10",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 120,
+      "armor_value": 10,
+      "stats": {
+        "haste": 9,
+        "move": 6,
+        "body": 5,
+        "mind": 3,
+        "spirit": 5
+      },
+      "abilities": "Before the game this unit may only be deployed along the middle of the battlefield. It is treated as stunned until an ally makes a DC15+Spirit check within 6\" of the Willow Titan. ",
+      "description": "These hulking monsters do the landscape, hiding in plain sight, ready to be awakened.",
+      "spell_ids": [],
+      "keywords": [
+        "kmt3kfnljcm0",
+        "kmt3kg2lfx39",
+        "kmthf2lgdq93",
+        "kmthzf1225ee"
+      ],
+      "customAbilities": [
+        {
+          "name": "Slumbering Giant",
+          "description": "Before the game this unit may only be deployed along the middle of the battlefield. It is treated as stunned until an ally makes a DC15+Spirit check within 6\" of the Willow Titan."
+        }
+      ],
+      "customFeats": [
+        {
+          "name": "Healing Roots",
+          "description": "When this unit activates, all friendly units within 6\" heals 1 wound.",
+          "veil_cost": 1,
+          "valor_cost": 0
+        }
+      ],
+      "keyword_values": {
+        "kmthzf1225ee": 10
+      }
+    },
+    {
+      "id": "hmt5huluphkw",
+      "name": "Orc maurader",
+      "faction_id": "fmt1zviucpcj",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt33diwnsi8",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "none",
+      "gold_cost": 70,
+      "armor_value": 8,
+      "stats": {
+        "haste": 12,
+        "move": 8,
+        "body": 3,
+        "mind": 1,
+        "spirit": 5
+      },
+      "abilities": "MOVE!(2 Valor): All non-elite units within 3\" of a marauder may make one standard move action. they must end this move action still within 3\" of the Maurader.",
+      "description": "",
+      "spell_ids": [],
+      "keywords": [
+        "kmt5h9et9rwt"
+      ],
+      "customAbilities": [],
+      "customFeats": [
+        {
+          "name": "Move!",
+          "description": "All non-elite units within 3\" of a marauder may make one standard move action. they must end this move action still within 3\" of the Maurader.",
+          "veil_cost": 0,
+          "valor_cost": 1
+        }
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmt7eter2x6c",
+      "name": "Pact Materna",
+      "faction_id": "",
+      "is_warlock_minion": true,
+      "weapon_id": "wmt1z35fsbp8",
+      "custom_weapon_name": "Veil thrash",
+      "custom_weapon_damage": "d4",
+      "weapon_proficiency": "skilled",
+      "gold_cost": 0,
+      "armor_value": 6,
+      "stats": {
+        "haste": 0,
+        "move": 6,
+        "body": 2,
+        "mind": 4,
+        "spirit": 4
+      },
+      "abilities": "The materna's spells have the reaction keyword",
+      "description": "",
+      "spell_ids": [
+        "smt3hqdl1tu3",
+        "smt3i63qshfj"
+      ],
+      "keywords": [],
+      "customAbilities": [
+        {
+          "name": "",
+          "description": "The materna's spells have the reaction keyword"
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt7evrd6jsb",
+      "name": "Pact Fraterna",
+      "faction_id": "",
+      "is_warlock_minion": true,
+      "weapon_id": "",
+      "custom_weapon_name": "Veil thump",
+      "custom_weapon_damage": "d8",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 0,
+      "armor_value": 10,
+      "stats": {
+        "haste": 0,
+        "move": 4,
+        "body": 4,
+        "mind": 2,
+        "spirit": 3
+      },
+      "abilities": "The pact fraterna may grapple an enemy unit it is in combat with. The unit must make a Dc12+body check or be stunned. The grappled unit may repeat this check when they activate.",
+      "description": "",
+      "spell_ids": [],
+      "keywords": [],
+      "customAbilities": [
+        {
+          "name": "",
+          "description": "The pact fraterna may grapple an enemy unit it is in combat with. The unit must make a Dc12+body check or be stunned. The grappled unit may repeat this check when they activate."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt7ezs2f627",
+      "name": "Pact Apprenta",
+      "faction_id": "",
+      "is_warlock_minion": true,
+      "weapon_id": "",
+      "custom_weapon_name": "Veil thrash",
+      "custom_weapon_damage": "d4",
+      "weapon_proficiency": "skilled",
+      "gold_cost": 0,
+      "armor_value": 6,
+      "stats": {
+        "haste": 0,
+        "move": 6,
+        "body": 2,
+        "mind": 5,
+        "spirit": 3
+      },
+      "abilities": "Spells cast by the warlock may be channeled through the apprenta minion. May use the apprenta model for line of sight and targeting as if the apprenta was casting the spell.",
+      "description": "",
+      "spell_ids": [
+        "smt1z671pdru"
+      ],
+      "keywords": [],
+      "customAbilities": [
+        {
+          "name": "",
+          "description": "Spells cast by the warlock may be channeled through the apprenta minion. May use the apprenta model for line of sight and targeting as if the apprenta was casting the spell."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt89ctfdnus",
+      "name": "Goblin Footmen",
+      "faction_id": "fmt1zviucpcj",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt21xj74ru5",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "none",
+      "gold_cost": 20,
+      "armor_value": 6,
+      "stats": {
+        "haste": 11,
+        "move": 6,
+        "body": 2,
+        "mind": 1,
+        "spirit": 4
+      },
+      "abilities": "",
+      "description": "",
+      "spell_ids": [],
+      "keywords": [],
+      "customAbilities": [],
+      "customFeats": [],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmt89dqlb9u7",
+      "name": "Gnoll Archer",
+      "faction_id": "fmt1zviucpcj",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt221m7l57l",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "skilled",
+      "gold_cost": 45,
+      "armor_value": 8,
+      "stats": {
+        "haste": 14,
+        "move": 7,
+        "body": 2,
+        "mind": 2,
+        "spirit": 2
+      },
+      "abilities": "hail of arrows(2 Valor): Every friendly non-elite unit within 3\" may make a free shoot action at the target of this unit.",
+      "description": "",
+      "spell_ids": [],
+      "keywords": [
+        "kmt5h9et9rwt"
+      ],
+      "customAbilities": [
+        {
+          "name": "hail of arrows(2 Valor)",
+          "description": "Every friendly non-elite unit within 3\" may make a free shoot action at the target of this unit."
+        }
+      ],
+      "customFeats": []
+    },
+    {
+      "id": "hmt89f8cgg9i",
+      "name": "Kobold Archer",
+      "faction_id": "fmt1zviucpcj",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt221m7l57l",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "none",
+      "gold_cost": 25,
+      "armor_value": 6,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 2,
+        "mind": 1,
+        "spirit": 3
+      },
+      "abilities": "",
+      "description": "",
+      "spell_ids": [],
+      "keywords": [],
+      "customAbilities": [],
+      "customFeats": []
+    },
+    {
+      "id": "hmtkcp81plfd",
+      "name": "Artificer Riflemen",
+      "faction_id": "fmtkci4752yw",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt20bivm8lw",
+      "custom_weapon_name": "Arcane LongGun",
+      "custom_weapon_damage": "d10",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 50,
+      "armor_value": 6,
+      "stats": {
+        "haste": 11,
+        "move": 6,
+        "body": 2,
+        "mind": 3,
+        "spirit": 6
+      },
+      "customAbilities": [],
+      "customFeats": [
+        {
+          "name": "Overcharge",
+          "description": "Before making a shoot action this unit may overcharge their weapon to add the Arcane keyword.",
+          "veil_cost": 1,
+          "valor_cost": 0
+        }
+      ],
+      "description": "",
+      "spell_ids": [],
+      "keywords": [
+        "kmthzf1225ee"
+      ],
+      "keyword_values": {
+        "kmthzf1225ee": 12
+      }
+    }
+  ],
+  "theme": {
+    "bg": "#0a0605",
+    "bgAlt": "#070403",
+    "panel": "#150c0c",
+    "panelRaised": "#1f1312",
+    "rule": "#4a2620",
+    "ink": "#f0ece4",
+    "inkDim": "#c7bdb3",
+    "muted": "#8f8078",
+    "neutralFill": "#4a3f3a",
+    "pink": "#b8203f",
+    "pinkBright": "#e8425f",
+    "btnSilver": "#aab0b8",
+    "btnSilverBright": "#f5f7fa",
+    "btnSilverDim": "#5c6068",
+    "cyan": "#1f7a63",
+    "cyanBright": "#5fe0bb",
+    "gold": "#b8862f",
+    "danger": "#c2451f",
+    "onAccent": "#140b0a",
+    "rarityCommon": "#f0ece4",
+    "rarityRare": "#3f5fa0",
+    "rarityLegendary": "#7a3f8f",
+    "bodyGradStart": "#0d1210",
+    "bodyGradMid": "#1a0808",
+    "bodyGradEnd": "#050302"
+  }
+}
