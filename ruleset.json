@@ -2306,7 +2306,15 @@
       "gold_cost": 0,
       "allowed_classes": [],
       "veil_cost": 0,
-      "valor_cost": 2
+      "valor_cost": 2,
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
     },
     {
       "id": "fmtkcb8hb3o2",
@@ -3366,7 +3374,7 @@
       "name": "Man-at-Arms",
       "faction_id": "fmt1ygkuhwdn",
       "weapon_id": "wmt33diwnsi8",
-      "gold_cost": 75,
+      "gold_cost": 65,
       "armor_value": 10,
       "stats": {
         "haste": 9,
@@ -3380,18 +3388,19 @@
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "mastery",
       "keywords": [
         "kmt5h9et9rwt"
       ],
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "MordHau Grip (1 Valor)",
-          "description": "Add +2 to the units hit roll and change its attack die to a D10."
+          "name": "MordHau Grip",
+          "description": "Before attacking you may choose to use MordHau Grip, subtract 2 from this units hit roll and change its attack die to a D10."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "keyword_values": {}
     },
     {
       "id": "hmt20qanmco6",
@@ -3401,7 +3410,7 @@
       "gold_cost": 45,
       "armor_value": 6,
       "stats": {
-        "haste": 11,
+        "haste": 13,
         "move": 6,
         "body": 2,
         "mind": 2,
@@ -3444,25 +3453,30 @@
       "custom_weapon_damage": "",
       "spell_ids": [],
       "weapon_proficiency": "skilled",
-      "keywords": [],
+      "keywords": [
+        "kmthzf1225ee"
+      ],
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "Steel intervention(x Valor)",
-          "description": "If a unit within 3\" of an armorer would be wounded. you may spend x valor, for every valor spent roll a D20. on a 15+ negate 1 wound."
+          "name": "Steel intervention",
+          "description": "If a friendly unit within 2\" of an armor is hit by an attack, you may choose for the wound roll to be allocated to the armor instead."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "keyword_values": {
+        "kmthzf1225ee": 16
+      }
     },
     {
       "id": "hmt350gp3lj6",
       "name": "Pikemen",
       "faction_id": "fmt1ygkuhwdn",
       "weapon_id": "wmt220ka1a4u",
-      "gold_cost": 35,
+      "gold_cost": 30,
       "armor_value": 8,
       "stats": {
-        "haste": 10,
+        "haste": 12,
         "move": 6,
         "body": 2,
         "mind": 1,
@@ -3478,14 +3492,14 @@
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "For the Lost King!(1 Valor)",
-          "description": "Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge."
+          "name": "Inspired",
+          "description": "This unit gets a +2 to hit rolls while within 2\" of a hero unit."
         }
       ],
       "customFeats": [
         {
-          "name": "For the Lost King!",
-          "description": "Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge.",
+          "name": "",
+          "description": "",
           "veil_cost": 0,
           "valor_cost": 1
         }
@@ -3507,7 +3521,7 @@
         "spirit": 5
       },
       "abilities": "Guardian(1 Valor): When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in combat with an enemy unit.",
-      "description": "",
+      "description": "\"KA-KAW! MOTHERFUCKER!\"",
       "custom_weapon_name": "Claws",
       "custom_weapon_damage": "d8",
       "spell_ids": [],
@@ -3518,15 +3532,16 @@
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "Guardian(1 Valor)",
-          "description": "When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in combat with an enemy unit."
+          "name": "Guardian",
+          "description": "When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in the combat zone of that an enemy unit."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "keyword_values": {}
     },
     {
       "id": "hmt354wi4t8m",
-      "name": "Willow Ranger",
+      "name": "Willow Stalker",
       "faction_id": "fmt1zprswgf7",
       "weapon_id": "wmt20bivm8lw",
       "gold_cost": 75,
@@ -3539,22 +3554,24 @@
         "spirit": 4
       },
       "abilities": "Spotter(1 Valor): As a reaction, this unit may grant another unit within 3\" making a shoot action a +2 to their hit roll.",
-      "description": "",
+      "description": "\"The last thing you hear is the whistle of the arrow\"",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
       "weapon_proficiency": "mastery",
       "keywords": [
-        "kmt5h9et9rwt"
+        "kmt5h9et9rwt",
+        "kmt7z51ibt3v"
       ],
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "Spotter(1 Valor)",
-          "description": "As a reaction, this unit may grant another unit within 3\" making a shoot action a +2 to their hit roll."
+          "name": "Patience",
+          "description": "When making sentry reactions, you may add this units mastery to the hit roll"
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "keyword_values": {}
     },
     {
       "id": "hmt516geko9y",
@@ -3566,25 +3583,26 @@
       "gold_cost": 30,
       "armor_value": 6,
       "stats": {
-        "haste": 12,
+        "haste": 13,
         "move": 6,
         "body": 2,
         "mind": 3,
         "spirit": 3
       },
       "abilities": "Swift Footed (1 Valor): This unit may shoot in a turn it also made a run action.",
-      "description": "",
+      "description": "\"The willow knows the way\"",
       "spell_ids": [],
       "weapon_proficiency": "mastery",
       "keywords": [],
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "Swift Footed (1 Valor)",
+          "name": "Swift Footed",
           "description": "This unit may shoot in a turn it also made a run action."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "keyword_values": {}
     },
     {
       "id": "hmt55yxmz7w7",
@@ -3597,7 +3615,7 @@
       "gold_cost": 25,
       "armor_value": 6,
       "stats": {
-        "haste": 11,
+        "haste": 12,
         "move": 8,
         "body": 2,
         "mind": 3,
@@ -3612,11 +3630,12 @@
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "Duck (1 Valor)",
-          "description": "If a halfling levy is within 1\" of terrain and is the target of a ranged cast or shoot action, they may use this ability to duck and no longer be an eligible target for the rest of that units activation."
+          "name": "Dogpile",
+          "description": "If a target of a halfling levy is under the Surrounded condition due to another halfling levy, you may re-roll wound rolls against that target."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "keyword_values": {}
     },
     {
       "id": "hmt560up4fce",
@@ -3636,23 +3655,27 @@
         "spirit": 3
       },
       "abilities": "The Druid may shapeshift into a bear form as a Bonus action. They lose the ability to spellcast. However their armor value becomes 10, and their weapon value is Dual Claws with Mastery and 1d8 damage.",
-      "description": "",
+      "description": "Long study of nature has lead the druids to master the magics that bore life to the creatures of the willow.",
       "spell_ids": [
         "smt34c4wdbms",
         "smt3jdl4us8i",
         "smt32rf32diy"
       ],
       "keywords": [
+        "kmt3kfnljcm0",
         "kmt5h9et9rwt"
       ],
       "is_warlock_minion": false,
-      "customAbilities": [
+      "customAbilities": [],
+      "customFeats": [
         {
-          "name": "",
-          "description": "The Druid may shapeshift into a bear form as a Bonus action. They lose the ability to spellcast. However their armor value becomes 10, and their weapon value is Dual Claws with Mastery and 1d8 damage."
+          "name": "BeastShape",
+          "description": "As a bonus action, the Druid transforms shape into a fearsome bear.  When this happens, you may activate the bear-form druid as if they had just activated.",
+          "veil_cost": 1,
+          "valor_cost": 0
         }
       ],
-      "customFeats": []
+      "keyword_values": {}
     },
     {
       "id": "hmt5hi6faoi6",
@@ -3947,6 +3970,68 @@
       "keyword_values": {
         "kmthzf1225ee": 12
       }
+    },
+    {
+      "id": "hmtlsufdudyk",
+      "name": "Willow Bear",
+      "faction_id": "fmt1zprswgf7",
+      "is_warlock_minion": false,
+      "weapon_id": "",
+      "custom_weapon_name": "Claws(2x)",
+      "custom_weapon_damage": "d8",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 60,
+      "armor_value": 10,
+      "stats": {
+        "haste": 11,
+        "move": 7,
+        "body": 3,
+        "mind": 1,
+        "spirit": 5
+      },
+      "customAbilities": [
+        {
+          "name": "Bite",
+          "description": "When a willow bear makes a melee attack action, it can choose to use Bite instead. Bite is one attack, Replace your attack dice with a D10 and add the Stunning Wounds keyword to this attack."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [],
+      "keywords": [
+        "kmt5h8ghtsk6"
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmtlt6903azg",
+      "name": "Willow Warden",
+      "faction_id": "fmt1zprswgf7",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt221142461",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 50,
+      "armor_value": 8,
+      "stats": {
+        "haste": 11,
+        "move": 6,
+        "body": 3,
+        "mind": 2,
+        "spirit": 5
+      },
+      "customAbilities": [
+        {
+          "name": "Confident Charge",
+          "description": "When a warden makes a melee attack against a unit who was the target of a charge this activation, target unit has disadvantage on Clash and parry reactions this combat."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [],
+      "keywords": [],
+      "keyword_values": {}
     }
   ],
   "theme": {
