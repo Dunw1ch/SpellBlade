@@ -421,6 +421,7 @@ footer.foot{ text-align:center; color:var(--muted); font-size:12.5px; padding:26
 #printSheet, #printSheet *{ color:#111 !important; background:#fff !important; box-shadow:none !important; text-shadow:none !important; }
 #printSheet{ font-family:Georgia,'Times New Roman',serif; font-size:9.5px; line-height:1.25; }
 .print-header{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid #111; padding-bottom:3px; margin-bottom:7px; }
+.print-faction-feats{ margin:-3px 0 8px; padding-bottom:6px; border-bottom:1.5px solid #111; }
 .print-header h1{ font-family:'Cinzel',Georgia,serif; font-size:15px; margin:0; letter-spacing:.03em; }
 .print-header-meta{ font-size:8.5px; text-align:right; line-height:1.25; }
 .print-units-grid{ column-count:2; column-gap:12px; }
@@ -2754,6 +2755,23 @@ function renderPrintGlossaryHTML(glossarySet){
     + '</div></div>';
 }
 
+// Faction-Wide Feats (list.factionFeatIds, up to 4) — the print counterpart to
+// renderFactionFeatsPanel() in Battle Mode. Placed right at the top of the sheet, same as there,
+// since these apply to the whole party and a player shouldn't have to hunt through individual
+// Hero cards to find them. Renders nothing if none have been picked for this List.
+function buildPrintFactionFeatsHTML(){
+  const picked = (list.factionFeatIds||[]).map(id => byId(gameData.feats, id)).filter(Boolean);
+  if(!picked.length) return '';
+  return '<div class="print-faction-feats"><div class="print-section-title">Faction-Wide Feats</div>'
+    + picked.map(f =>
+        '<div class="print-item-row"><div>'
+          + '<span class="print-item-name">'+escapeHtml(f.name)+'</span> '
+          + '<span class="print-dmg">('+escapeHtml(featCostText(f))+')</span>'
+          + ' \u2014 '+escapeHtml(f.ability_description)
+        + '</div></div>'
+      ).join('')
+    + '</div>';
+}
 function buildPrintSheetHTML(){
   const fac = getFaction();
   const units = battleActivationOrder();
@@ -2763,7 +2781,7 @@ function buildPrintSheetHTML(){
       + (fac? escapeHtml(fac.name)+'<br>':'')
       + 'Gold: '+listGoldUsed()+' / '+list.goldCap+'<br>'
       + 'Veil '+(list.veil||0)+' &nbsp; Valor '+(list.valor||0)
-    + '</div></div>';
+    + '</div></div>' + buildPrintFactionFeatsHTML();
   if(!units.length){
     return header + '<p class="print-empty">This list is empty — build one in List Builder first.</p>';
   }
