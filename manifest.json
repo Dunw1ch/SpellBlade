@@ -1,0 +1,14 @@
+{
+  "name": "SpellBlade",
+  "short_name": "SpellBlade",
+  "description": "List builder, Battle Mode reference, and ruleset editor for the SpellBlade tabletop wargame.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0605",
+  "theme_color": "#0a0605",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
