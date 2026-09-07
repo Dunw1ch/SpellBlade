@@ -84,6 +84,13 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 
 .step{ background:var(--panel); background-image:var(--noise-texture); background-blend-mode:overlay; border:1px solid var(--rule); border-radius:5px; padding:20px 24px; margin-bottom:18px; }
 .form-step{ border-color:var(--pink); border-width:2px; }
+/* Faction and Guild are the two foundational, sequential choices everything else in the builder
+   depends on (Guild options, Faction-Wide Feats, and — soon — unit availability all key off these)
+   — a gold accent border+glow sets them apart from ordinary steps without colliding with pink
+   (already means "actively editing this" on Admin forms) or cyan (already means "selected" on
+   opt-cards). */
+.step-emphasis{ border-color:var(--gold); border-width:2px; box-shadow:0 0 20px var(--gold-glow); }
+.step-emphasis .step-title{ font-size:19px; }
 .step-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
 .step-num{ font-family:var(--font-data); color:var(--muted); font-size:12px; letter-spacing:.02em; }
 .step-title{ font-family:var(--font-display); font-weight:700; font-size:17px; letter-spacing:.02em; color:var(--ink); }
@@ -527,7 +534,7 @@ let gameData = null; // populated asynchronously at startup — see loadRulesetF
 
 /* ============================= STATE ============================= */
 // A "list" is the whole army: one shared gold cap and Faction, any number of Heroes, any number of Hirelings.
-let list = { goldCap:500, factionId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[] };
+let list = { goldCap:500, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[] };
 let editingHeroId = null; // instanceId of the Hero currently open in the builder, or null to show the roster
 let mode = 'play';
 let playTab = 'characters'; // 'characters' | 'hirelings'
@@ -645,6 +652,17 @@ function factionName(id){ const f = byId(gameData.factions, id); return f ? f.na
 // Faction is shown to the player, this reads clearly as "Any Faction" rather than the generic "—"
 // factionName() falls back to for a genuinely missing/broken reference.
 function hirelingFactionLabel(h){ return h.faction_id ? factionName(h.faction_id) : 'Any Faction'; }
+// Returns '' (not shown) when the Hireling isn't Guild-specific — most Hirelings aren't, so unlike
+// Faction (always shown, even as "Any Faction") this stays silent rather than adding noise like
+// "Any Guild" to every card.
+function hirelingGuildLabel(h){ if(!h.guild_id) return ''; const g = byId(gameData.guilds, h.guild_id); return g ? g.name : ''; }
+// Combines Faction + Guild (when set) into the one subtitle line shown on cards — e.g. "BarrowMoor
+// Kingdoms · Cult of the Five Eyes Guild" — vs. the Admin table's own separate Faction/Guild
+// columns, which stay split for clean sorting.
+function hirelingFactionGuildLabel(h){
+  const g = hirelingGuildLabel(h);
+  return hirelingFactionLabel(h) + (g ? ' \u00b7 '+g+' Guild' : '');
+}
 function weaponName(id){ const w = byId(gameData.weapons, id); return w ? w.name : '—'; }
 // Some Hirelings have a natural weapon (claws, bite, etc.) that isn't worth a full Weapons catalog
 // entry. If a custom weapon name is set it takes priority for display; otherwise falls back to the
@@ -819,10 +837,10 @@ function classSchoolAllowed(cls, schoolName){
   if(cls.allowed_schools == null) return true; // unconfigured legacy Class -> permissive default (all Schools)
   return cls.allowed_schools.includes(schoolName);
 }
-// Shared by Weapons, Items, and Spells: any of these can be locked to a single Faction (checked
-// against the whole List's chosen Faction — a List-wide choice, not per-Hero) or a single Guild
-// (checked against this Hero's own Guild), or left restriction_type:'none' to stay available to
-// everyone ("Any"). Only one or the other applies at a time, never both.
+// Shared by Weapons, Items, Feats, and Spells: any of these can be locked to a single Faction or a
+// single Guild — both now List-wide choices, not per-Hero — or left restriction_type:'none' to
+// stay available to everyone ("Any"). Only one or the other applies at a time, never both. Still
+// takes a `hero` param for call-site consistency, but Guild restriction no longer reads it.
 function factionGuildLockReason(hero, entity){
   const type = entity.restriction_type || 'none';
   if(type === 'faction'){
@@ -831,9 +849,9 @@ function factionGuildLockReason(hero, entity){
       return 'Only available to the '+(f?f.name:'chosen')+' Faction';
     }
   } else if(type === 'guild'){
-    if(!hero || hero.guildId !== entity.restriction_id){
+    if(list.guildId !== entity.restriction_id){
       const g = byId(gameData.guilds, entity.restriction_id);
-      return 'Only available to members of the '+(g?g.name:'chosen')+' Guild';
+      return 'Only available with the '+(g?g.name:'chosen')+' Guild';
     }
   }
   return '';
@@ -1012,12 +1030,40 @@ function parseKeywordValues(fd, selectedKeywordIds){
 
 /* ---- List-wide (shared across every Hero + Hireling) ---- */
 function getFaction(){ if(!list.factionId) return null; return byId(gameData.factions, list.factionId) || null; }
+function getGuild(){ if(!list.guildId) return null; return byId(gameData.guilds, list.guildId) || null; }
+// Guild is now a party-wide choice, sibling to Faction — not a per-Hero pick. A Guild belongs to
+// exactly one Faction, so it can't be selected (or kept selected) unless the List's Faction matches.
+function guildLockReason(g){
+  if(!list.factionId) return 'Choose a Faction first';
+  if(g.faction_id !== list.factionId) return 'Not available to your Faction';
+  return '';
+}
+function guildEligible(g){ return guildLockReason(g) === ''; }
+// The party's Guild (if it restricts allowed_classes) now constrains which Classes ANY Hero in the
+// party may use — checked here instead of per-Hero membership, since Guild is party-wide.
+function guildClassLockReason(cls){
+  const guild = getGuild();
+  if(!guild || !guild.allowed_classes || !guild.allowed_classes.length) return '';
+  if(!guild.allowed_classes.includes(cls.id)) return 'Not allowed by the party\u2019s '+guild.name+' Guild';
+  return '';
+}
+// Toggle-select, exactly like selectFaction — click the current Guild again to clear it. No hero
+// mutation needed: every downstream effect (stat_modifiers, equip_override, allowed_classes, the
+// Guild Ability) reads list.guildId live, so nothing needs to be granted/revoked per Hero.
+function selectGuild(id){
+  const g = byId(gameData.guilds, id); if(!g) return;
+  if(!guildEligible(g)){ showStatus(guildLockReason(g)); return; }
+  if(list.guildId === id){ list.guildId = null; renderPlay(); return; }
+  const current = list.guildId ? byId(gameData.guilds, list.guildId) : null;
+  const currentCost = current ? current.gold_cost : 0;
+  if(listGoldUsed() - currentCost + g.gold_cost > list.goldCap){ showStatus('Not enough gold left in the list for '+g.name+' ('+g.gold_cost+'g).'); return; }
+  list.guildId = id;
+  renderPlay();
+}
 function heroCost(hero){
   let total = 0;
   const cls = getHeroClass(hero);
   if(cls) total += cls.gold_cost;
-  const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
-  if(guild) total += guild.gold_cost;
   hero.weaponIds.forEach(id => { const w = byId(gameData.weapons, id); if(w) total += w.gold_cost; });
   if(hero.armorId){ const a = byId(gameData.armor, hero.armorId); if(a) total += a.gold_cost; }
   hero.itemIds.forEach(id => { const it = byId(gameData.items, id); if(it) total += it.gold_cost; });
@@ -1030,12 +1076,19 @@ function listGoldUsed(){
   const heroesCost = list.heroes.reduce((sum,h) => sum + heroCost(h), 0);
   const hirelingsCost = list.hirelings.reduce((sum,p) => sum + hirelingPickCost(p), 0);
   const partyCost = list.partyInventory.reduce((sum,p) => sum + partyInventoryCost(p), 0);
-  return heroesCost + hirelingsCost + partyCost;
+  const guild = getGuild();
+  const guildCost = guild ? guild.gold_cost : 0;
+  return heroesCost + hirelingsCost + partyCost + guildCost;
 }
 function hirelingLockReason(h){
-  if(!h.faction_id) return ''; // "Any Faction" — hireable regardless of the List's chosen Faction (or lack of one)
-  if(!list.factionId) return 'Choose a Faction first';
-  if(h.faction_id !== list.factionId) return 'Not available to your Faction';
+  if(h.faction_id){ // "" means "Any Faction" — hireable regardless of the List's chosen Faction (or lack of one)
+    if(!list.factionId) return 'Choose a Faction first';
+    if(h.faction_id !== list.factionId) return 'Not available to your Faction';
+  }
+  if(h.guild_id && list.guildId !== h.guild_id){
+    const g = byId(gameData.guilds, h.guild_id);
+    return 'Requires the '+(g?g.name:'chosen')+' Guild';
+  }
   return '';
 }
 function hirelingEligible(h){ return hirelingLockReason(h) === ''; }
@@ -1075,16 +1128,17 @@ function heroFeatLimit(hero){
   return cls ? (cls.max_feats!=null ? cls.max_feats : 2) : 0;
 }
 const STAT_KEYS = ['haste','move','body','mind','spirit'];
-// A Hero's stats after Guild, Feat, Weapon, Armor, and Item stat_modifiers are all applied on top
-// of the Class base. Every equipped Weapon (a Hero can carry more than one) and Item (also
-// multiple) contributes its modifiers; Armor is a single slot. The List's Party Leader (at most
-// one Hero, list.partyLeaderId) gets a flat +1 Haste on top of everything else. Clamped to a
-// minimum of 0 so a heavy penalty can never show/behave as a negative stat.
+// A Hero's stats after the party's Guild (now party-wide, not per-Hero — every Hero gets the same
+// Guild's modifiers), Feat, Weapon, Armor, and Item stat_modifiers are all applied on top of the
+// Class base. Every equipped Weapon (a Hero can carry more than one) and Item (also multiple)
+// contributes its modifiers; Armor is a single slot. The List's Party Leader (at most one Hero,
+// list.partyLeaderId) gets a flat +1 Haste on top of everything else. Clamped to a minimum of 0 so
+// a heavy penalty can never show/behave as a negative stat.
 function heroEffectiveStats(hero){
   const cls = getHeroClass(hero);
   const eff = {};
   STAT_KEYS.forEach(k => { eff[k] = cls ? (cls.stats[k]||0) : 0; });
-  const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
+  const guild = getGuild();
   if(guild && guild.stat_modifiers) STAT_KEYS.forEach(k => { eff[k] += (guild.stat_modifiers[k]||0); });
   (hero.featIds||[]).forEach(fid => {
     const f = byId(gameData.feats, fid);
@@ -1104,12 +1158,13 @@ function heroEffectiveStats(hero){
   STAT_KEYS.forEach(k => { if(eff[k] < 0) eff[k] = 0; });
   return eff;
 }
-// A Hero's equip-skill list after Guild and Feat equip_override entries are unioned on top
-// of the Class's own Skilled list — these only ever ADD access, never take it away.
+// A Hero's equip-skill list after the party's Guild (party-wide, not per-Hero) and this Hero's own
+// Feat equip_override entries are unioned on top of the Class's own Skilled list — these only ever
+// ADD access, never take it away.
 function heroEquipSkills(hero){
   const cls = getHeroClass(hero);
   let skills = cls ? cls.skills.slice() : [];
-  const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
+  const guild = getGuild();
   if(guild && guild.equip_override) skills = skills.concat(guild.equip_override);
   (hero.featIds||[]).forEach(fid => {
     const f = byId(gameData.feats, fid);
@@ -1191,23 +1246,25 @@ function featLockReason(hero, f){
   // pool is therefore a clean partition: Faction-Wide Feats here, Class/Guild Feats in the Hero
   // builder. This check comes first so it holds regardless of allowed_classes (Faction Feats are
   // typically authored with an empty allowed_classes, which would otherwise open them to all).
-  if(f.faction_id) return 'Faction-Wide Feat — chosen for the whole party';
+  if(f.restriction_type === 'faction') return 'Faction-Wide Feat — chosen for the whole party';
   const cls = getHeroClass(hero);
   if(!cls) return 'Choose a Class first';
   if(!(f.allowed_classes.length===0 || f.allowed_classes.includes(cls.id))) return 'Not available to this Class';
-  const owningGuild = guildForFeat(f.id);
-  if(owningGuild && hero.guildId !== owningGuild.id) return 'Only available to members of the '+owningGuild.name+' Guild';
+  // A Guild-Specific Feat (set via the same Faction/Guild Restriction field Weapons/Items/Armor
+  // already use) is a normal, optional, cost-paying pick — just additionally gated on the PARTY's
+  // Guild (Guild is party-wide now, not per-Hero). Distinct from guildForFeat()/g.feat_id, which is
+  // the single Feat a Guild grants automatically to the whole party — see renderGuildAbilityPanel —
+  // and so never appears as an individually-picked card at all.
+  if(f.restriction_type === 'guild'){
+    if(list.guildId !== f.restriction_id){
+      const g = byId(gameData.guilds, f.restriction_id);
+      return 'Only available with the '+(g?g.name:'chosen')+' Guild';
+    }
+    return '';
+  }
   return '';
 }
 function featEligible(hero, f){ return featLockReason(hero, f) === ''; }
-function guildLockReason(hero, g){
-  if(!hero.classId) return 'Choose a Class first';
-  if(!list.factionId) return 'Choose a Faction first';
-  if(g.faction_id !== list.factionId) return 'Not available to your Faction';
-  if(!(g.allowed_classes.length===0 || g.allowed_classes.includes(hero.classId))) return 'Not available to this Class';
-  return '';
-}
-function guildEligible(hero, g){ return guildLockReason(hero, g) === ''; }
 
 function showStatus(msg){
   const el = document.getElementById('statusMsg') || document.getElementById('battleStatusMsg');
@@ -1223,19 +1280,27 @@ function showStatus(msg){
 // Faction's pool and may not even exist in the new one. Any Hero who already took one of those
 // Feats keeps it (consistent with how every other eligibility rule in this app works — e.g.
 // editing a Feat's allowed_classes later doesn't retroactively strip it from Heroes who have it).
-function selectFaction(id){ list.factionId = id || null; list.factionFeatIds = []; renderPlay(); }
+function selectFaction(id){
+  if(list.factionId === id) id = null; // clicking the already-selected Faction again clears it
+  list.factionId = id || null;
+  list.guildId = null;
+  list.factionFeatIds = [];
+  renderPlay();
+}
 function resetList(){
   if(!confirm('Reset the entire list? This removes every Hero and Hireling.')) return;
-  list = { goldCap:list.goldCap, factionId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[] };
+  list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[] };
   editingHeroId = null;
   battleExpandedIds = [];
   renderPlay();
 }
 function exportList(){
   const fac = getFaction();
+  const guild = getGuild();
   const leaderHero = list.partyLeaderId ? list.heroes.find(h => h.instanceId===list.partyLeaderId) : null;
   const data = {
     faction: fac ? fac.name : null,
+    guild: guild ? guild.name : null,
     goldCap: list.goldCap,
     goldUsed: listGoldUsed(),
     veil: list.veil || 0,
@@ -1243,11 +1308,9 @@ function exportList(){
     partyLeader: leaderHero ? (heroDisplayName(leaderHero)) : null,
     heroes: list.heroes.map(hero => {
       const cls = getHeroClass(hero);
-      const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
       return {
         name: heroDisplayName(hero),
         class: cls ? cls.name : null,
-        guild: guild ? guild.name : null,
         isPartyLeader: hero.instanceId === list.partyLeaderId,
         weapons: hero.weaponIds.map(id => (byId(gameData.weapons,id)||{}).name).filter(Boolean),
         masteredWeapons: hero.weaponIds.map(id => byId(gameData.weapons,id)).filter(w => w && weaponMastered(hero, w)).map(w => w.name),
@@ -1278,10 +1341,15 @@ function importList(file){
       if(!raw || !Array.isArray(raw.heroes) || !Array.isArray(raw.hirelings)){
         throw new Error("This doesn't look like a Spellblade list export.");
       }
-      const importedHeroes = raw.heroes.map(h => { const merged = Object.assign({ schoolFocus:null, pactHirelingId:null }, h); delete merged.masteryWeaponIds; return merged; });
+      // Guild moved from a per-Hero field to a List-wide one (list.guildId, alongside factionId) —
+      // an older export may still have individual heroes.guildId values from before that change.
+      // There's no reliable way to pick "the" party Guild from potentially differing per-Hero picks,
+      // so those are just dropped; guildId only comes from the List's own (new) field, if present.
+      const importedHeroes = raw.heroes.map(h => { const merged = Object.assign({ schoolFocus:null, pactHirelingId:null }, h); delete merged.masteryWeaponIds; delete merged.guildId; return merged; });
       list = {
         goldCap: typeof raw.goldCap === 'number' ? raw.goldCap : 500,
         factionId: raw.factionId || null,
+        guildId: raw.guildId || null,
         heroes: importedHeroes,
         hirelings: raw.hirelings,
         partyInventory: Array.isArray(raw.partyInventory) ? raw.partyInventory : [],
@@ -1302,7 +1370,7 @@ function importList(file){
 
 /* ============================= HERO MANAGEMENT ============================= */
 function addHero(){
-  const hero = { instanceId: genId('hero'), name:'', classId:null, guildId:null, weaponIds:[], armorId:null, itemIds:[], featIds:[], spellIds:[], schoolFocus:null, pactHirelingId:null, craftedScrollItemId:null };
+  const hero = { instanceId: genId('hero'), name:'', classId:null, weaponIds:[], armorId:null, itemIds:[], featIds:[], spellIds:[], schoolFocus:null, pactHirelingId:null, craftedScrollItemId:null };
   list.heroes.push(hero);
   editingHeroId = hero.instanceId;
   renderPlay();
@@ -1345,11 +1413,11 @@ function selectHeroClass(instanceId, classId){
   const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
   const cls = byId(gameData.classes, classId); if(!cls) return;
   if(hero.classId !== classId){
-    const lockReason = classCountLockReason(hero, cls);
+    const lockReason = classCountLockReason(hero, cls) || guildClassLockReason(cls);
     if(lockReason){ showStatus(lockReason+'.'); return; }
   }
   hero.classId = classId;
-  hero.weaponIds = []; hero.armorId = null; hero.featIds = []; hero.spellIds = []; hero.guildId = null; hero.schoolFocus = null; hero.pactHirelingId = null;
+  hero.weaponIds = []; hero.armorId = null; hero.featIds = []; hero.spellIds = []; hero.schoolFocus = null; hero.pactHirelingId = null;
   renderPlay();
 }
 // A Warlock's Familial Pact (or any other Class with has_pact set): pick exactly one Hireling
@@ -1363,25 +1431,6 @@ function selectHeroPact(instanceId, hirelingId){
   const minion = byId(gameData.hirelings, hirelingId);
   if(!minion || !minion.is_warlock_minion) return;
   hero.pactHirelingId = (hero.pactHirelingId === hirelingId) ? null : hirelingId;
-  renderPlay();
-}
-function grantGuildFeat(hero, guild){
-  if(guild && guild.feat_id && !hero.featIds.includes(guild.feat_id)){ hero.featIds.push(guild.feat_id); }
-}
-function revokeGuildFeat(hero, guild){
-  if(guild && guild.feat_id){ hero.featIds = hero.featIds.filter(id => id !== guild.feat_id); }
-}
-function selectHeroGuild(instanceId, guildId){
-  const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
-  const g = byId(gameData.guilds, guildId); if(!g) return;
-  if(hero.guildId === guildId){ revokeGuildFeat(hero, g); hero.guildId = null; renderPlay(); return; }
-  if(!guildEligible(hero, g)){ showStatus(guildLockReason(hero, g)); return; }
-  const current = hero.guildId ? ((byId(gameData.guilds, hero.guildId)||{}).gold_cost||0) : 0;
-  if(listGoldUsed() - current + g.gold_cost > list.goldCap){ showStatus('Not enough gold left in the list for '+g.name+' ('+g.gold_cost+'g).'); return; }
-  const prevGuild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
-  if(prevGuild) revokeGuildFeat(hero, prevGuild);
-  hero.guildId = guildId;
-  grantGuildFeat(hero, g);
   renderPlay();
 }
 function toggleHeroWeapon(instanceId, weaponId){
@@ -1574,7 +1623,7 @@ function cardAttrs(fn){
 }
 
 function renderPlay(){
-  let html = renderTopControls() + renderFactionFeatPicker() + renderPlayTabs();
+  let html = renderFactionStep() + renderGuildStep() + renderTopControls() + renderFactionFeatPicker() + renderPlayTabs();
   if(playTab === 'characters'){
     const hero = editingHeroId ? list.heroes.find(h => h.instanceId === editingHeroId) : null;
     if(hero){
@@ -1597,11 +1646,50 @@ function renderTopControls(){
     + '<label class="field"><span>Gold cap</span><select onchange="list.goldCap=parseInt(this.value); renderPlay();">'
     + [200,300,400,500,600,750].map(v => '<option value="'+v+'" '+(list.goldCap===v?'selected':'')+'>'+v+'g</option>').join('')
     + '</select></label>'
-    + '<label class="field"><span>Faction</span><select onchange="selectFaction(this.value)">'
-    + '<option value="">— choose —</option>'
-    + gameData.factions.map(f => '<option value="'+f.id+'" '+(list.factionId===f.id?'selected':'')+'>'+escapeHtml(f.name)+'</option>').join('')
-    + '</select></label>'
     + '</div></div>';
+}
+
+// The first, foundational choice for a List — every Hero's available Guilds, the party's
+// Faction-Wide Feats, and (soon) which units are even available at all key off this. A prominent
+// card grid rather than a buried dropdown, and rendered first, so the "Faction, then Guild"
+// sequence actually reads as a sequence. Clicking the already-selected Faction again clears it
+// (the old dropdown's "— choose —" option, reachable now by re-clicking instead).
+function renderFactionStep(){
+  const cards = gameData.factions.slice().sort((a,b) => a.name.localeCompare(b.name)).map(f => {
+    const selected = list.factionId === f.id;
+    const guildCount = gameData.guilds.filter(g => g.faction_id === f.id).length;
+    return '<div class="opt-card '+(selected?'selected':'')+'" '+cardAttrs("selectFaction('"+f.id+"')")+'>'
+      + '<div class="opt-name">'+escapeHtml(f.name)+'</div>'
+      + '<div class="opt-tags"><span class="tag">'+guildCount+' Guild'+(guildCount!==1?'s':'')+'</span></div>'
+      + (f.description? '<div class="opt-desc">'+highlightCurrency(escapeHtml(f.description))+'</div>':'')
+      + '</div>';
+  }).join('');
+  return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">01</span><span class="step-title">Faction</span><span class="step-count">'+(list.factionId?'1/1':'0/1')+'</span></div>'
+    + '<div class="step-sub">Choose your Faction first — it determines which Guilds (and soon, which units) are available to this List.</div>'
+    + '<div class="option-grid">'+(cards||'<p class="empty-note">No factions yet — add one in Admin Mode.</p>')+'</div></div>';
+}
+// Guild is a party-wide choice, sibling to Faction — not a per-Hero pick. Only shows Guilds
+// belonging to the chosen Faction; the empty state distinguishes "no Faction chosen yet" from
+// "this Faction genuinely has no Guilds", same distinction the old per-Hero version made.
+function renderGuildStep(){
+  const cards = gameData.guilds.slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0))
+    .filter(g => list.guildId === g.id || guildEligible(g))
+    .map(g => {
+    const selected = list.guildId === g.id;
+    const classCount = (g.allowed_classes||[]).length;
+    return '<div class="opt-card '+(selected?'selected':'')+'" '+cardAttrs("selectGuild('"+g.id+"')")+'>'
+      + '<div class="opt-cost">'+g.gold_cost+'g</div>'
+      + '<div class="opt-name">'+escapeHtml(g.name)+'</div>'
+      + '<div class="opt-tags"><span class="tag">'+(classCount? classCount+' Class'+(classCount!==1?'es':'') : 'All Classes')+'</span></div>'
+      + '<div class="opt-desc">'+highlightCurrency(escapeHtml(g.ability_description))+'</div>'
+      + '</div>';
+  }).join('');
+  const emptyMsg = !list.factionId
+    ? 'Choose a Faction above first — Guilds are tied to one.'
+    : 'This Faction has no Guilds yet — add one in Admin Mode.';
+  return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">02</span><span class="step-title">Guild</span><span class="step-count">'+(list.guildId?'1/1':'0/1')+'</span></div>'
+    + '<div class="step-sub">Optional — applies to the whole party (stat bonuses, equip access, and any Class restriction), not just one Hero.</div>'
+    + '<div class="option-grid">'+(cards||'<p class="empty-note">'+emptyMsg+'</p>')+'</div></div>';
 }
 
 // A Faction's pool of Faction-Wide Feats (marked as such in Admin -> Feats, then assigned to this
@@ -1612,7 +1700,7 @@ function renderTopControls(){
 function renderFactionFeatPicker(){
   const fac = getFaction();
   if(!fac) return '';
-  const pool = gameData.feats.filter(f => f.faction_id === fac.id);
+  const pool = gameData.feats.filter(f => f.restriction_type==='faction' && f.restriction_id === fac.id);
   if(!pool.length) return '';
   const picked = list.factionFeatIds || [];
   const cards = pool.map(f => {
@@ -1650,13 +1738,12 @@ function switchPlayTab(t){ playTab = t; renderPlay(); }
 function renderRoster(){
   const cards = list.heroes.map(hero => {
     const cls = getHeroClass(hero);
-    const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
     const isLeader = list.partyLeaderId === hero.instanceId;
     const pact = hero.pactHirelingId ? byId(gameData.hirelings, hero.pactHirelingId) : null;
     return '<div class="roster-card">'
       + '<div class="roster-card-main">'
         + '<div class="opt-name">'+(isLeader?'<span style="color:var(--gold);" title="Party Leader">&#9733; </span>':'')+escapeHtml(heroDisplayName(hero))+'</div>'
-        + '<div class="opt-tags"><span class="tag">'+(cls?escapeHtml(cls.name):'No Class')+'</span>'+(guild?'<span class="tag">'+escapeHtml(guild.name)+'</span>':'')+(isLeader?'<span class="tag" style="color:var(--gold);border-color:var(--gold);">Party Leader (+1 Haste)</span>':'')+(pact?'<span class="tag" style="color:var(--cyan-bright);border-color:var(--cyan);">Pact: '+escapeHtml(pact.name)+'</span>':'')+'</div>'
+        + '<div class="opt-tags"><span class="tag">'+(cls?escapeHtml(cls.name):'No Class')+'</span>'+(isLeader?'<span class="tag" style="color:var(--gold);border-color:var(--gold);">Party Leader (+1 Haste)</span>':'')+(pact?'<span class="tag" style="color:var(--cyan-bright);border-color:var(--cyan);">Pact: '+escapeHtml(pact.name)+'</span>':'')+'</div>'
       + '</div>'
       + '<div class="roster-card-actions"><span class="cost-badge">'+heroCost(hero)+'g</span>'
         + '<button class="btn '+(isLeader?'primary':'ghost')+' small" onclick="setPartyLeader(\''+hero.instanceId+'\')" title="'+(isLeader?'Click to remove Party Leader status':'Make this Hero the Party Leader (+1 Haste)')+'">'+(isLeader?'\u2605 Leader':'Make Leader')+'</button>'
@@ -1681,7 +1768,6 @@ function renderHeroEditor(hero){
     + '<button class="btn '+(isLeader?'primary':'ghost')+' small" style="margin-top:8px;" onclick="setPartyLeader(\''+hero.instanceId+'\')">'+(isLeader?'\u2605 Party Leader (+1 Haste)':'Make Party Leader (+1 Haste)')+'</button>'
     + '</div></div>'
     + renderHeroClassStep(hero)
-    + renderHeroGuildStep(hero)
     + renderHeroWeaponStep(hero)
     + renderHeroArmorStep(hero)
     + renderHeroItemStep(hero)
@@ -1704,7 +1790,7 @@ function renderHeroPactStep(hero){
     return '<div class="opt-card '+(selected?'selected':'')+'" '+cardAttrs("selectHeroPact('"+hero.instanceId+"','"+h.id+"')")+'>'
       + '<div class="opt-cost">Free</div>'
       + '<div class="opt-name">'+escapeHtml(h.name)+'</div>'
-      + '<div class="unit-card-sub" style="margin:-2px 0 4px;">'+escapeHtml(hirelingFactionLabel(h))+'</div>'
+      + '<div class="unit-card-sub" style="margin:-2px 0 4px;">'+escapeHtml(hirelingFactionGuildLabel(h))+'</div>'
       + (weaponTag? '<div class="opt-tags">'+weaponTag+'</div>':'')
       + statBlock([
           {label:'Haste', value:h.stats.haste},
@@ -1725,10 +1811,10 @@ function renderHeroPactStep(hero){
 
 function renderHeroClassStep(hero){
   const cards = gameData.classes.slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0))
-    .filter(c => hero.classId === c.id || classCountLockReason(hero, c) === '')
+    .filter(c => hero.classId === c.id || (classCountLockReason(hero, c) === '' && guildClassLockReason(c) === ''))
     .map(c => {
     const selected = hero.classId === c.id;
-    const lockReason = selected ? '' : classCountLockReason(hero, c);
+    const lockReason = selected ? '' : (classCountLockReason(hero, c) || guildClassLockReason(c));
     const locked = !!lockReason;
     return '<div class="opt-card '+(selected?'selected':'')+' '+(locked?'locked':'')+'" '+cardAttrs("selectHeroClass('"+hero.instanceId+"','"+c.id+"')")+'>'
       + '<div class="opt-cost">'+c.gold_cost+'g</div>'
@@ -1755,25 +1841,6 @@ function renderHeroClassStep(hero){
     + '<div class="option-grid">'+(cards||'<p class="empty-note">No classes yet — add one in Admin Mode.</p>')+'</div></div>';
 }
 
-function renderHeroGuildStep(hero){
-  const cards = gameData.guilds.slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0))
-    .filter(g => hero.guildId === g.id || guildEligible(hero, g))
-    .map(g => {
-    const eligible = guildEligible(hero, g);
-    const selected = hero.guildId === g.id;
-    const reason = guildLockReason(hero, g);
-    return '<div class="opt-card '+(selected?'selected':'')+' '+(!eligible?'locked':'')+'" '+cardAttrs("selectHeroGuild('"+hero.instanceId+"','"+g.id+"')")+'>'
-      + '<div class="opt-cost">'+g.gold_cost+'g</div>'
-      + '<div class="opt-name">'+escapeHtml(g.name)+'</div>'
-      + '<div class="opt-tags"><span class="tag">'+escapeHtml(factionName(g.faction_id))+'</span></div>'
-      + '<div class="opt-desc">'+highlightCurrency(escapeHtml(g.ability_description))+'</div>'
-      + (!eligible? '<div class="opt-lock-note">'+reason+'</div>':'')
-      + '</div>';
-  }).join('');
-  return '<div class="step"><div class="step-head"><span class="step-num">02</span><span class="step-title">Guild</span><span class="step-count">'+(hero.guildId?1:0)+'/1</span></div>'
-    + '<div class="step-sub">Choose 1 — Guilds belong to a Faction and are sometimes restricted to a Class.</div>'
-    + '<div class="option-grid">'+(cards||'<p class="empty-note">No guilds yet — add one in Admin Mode.</p>')+'</div></div>';
-}
 
 function renderHeroWeaponStep(hero){
   const cls = getHeroClass(hero);
@@ -1816,7 +1883,7 @@ function renderHeroWeaponStep(hero){
       + (lockNote? '<div class="opt-lock-note">'+lockNote+'</div>':'')
       + '</div>';
   }).join('');
-  return '<div class="step"><div class="step-head"><span class="step-num">03</span><span class="step-title">Weapons</span><span class="step-count">'+hero.weaponIds.length+'/2</span></div>'
+  return '<div class="step"><div class="step-head"><span class="step-num">02</span><span class="step-title">Weapons</span><span class="step-count">'+hero.weaponIds.length+'/2</span></div>'
     + '<div class="step-sub">'+(cls? 'Choose up to 2 — this Hero is skilled in: '+(heroWeaponSkills(hero).join(', ')||'nothing yet')+' (+2 to hit). &#9733; marks weapon types this Class has Mastery in (+4 to hit).' : 'Choose a Class first.')+'</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">No weapons yet — add one in Admin Mode.</p>')+'</div></div>';
 }
@@ -1851,7 +1918,7 @@ function renderHeroArmorStep(hero){
       + (lockNote? '<div class="opt-lock-note">'+escapeHtml(lockNote)+'</div>':'')
       + '</div>';
   }).join('');
-  return '<div class="step"><div class="step-head"><span class="step-num">04</span><span class="step-title">Armor</span><span class="step-count">'+(hero.armorId?1:0)+'/1</span></div>'
+  return '<div class="step"><div class="step-head"><span class="step-num">03</span><span class="step-title">Armor</span><span class="step-count">'+(hero.armorId?1:0)+'/1</span></div>'
     + '<div class="step-sub">'+(cls? 'Choose 1 — this Hero is skilled in: '+(heroArmorSkills(hero).join(', ')||'nothing yet') : 'Choose a Class first.')+'</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">No armor yet — add some in Admin Mode.</p>')+'</div></div>';
 }
@@ -1921,47 +1988,44 @@ function renderHeroItemStep(hero){
   }).join('');
 
   return partySection
-    + '<div class="step"><div class="step-head"><span class="step-num">05</span><span class="step-title">Items</span><span class="step-count">'+used+'/3 slots</span></div>'
+    + '<div class="step"><div class="step-head"><span class="step-num">04</span><span class="step-title">Items</span><span class="step-count">'+used+'/3 slots</span></div>'
     + '<div class="step-sub">Choose freely — capped at 3 item slots per Hero. Some items (like a Shield) also need a free hand.</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">No items yet — add one in Admin Mode.</p>')+'</div></div>';
 }
 
 function renderHeroFeatStep(hero){
   const cls = getHeroClass(hero);
-  const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
   const limit = heroFeatLimit(hero);
   const atLimit = hero.featIds.length >= limit;
   const cards = gameData.feats.slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0))
     .filter(f => {
-      if(hero.featIds.includes(f.id)) return true; // always show what's already taken
-      if(guild && guild.feat_id===f.id) return true; // always show a guild-granted feat
-      return featLockReason(hero, f) === ''; // handles the Class check internally, and bypasses it for Faction-Wide picks
+      if(hero.featIds.includes(f.id)) return true; // always show what's already taken (covers stale Faction/Guild-granted feats too)
+      return featLockReason(hero, f) === '';
     })
     .map(f => {
-    const isActiveGuildFeat = !!(guild && guild.feat_id===f.id);
-    // A Faction-Wide Feat can only still be on a Hero if it was taken before this rule existed
-    // (or imported from an older list). It's shown so it can be clicked off, never re-added.
-    const isFactionWideFeat = !!f.faction_id;
-    const lockReason = featLockReason(hero, f);
+    // A Faction-Wide Feat, or a stale Guild-granted Feat (some Guild's single auto-grant, sitting
+    // on this Hero from before Guild became party-wide — no longer obtainable any other way), can
+    // only still be on a Hero at all if it was taken before these rules existed. Shown so it can
+    // be clicked off, never re-added.
+    const isFactionWideFeat = f.restriction_type === 'faction';
     const selected = hero.featIds.includes(f.id);
-    // The Feat Limit only blocks NEW picks — an already-selected Feat (or one auto-granted by a
-    // Guild) is never locked out by it, so the Hero can always toggle it back off.
-    const limitReason = (!isActiveGuildFeat && !selected && lockReason==='' && atLimit) ? 'Feat limit reached ('+limit+')' : '';
-    const eligible = isActiveGuildFeat ? true : (lockReason === '' && limitReason === '');
-    const clickAttrs = isActiveGuildFeat ? '' : cardAttrs("toggleHeroFeat('"+hero.instanceId+"','"+f.id+"')");
-    return '<div class="opt-card '+(selected?'selected':'')+' '+(!eligible?'locked':'')+' '+featCostCardClass(f)+'" '+clickAttrs+(isActiveGuildFeat?' style="cursor:default;"':'')+'>'
-      + '<div class="opt-cost">'+(isActiveGuildFeat? 'Guild' : (f.gold_cost? f.gold_cost+'g':'Free'))+'</div>'
+    const isStaleGuildGrant = selected && !!guildForFeat(f.id);
+    const lockReason = featLockReason(hero, f);
+    const limitReason = (!selected && lockReason==='' && atLimit) ? 'Feat limit reached ('+limit+')' : '';
+    const eligible = selected || (lockReason === '' && limitReason === '');
+    return '<div class="opt-card '+(selected?'selected':'')+' '+(!eligible?'locked':'')+' '+featCostCardClass(f)+'" '+cardAttrs("toggleHeroFeat('"+hero.instanceId+"','"+f.id+"')")+'>'
+      + '<div class="opt-cost">'+(f.gold_cost? f.gold_cost+'g':'Free')+'</div>'
       + '<div class="opt-name">'+escapeHtml(f.name)+'</div>'
       + '<div class="opt-tags"><span class="tag">'+highlightCurrency(escapeHtml(featCostText(f)))+'</span></div>'
       + '<div class="opt-desc">'+highlightCurrency(escapeHtml(f.ability_description))+'</div>'
-      + (isActiveGuildFeat? '<div class="opt-lock-note" style="color:var(--cyan-bright);">Granted by '+escapeHtml(guild.name)+'</div>'
-          : isFactionWideFeat ? '<div class="opt-lock-note" style="color:var(--gold);">Faction-Wide Feat \u2014 applies to the whole party; click to remove from this Hero</div>'
+      + (isFactionWideFeat? '<div class="opt-lock-note" style="color:var(--gold);">Faction-Wide Feat \u2014 applies to the whole party; click to remove from this Hero</div>'
+          : isStaleGuildGrant? '<div class="opt-lock-note" style="color:var(--cyan-bright);">Guild bonuses are party-wide now \u2014 click to remove this leftover pick</div>'
           : (lockReason? '<div class="opt-lock-note">'+escapeHtml(lockReason)+'</div>'
               : (limitReason? '<div class="opt-lock-note">'+escapeHtml(limitReason)+'</div>':'')))
       + '</div>';
   }).join('');
-  return '<div class="step"><div class="step-head"><span class="step-num">06</span><span class="step-title">Feats</span><span class="step-count">'+hero.featIds.length+'/'+limit+' Feats</span></div>'
-    + '<div class="step-sub">'+(cls? 'Class and Guild Feats this Hero can take. Faction-Wide Feats are chosen once for the party and aren\u2019t picked here.':'Choose a Class first.')+'</div>'
+  return '<div class="step"><div class="step-head"><span class="step-num">05</span><span class="step-title">Feats</span><span class="step-count">'+hero.featIds.length+'/'+limit+' Feats</span></div>'
+    + '<div class="step-sub">'+(cls? 'Class Feats this Hero can take, plus any Guild-Specific Feats if the party has the matching Guild. Faction-Wide Feats and the party\u2019s Guild Ability are shown elsewhere, not picked per-Hero.':'Choose a Class first.')+'</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">No feats yet — add one in Admin Mode.</p>')+'</div></div>';
 }
 
@@ -2003,7 +2067,7 @@ function renderHeroSpellStep(hero){
   const emptyMsg = gameData.spells.length===0
     ? '<p class="empty-note">No spells yet — add one in Admin Mode.</p>'
     : '<p class="empty-note">No spells match this filter.</p>';
-  return '<div class="step"><div class="step-head"><span class="step-num">07</span><span class="step-title">Spells</span><span class="step-count">'+used+'/'+max+' Mind</span></div>'
+  return '<div class="step"><div class="step-head"><span class="step-num">06</span><span class="step-title">Spells</span><span class="step-count">'+used+'/'+max+' Mind</span></div>'
     + '<div class="step-sub">'+(cls? "Total spell level spent may not exceed this Hero's Mind stat.":'Choose a Class first.')+'</div>'
     + filters
     + '<div class="option-grid">'+(cards||emptyMsg)+'</div></div>';
@@ -2038,7 +2102,7 @@ function renderHeroSchoolFocusStep(hero){
       + '</div>';
   }).join('');
 
-  return '<div class="step"><div class="step-head"><span class="step-num">08</span><span class="step-title">'+escapeHtml(abilityName)+'</span></div>'
+  return '<div class="step"><div class="step-head"><span class="step-num">07</span><span class="step-title">'+escapeHtml(abilityName)+'</span></div>'
     + '<div class="step-sub">Choose a School, how it empowers you, and which Spell from that School it applies to.</div>'
     + '<div class="top-controls" style="margin-bottom:14px;">'+schoolSelect+'</div>'
     + '<div class="option-grid" style="margin-bottom:'+(focus.school?'14px':'0')+';">'+effectCards+'</div>'
@@ -2065,7 +2129,7 @@ function renderHirelingsTabContent(){
     return '<div class="opt-card '+(!eligible?'locked':'')+'" '+cardAttrs("addHireling('"+h.id+"')")+'>'
       + '<div class="opt-cost">'+h.gold_cost+'g</div>'
       + '<div class="opt-name">'+escapeHtml(h.name)+'</div>'
-      + '<div class="unit-card-sub" style="margin:-2px 0 4px;">'+escapeHtml(hirelingFactionLabel(h))+'</div>'
+      + '<div class="unit-card-sub" style="margin:-2px 0 4px;">'+escapeHtml(hirelingFactionGuildLabel(h))+'</div>'
       + loadout
       + statBlock([
           {label:'Haste', value:h.stats.haste},
@@ -2320,18 +2384,35 @@ function renderBattlePartyInventoryPanel(){
     + rows
     + '</div>';
 }
+// Shown once, at the top of Battle Mode, for whichever Guild the party has selected — Guild is
+// now party-wide, so both its own descriptive ability text AND any Guild Feat it grants (Admin ->
+// Guilds) apply automatically to everyone, rather than being shown per-Hero or picked/spending a
+// Feat slot. Renders nothing if the Guild has neither an ability description nor a Guild Feat.
+function renderGuildAbilityPanel(guild){
+  if(!guild) return '';
+  const f = guild.feat_id ? byId(gameData.feats, guild.feat_id) : null;
+  if(!guild.ability_description && !f) return '';
+  return '<div class="faction-feats-panel">'
+    + '<div class="faction-feats-title">Guild \u2014 '+escapeHtml(guild.name)+'</div>'
+    + (guild.ability_description? '<div class="faction-feat-desc" style="'+(f?'margin-bottom:8px;':'')+'">'+highlightCurrency(escapeHtml(guild.ability_description))+'</div>':'')
+    + (f? '<div class="faction-feat-row"><div class="faction-feat-head"><span class="faction-feat-name">'+escapeHtml(f.name)+'</span><span class="faction-feat-cost">'+highlightCurrency(escapeHtml(featCostText(f)))+'</span></div><div class="faction-feat-desc">'+highlightCurrency(escapeHtml(f.ability_description))+'</div></div>':'')
+    + '</div>';
+}
 function renderBattle(){
   const fac = getFaction();
+  const guild = getGuild();
   const gUsed = listGoldUsed(), gCap = list.goldCap;
   let html = '<div class="battle-toolbar"><button class="btn primary" onclick="printBattleList()">&#128438; Create PDF</button></div>';
   html += '<div id="battleStatusMsg" class="status-msg"></div>';
   html += '<div class="battle-summary">'
     + '<span class="tag">Faction: '+(fac?escapeHtml(fac.name):'None')+'</span>'
+    + (guild? '<span class="tag">Guild: '+escapeHtml(guild.name)+'</span>':'')
     + '<span class="tag">Gold: '+gUsed+' / '+gCap+'</span>'
     + '<span class="tag">Heroes: '+list.heroes.length+'</span>'
     + '<span class="tag">Hirelings: '+list.hirelings.length+'</span>'
     + '</div>';
   html += renderFactionFeatsPanel(fac);
+  html += renderGuildAbilityPanel(guild);
   html += renderPartyResourceTracker();
   html += renderBattlePartyInventoryPanel();
 
@@ -2391,7 +2472,6 @@ function battleSpellTableHTML(rows){
 }
 function renderBattleHeroCard(hero){
   const cls = getHeroClass(hero);
-  const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
   const weapons = hero.weaponIds.map(id => byId(gameData.weapons,id)).filter(Boolean);
   const armorObj = hero.armorId ? byId(gameData.armor, hero.armorId) : null;
   const items = hero.itemIds.map(id => byId(gameData.items,id)).filter(Boolean);
@@ -2424,7 +2504,6 @@ function renderBattleHeroCard(hero){
 
   const isLeader = list.partyLeaderId === hero.instanceId;
   const subParts = [ cls ? escapeHtml(cls.name) : 'No Class' ];
-  if(guild) subParts.push(escapeHtml(guild.name));
   if(isLeader) subParts.push('<span style="color:var(--gold);">&#9733; Party Leader</span>');
   const abilityLine = (cls && cls.signature_ability) ? '<div class="unit-card-ability">'+escapeHtml(signatureAbilityDisplayName(cls))+'</div>' : '';
   const classKeywordsLine = cls ? keywordChipsHTML(cls.keywords, cls.keyword_values) : '';
@@ -2443,9 +2522,6 @@ function renderBattleHeroCard(hero){
     body += '<div class="unit-block"><div class="unit-block-title">Feats</div>' + feats.map(f =>
       '<div class="unit-item"><div class="opt-name">'+escapeHtml(f.name)+'</div><div class="opt-tags"><span class="tag">'+highlightCurrency(escapeHtml(featCostText(f)))+'</span></div><div class="opt-desc" style="font-style:normal;color:var(--ink);">'+highlightCurrency(escapeHtml(f.ability_description))+'</div></div>'
     ).join('') + '</div>';
-  }
-  if(guild){
-    body += '<div class="unit-block"><div class="unit-block-title">Guild</div><div class="unit-item"><div class="opt-name">'+escapeHtml(guild.name)+'</div><div class="opt-desc" style="font-style:normal;color:var(--ink);">'+highlightCurrency(escapeHtml(guild.ability_description))+'</div></div></div>';
   }
   if(weapons.length){
     body += '<div class="unit-block"><div class="unit-block-title">Weapons</div>' + groupHeroWeapons(hero).map(g => {
@@ -2520,7 +2596,7 @@ function renderBattleHirelingCard(pick, pactOwnerName, hasteOverride){
   // subtitle — same card, same stat block, just a different, more informative sub-line.
   const subParts = pactOwnerName
     ? [ '<span style="color:var(--cyan-bright);">Familial Pact</span> — summoned by '+escapeHtml(pactOwnerName) ]
-    : [ escapeHtml(hirelingFactionLabel(h))+' Hireling' ];
+    : [ escapeHtml(hirelingFactionGuildLabel(h))+' Hireling' ];
   const abilityNames = (h.customAbilities||[]).map(a=>a.name).filter(Boolean).concat((h.customFeats||[]).map(f=>f.name).filter(Boolean));
   const abilityLine = abilityNames.length ? '<div class="unit-card-ability">Ability: '+escapeHtml(abilityNames.join(', '))+'</div>' : '';
   const keywordsLine = keywordChipsHTML(h.keywords, h.keyword_values);
@@ -2619,7 +2695,6 @@ function buildPrintSpellTableHTML(rows){
 
 function buildPrintHeroBlock(hero, glossarySet){
   const cls = getHeroClass(hero);
-  const guild = hero.guildId ? byId(gameData.guilds, hero.guildId) : null;
   const weapons = hero.weaponIds.map(id => byId(gameData.weapons,id)).filter(Boolean);
   const armorObj = hero.armorId ? byId(gameData.armor, hero.armorId) : null;
   const items = hero.itemIds.map(id => byId(gameData.items,id)).filter(Boolean);
@@ -2629,7 +2704,6 @@ function buildPrintHeroBlock(hero, glossarySet){
   const isLeader = list.partyLeaderId === hero.instanceId;
 
   const subBits = [ cls ? cls.name : 'No Class' ];
-  if(guild) subBits.push(guild.name);
   if(armorObj) subBits.push('Armor: '+armorObj.name);
   if(isLeader) subBits.push('Party Leader');
 
@@ -2655,12 +2729,12 @@ function buildPrintHeroBlock(hero, glossarySet){
     }));
   }
 
-  // Abilities section: class signature ability, Guild ability, every Feat, and the equipped
-  // Armor's ability text (if any) — all spelled out in full (no truncation) since this is the text
-  // a player needs mid-game and can't compress into a table cell the way a keyword name can.
+  // Abilities section: class signature ability, every Feat, and the equipped Armor's ability text
+  // (if any) — all spelled out in full (no truncation) since this is the text a player needs
+  // mid-game and can't compress into a table cell the way a keyword name can. Guild ability text is
+  // shown once at the party level now (buildPrintGuildAbilityHTML), not repeated per-Hero.
   const abilityBits = [];
   if(cls && cls.signature_ability) abilityBits.push('<div class="print-ability"><span class="print-ability-name">'+escapeHtml(signatureAbilityDisplayName(cls))+':</span> '+escapeHtml(signatureAbilityRulesText(cls))+'</div>');
-  if(guild && guild.ability_description) abilityBits.push('<div class="print-ability"><span class="print-ability-name">Guild \u2014 '+escapeHtml(guild.name)+':</span> '+escapeHtml(guild.ability_description)+'</div>');
   feats.forEach(f => abilityBits.push('<div class="print-ability"><span class="print-ability-name">Feat \u2014 '+escapeHtml(f.name)+' ('+featCostText(f)+'):</span> '+escapeHtml(f.ability_description)+'</div>'));
   if(armorObj && armorObj.abilities) abilityBits.push('<div class="print-ability"><span class="print-ability-name">Armor \u2014 '+escapeHtml(armorObj.name)+':</span> '+escapeHtml(armorObj.abilities)+'</div>');
   if(armorObj && armorObj.keywords && armorObj.keywords.length){ abilityBits.push('<div class="print-ability"><span class="print-ability-name">Armor Keywords:</span> '+printKeywordNamesInline(armorObj.keywords, glossarySet, armorObj.keyword_values)+'</div>'); }
@@ -2701,7 +2775,7 @@ function buildPrintHirelingBlock(pick, pactOwnerName, hasteOverride, glossarySet
   const spells = (h.spell_ids||[]).map(id => byId(gameData.spells,id)).filter(Boolean);
   const displayedHaste = hasteOverride!=null ? hasteOverride : h.stats.haste;
 
-  const subBits = pactOwnerName ? ['Familial Pact \u2014 summoned by '+pactOwnerName] : [hirelingFactionLabel(h)+' Hireling'];
+  const subBits = pactOwnerName ? ['Familial Pact \u2014 summoned by '+pactOwnerName] : [hirelingFactionGuildLabel(h)+' Hireling'];
 
   let out = '<div class="print-unit">'
     + '<div class="print-card-title">'+escapeHtml(h.name)+'</div>'
@@ -2772,16 +2846,29 @@ function buildPrintFactionFeatsHTML(){
       ).join('')
     + '</div>';
 }
+// The print counterpart to renderGuildAbilityPanel() — the party's Guild description and any
+// Guild Feat, shown once at the top, since both apply to everyone rather than being shown or
+// picked per-Hero.
+function buildPrintGuildAbilityHTML(guild){
+  if(!guild) return '';
+  const f = guild.feat_id ? byId(gameData.feats, guild.feat_id) : null;
+  if(!guild.ability_description && !f) return '';
+  return '<div class="print-faction-feats"><div class="print-section-title">Guild \u2014 '+escapeHtml(guild.name)+'</div>'
+    + (guild.ability_description? '<div class="print-item-row"><div>'+escapeHtml(guild.ability_description)+'</div></div>':'')
+    + (f? '<div class="print-item-row"><div><span class="print-item-name">'+escapeHtml(f.name)+'</span> <span class="print-dmg">('+escapeHtml(featCostText(f))+')</span> \u2014 '+escapeHtml(f.ability_description)+'</div></div>':'')
+    + '</div>';
+}
 function buildPrintSheetHTML(){
   const fac = getFaction();
+  const guild = getGuild();
   const units = battleActivationOrder();
   const header = '<div class="print-header">'
     + '<h1>Spellblade \u2014 Party Roster</h1>'
     + '<div class="print-header-meta">'
-      + (fac? escapeHtml(fac.name)+'<br>':'')
+      + (fac? escapeHtml(fac.name)+(guild?' \u00b7 '+escapeHtml(guild.name):'')+'<br>':'')
       + 'Gold: '+listGoldUsed()+' / '+list.goldCap+'<br>'
       + 'Veil '+(list.veil||0)+' &nbsp; Valor '+(list.valor||0)
-    + '</div></div>' + buildPrintFactionFeatsHTML();
+    + '</div></div>' + buildPrintFactionFeatsHTML() + buildPrintGuildAbilityHTML(guild);
   if(!units.length){
     return header + '<p class="print-empty">This list is empty — build one in List Builder first.</p>';
   }
@@ -2829,7 +2916,7 @@ function cancelForm(){ editingId = null; renderAdmin(); }
 // Clears any Weapon/Armor/Item/Spell whose Faction/Guild Restriction points at a Faction or Guild
 // that's about to be deleted, so nothing is left silently pointing at a dead reference.
 function clearRestrictionsTo(type, refId){
-  [gameData.weapons, gameData.armor, gameData.items, gameData.spells].forEach(arr => {
+  [gameData.weapons, gameData.armor, gameData.items, gameData.spells, gameData.feats].forEach(arr => {
     arr.forEach(e => { if(e.restriction_type===type && e.restriction_id===refId){ e.restriction_type='none'; e.restriction_id=''; } });
   });
 }
@@ -2837,19 +2924,19 @@ function deleteEntry(tab, id){
   const entity = byId(gameData[tab], id);
   gameData[tab] = gameData[tab].filter(x => x.id !== id);
   if(tab==='classes'){
-    list.heroes.forEach(h => { if(h.classId===id){ h.classId=null; h.guildId=null; h.weaponIds=[]; h.armorId=null; h.featIds=[]; h.spellIds=[]; } });
+    list.heroes.forEach(h => { if(h.classId===id){ h.classId=null; h.weaponIds=[]; h.armorId=null; h.featIds=[]; h.spellIds=[]; } });
     gameData.feats.forEach(f => { f.allowed_classes = f.allowed_classes.filter(c => c!==id); });
     gameData.guilds.forEach(g => { g.allowed_classes = g.allowed_classes.filter(c => c!==id); });
     gameData.spells.forEach(s => { s.allowed_classes = (s.allowed_classes||[]).filter(c => c!==id); });
   }
   if(tab==='guilds'){
+    // Guild is party-wide now — clear the List's own pick, and strip any lingering stale grant of
+    // this Guild's feat from Heroes (only ever relevant for an older imported list from before Guild
+    // became party-wide; a live session never grants a Guild Feat directly to a Hero anymore).
     const grantedFeatId = entity && entity.feat_id;
-    list.heroes.forEach(h => {
-      if(h.guildId===id){
-        h.guildId = null;
-        if(grantedFeatId) h.featIds = h.featIds.filter(f => f!==grantedFeatId);
-      }
-    });
+    if(list.guildId===id) list.guildId = null;
+    if(grantedFeatId) list.heroes.forEach(h => { h.featIds = h.featIds.filter(f => f!==grantedFeatId); });
+    gameData.hirelings.forEach(h => { if(h.guild_id===id) h.guild_id = ''; });
     clearRestrictionsTo('guild', id);
   }
   if(tab==='weapons'){
@@ -2884,7 +2971,6 @@ function deleteEntry(tab, id){
   if(tab==='factions'){
     if(list.factionId===id){ list.factionId = null; list.factionFeatIds = []; }
     clearRestrictionsTo('faction', id);
-    gameData.feats.forEach(f => { if(f.faction_id===id) f.faction_id=''; });
   }
   if(tab==='hirelings'){
     list.hirelings = list.hirelings.filter(p => p.hirelingId!==id);
@@ -2908,7 +2994,7 @@ function renderAdminTable(tab){
     factions: { data: gameData.factions, cols: [
         { label:'Name', get:f=>escapeHtml(f.name), sort:f=>f.name },
         { label:'Description', get:f=>highlightCurrency(escapeHtml(f.description)) },
-        { label:'Faction-Wide Feats', get:f=>{ const pool = gameData.feats.filter(feat=>feat.faction_id===f.id); return pool.length? escapeHtml(pool.map(feat=>feat.name).join(', ')) : '—'; } },
+        { label:'Faction-Wide Feats', get:f=>{ const pool = gameData.feats.filter(feat=>feat.restriction_type==='faction' && feat.restriction_id===f.id); return pool.length? escapeHtml(pool.map(feat=>feat.name).join(', ')) : '—'; } },
       ]},
     classes: { data: gameData.classes, cols: [
         { label:'Name', get:c=>escapeHtml(c.name), sort:c=>c.name },
@@ -2968,7 +3054,7 @@ function renderAdminTable(tab){
       ]},
     feats: { data: gameData.feats, cols: [
         { label:'Name', get:f=>escapeHtml(f.name), sort:f=>f.name },
-        { label:'Faction', get:f=>{ const fac = f.faction_id ? byId(gameData.factions, f.faction_id) : null; return fac ? escapeHtml(fac.name) : '—'; }, sort:f=>{ const fac = f.faction_id ? byId(gameData.factions, f.faction_id) : null; return fac ? fac.name : ''; } },
+        { label:'Restriction', get:f=>restrictionSummary(f), sort:f=>restrictionSummary(f) },
         { label:'Guild', get:f=>{ const g = guildForFeat(f.id); return g ? escapeHtml(g.name) : '—'; }, sort:f=>{ const g = guildForFeat(f.id); return g ? g.name : ''; } },
         { label:'Classes', get:f=> f.allowed_classes.length? escapeHtml(f.allowed_classes.map(id=>{const c=byId(gameData.classes,id);return c?c.name:'';}).filter(Boolean).join(', ')) : 'All' },
         { label:'Gold', get:f=>f.gold_cost? f.gold_cost+'g':'Free', sort:f=>f.gold_cost||0 },
@@ -2996,6 +3082,7 @@ function renderAdminTable(tab){
         { label:'Name', get:h=>escapeHtml(h.name), sort:h=>h.name },
         { label:'Warlock Minion?', get:h=>h.is_warlock_minion? 'Yes' : 'No', sort:h=>h.is_warlock_minion?1:0 },
         { label:'Faction', get:h=>escapeHtml(hirelingFactionLabel(h)), sort:h=>hirelingFactionLabel(h) },
+        { label:'Guild', get:h=>hirelingGuildLabel(h)? escapeHtml(hirelingGuildLabel(h)) : '—', sort:h=>hirelingGuildLabel(h) },
         { label:'Weapon', get:h=>{ const w = hirelingWeaponInfo(h); return w ? (w.isCustom? escapeHtml(w.name)+' (custom)' : escapeHtml(w.name)) : '—'; } },
         { label:'Proficiency', get:h=>{ const b = hirelingWeaponToHitBonus(h); return b>0 ? toHitBonusLabel(b).replace('&#9733; ','') : 'None'; }, sort:h=>hirelingWeaponToHitBonus(h) },
         { label:'Gold', get:h=>h.gold_cost+'g', sort:h=>h.gold_cost||0 },
@@ -3088,7 +3175,7 @@ function keywordFields(e){
     + '<p class="empty-note" style="margin:4px 0 0;">When checked, anywhere this Keyword is selected (on a Weapon, Armor, etc.) will show a number field next to it, so each one can carry its own value — e.g. one weapon can have Critical 1 while another has Critical 3.</p>';
 }
 function factionFields(e){
-  const assignedFeats = e ? gameData.feats.filter(f => f.faction_id === e.id) : [];
+  const assignedFeats = e ? gameData.feats.filter(f => f.restriction_type==='faction' && f.restriction_id === e.id) : [];
   return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'"></label>'
     + '<label class="field wide"><span>Description</span><textarea name="description" rows="2">'+escapeHtml(e&&e.description)+'</textarea></label>'
     + (e
@@ -3195,13 +3282,13 @@ function guildFields(e){
     + '</select></label>'
     + '<label class="field"><span>Gold cost</span><input type="number" name="gold_cost" min="0" value="'+(e?e.gold_cost:0)+'"></label>'
     + '<label class="field wide"><span>Abilities</span><textarea name="ability_description" rows="2">'+escapeHtml(e&&e.ability_description)+'</textarea></label>'
-    + '<fieldset class="check-group"><legend>Guild Feat (optional — automatically granted to any Hero who joins this Guild)</legend>'
+    + '<fieldset class="check-group"><legend>Guild Feat (optional — automatically applies to the whole party once this Guild is selected, no Hero picks it individually)</legend>'
       + '<label class="field wide"><span>Feat Name</span><input name="guild_feat_name" value="'+escapeAttr(feat&&feat.name)+'" placeholder="Leave blank for no unique Feat"></label>'
       + '<label class="field wide"><span>Feat Effect</span><textarea name="guild_feat_description" rows="2">'+escapeHtml(feat&&feat.ability_description)+'</textarea></label>'
       + '<label class="field"><span>Veil Cost</span><input type="number" name="guild_feat_veil_cost" min="0" value="'+(feat&&feat.veil_cost?feat.veil_cost:0)+'"></label>'
       + '<label class="field"><span>Valor Cost</span><input type="number" name="guild_feat_valor_cost" min="0" value="'+(feat&&feat.valor_cost?feat.valor_cost:0)+'"></label>'
     + '</fieldset>'
-    + '<fieldset class="check-group"><legend>Available to (leave blank for all classes)</legend>'
+    + '<fieldset class="check-group"><legend>Allowed Classes (leave blank for all — restricts which Classes ANY Hero in the party may use once this Guild is picked)</legend>'
       + (gameData.classes.map(c=>'<label class="chk"><input type="checkbox" name="allowed_classes" value="'+c.id+'" '+(e&&e.allowed_classes&&e.allowed_classes.includes(c.id)?'checked':'')+'> '+escapeHtml(c.name)+'</label>').join('') || '<p class="empty-note">No classes yet.</p>')
     + '</fieldset>'
     + statModifierFieldset(e)
@@ -3258,11 +3345,8 @@ function featFields(e){
     + '<label class="field"><span>Veil Cost</span><input type="number" name="veil_cost" min="0" value="'+(e&&e.veil_cost?e.veil_cost:0)+'"></label>'
     + '<label class="field"><span>Valor Cost</span><input type="number" name="valor_cost" min="0" value="'+(e&&e.valor_cost?e.valor_cost:0)+'"></label>'
     + '<p class="empty-note" style="margin:-8px 0 12px;">Leave both at 0 for a free/passive Feat. A Feat can require Veil and Valor at the same time — just set both.</p>'
-    + '<label class="field"><span>Faction</span><select name="faction_id">'
-      + '<option value="" '+(!e||!e.faction_id?'selected':'')+'>— Not Faction-Specific —</option>'
-      + gameData.factions.map(f=>'<option value="'+f.id+'" '+(e&&e.faction_id===f.id?'selected':'')+'>'+escapeHtml(f.name)+'</option>').join('')
-    + '</select></label>'
-    + '<p class="empty-note" style="margin:-8px 0 12px;">Assigning a Faction here puts this Feat in that Faction\u2019s pool — once a player picks this Faction, they may choose up to 4 Feats from that pool for the whole party, and any Hero may take one regardless of Class or Guild.</p>'
+    + restrictionFieldHTML(e)
+    + '<p class="empty-note" style="margin:-8px 0 12px;">Faction-restricted puts this Feat in that Faction\u2019s pool — once a player picks this Faction, they may choose up to 4 Feats from that pool for the whole party, and any Hero may take one regardless of Class or Guild. Guild-restricted instead makes it a normal, optional pick (still costs gold/Veil/Valor as set above) available only to Heroes who are members of that Guild.</p>'
     + '<fieldset class="check-group"><legend>Available to (leave blank for all classes)</legend>'
       + (gameData.classes.map(c=>'<label class="chk"><input type="checkbox" name="allowed_classes" value="'+c.id+'" '+(e&&e.allowed_classes&&e.allowed_classes.includes(c.id)?'checked':'')+'> '+escapeHtml(c.name)+'</label>').join('') || '<p class="empty-note">No classes yet.</p>')
     + '</fieldset>'
@@ -3302,6 +3386,11 @@ function hirelingFields(e){
       + '<option value="" '+(!e||!e.faction_id?'selected':'')+'>Any Faction (hireable by every List)</option>'
       + (gameData.factions.map(f=>'<option value="'+f.id+'" '+(e&&e.faction_id===f.id?'selected':'')+'>'+escapeHtml(f.name)+'</option>').join(''))
     + '</select></label>'
+    + '<label class="field"><span>Guild</span><select name="guild_id">'
+      + '<option value="" '+(!e||!e.guild_id?'selected':'')+'>Not Guild-Specific</option>'
+      + (gameData.guilds.map(g=>'<option value="'+g.id+'" '+(e&&e.guild_id===g.id?'selected':'')+'>'+escapeHtml(g.name)+' ('+escapeHtml(factionName(g.faction_id))+')</option>').join(''))
+    + '</select></label>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">A Guild-specific Hireling only shows up once at least one Hero in the List actually belongs to that Guild.</p>'
     + '<label class="field"><span>Weapon</span><select name="weapon_id">'
       + '<option value="">— none —</option>'
       + gameData.weapons.map(w=>'<option value="'+w.id+'" '+(e&&e.weapon_id===w.id?'selected':'')+'>'+escapeHtml(w.name)+'</option>').join('')
@@ -3429,7 +3518,7 @@ function saveEntry(event, tab, id){
     obj.gold_cost = num(fd,'gold_cost');
     obj.veil_cost = num(fd,'veil_cost');
     obj.valor_cost = num(fd,'valor_cost');
-    obj.faction_id = fd.get('faction_id') || '';
+    Object.assign(obj, parseRestrictionField(fd));
     obj.allowed_classes = fd.getAll('allowed_classes');
     obj.stat_modifiers = { haste:num(fd,'mod_haste'), move:num(fd,'mod_move'), body:num(fd,'mod_body'), mind:num(fd,'mod_mind'), spirit:num(fd,'mod_spirit') };
     obj.equip_override = fd.getAll('equip_override');
@@ -3451,6 +3540,7 @@ function saveEntry(event, tab, id){
   }
   if(tab==='hirelings'){
     obj.name = fd.get('name'); obj.faction_id = fd.get('faction_id') || '';
+    obj.guild_id = fd.get('guild_id') || '';
     obj.is_warlock_minion = fd.has('is_warlock_minion');
     obj.weapon_id = fd.get('weapon_id') || '';
     obj.custom_weapon_name = (fd.get('custom_weapon_name') || '').trim();
@@ -3536,7 +3626,7 @@ function normalizeRuleset(parsed){
   parsed.classes.forEach(c => { if(!Array.isArray(c.mastery_skills)) c.mastery_skills = []; if(c.stats) delete c.stats.mastery; if(c.max_feats==null) c.max_feats = 2; if(!Array.isArray(c.keywords)) c.keywords = []; if(c.has_pact===undefined) c.has_pact = false; });
   const zeroMods = { haste:0, move:0, body:0, mind:0, spirit:0 };
   parsed.weapons.forEach(w => { if(!w.rarity) w.rarity = 'common'; if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroMods); if(w.restriction_type===undefined){ w.restriction_type = 'none'; w.restriction_id = ''; } });
-  parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(h.weapon_proficiency===undefined) h.weapon_proficiency = 'none'; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false;
+  parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(h.weapon_proficiency===undefined) h.weapon_proficiency = 'none'; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false; if(h.guild_id===undefined) h.guild_id = '';
     if(!Array.isArray(h.customAbilities)){
       const old = h.abilities || '';
       const title = abilityTitle(old);
@@ -3547,7 +3637,20 @@ function normalizeRuleset(parsed){
   parsed.armor.forEach(a => { if(!a.rarity) a.rarity = 'common'; if(!a.stat_modifiers) a.stat_modifiers = Object.assign({}, zeroMods); if(a.restriction_type===undefined){ a.restriction_type = 'none'; a.restriction_id = ''; } });
   parsed.items.forEach(it => { if(!it.rarity) it.rarity = 'common'; if(!it.stat_modifiers) it.stat_modifiers = Object.assign({}, zeroMods); if(it.restriction_type===undefined){ it.restriction_type = 'none'; it.restriction_id = ''; } });
   parsed.guilds.forEach(g => { if(!g.stat_modifiers) g.stat_modifiers = Object.assign({}, zeroMods); if(!Array.isArray(g.equip_override)) g.equip_override = []; });
-  parsed.feats.forEach(f => { if(!f.stat_modifiers) f.stat_modifiers = Object.assign({}, zeroMods); if(!Array.isArray(f.equip_override)) f.equip_override = []; });
+  // Feats used to carry a single flat faction_id string ("Faction-Wide Feat" pool membership) —
+  // migrated here onto the same restriction_type/restriction_id pair Weapons/Items/Armor/Spells
+  // already use, so a Feat can now ALSO be Guild-restricted (an optional, member-only pick) via the
+  // exact same mechanism, not a separate one. Only migrates faction_id if the new fields aren't
+  // already present, so re-running this on an already-migrated file is always a safe no-op.
+  parsed.feats.forEach(f => {
+    if(!f.stat_modifiers) f.stat_modifiers = Object.assign({}, zeroMods);
+    if(!Array.isArray(f.equip_override)) f.equip_override = [];
+    if(f.restriction_type===undefined){
+      if(f.faction_id){ f.restriction_type = 'faction'; f.restriction_id = f.faction_id; }
+      else { f.restriction_type = 'none'; f.restriction_id = ''; }
+    }
+    delete f.faction_id;
+  });
   if(!parsed.theme) parsed.theme = Object.assign({}, DEFAULT_THEME);
   return parsed;
 }
@@ -3560,7 +3663,7 @@ function importRuleset(file){
       normalizeRuleset(parsed);
       gameData = parsed;
       applyTheme(gameData.theme);
-      list = { goldCap:list.goldCap, factionId:null, heroes:[], hirelings:[], veil:0, valor:0, partyLeaderId:null };
+      list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[] };
       editingHeroId = null;
       editingId = null;
       renderAdmin();

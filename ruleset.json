@@ -1815,7 +1815,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt1z8ish7gm",
@@ -1837,7 +1838,8 @@
       "equip_override": [],
       "veil_cost": 1,
       "valor_cost": 0,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt218egkaek",
@@ -1860,7 +1862,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt21e7rr9ip",
@@ -1882,7 +1885,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 2,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt349jbmv7y",
@@ -1904,7 +1908,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt3i31jsztg",
@@ -1924,7 +1929,9 @@
       },
       "equip_override": [],
       "veil_cost": 2,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt55iszoupc",
@@ -1946,7 +1953,9 @@
       },
       "equip_override": [],
       "veil_cost": 2,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt59uk5osbj",
@@ -1969,7 +1978,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt59v8uecj3",
@@ -1991,7 +2001,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 2,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt5f6w73pgu",
@@ -2011,7 +2022,9 @@
       },
       "equip_override": [],
       "veil_cost": 1,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt5fatp9jtu",
@@ -2032,7 +2045,8 @@
       "equip_override": [],
       "veil_cost": 1,
       "valor_cost": 0,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt883w1lip3",
@@ -2050,7 +2064,8 @@
       "equip_override": [],
       "veil_cost": 0,
       "valor_cost": 2,
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt884jsd39d",
@@ -2072,7 +2087,9 @@
       },
       "equip_override": [],
       "veil_cost": 0,
-      "valor_cost": 3
+      "valor_cost": 3,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt889c9yndl",
@@ -2094,7 +2111,9 @@
       },
       "equip_override": [],
       "veil_cost": 2,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt88cn2pj4c",
@@ -2119,7 +2138,9 @@
       },
       "equip_override": [],
       "veil_cost": 3,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt88lzahfhk",
@@ -2136,7 +2157,9 @@
       },
       "equip_override": [],
       "veil_cost": 3,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt88vsuvlwx",
@@ -2158,7 +2181,9 @@
       },
       "equip_override": [],
       "veil_cost": 1,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmt88y5ciy5k",
@@ -2180,7 +2205,9 @@
       },
       "equip_override": [],
       "veil_cost": 2,
-      "valor_cost": 0
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmtkcb8hb3o2",
@@ -2198,7 +2225,8 @@
         "spirit": 0
       },
       "equip_override": [],
-      "faction_id": ""
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmtkcd40oh7p",
@@ -2215,7 +2243,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "fmtkpuaswuc5",
@@ -2224,7 +2254,6 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 3,
-      "faction_id": "fmt1zprswgf7",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2233,7 +2262,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
     },
     {
       "id": "fmtkq404929u",
@@ -2242,7 +2273,6 @@
       "gold_cost": 0,
       "veil_cost": 1,
       "valor_cost": 0,
-      "faction_id": "fmt1zprswgf7",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2251,7 +2281,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
     },
     {
       "id": "fmtkq51jkt90",
@@ -2260,7 +2292,6 @@
       "gold_cost": 0,
       "veil_cost": 1,
       "valor_cost": 0,
-      "faction_id": "fmt1zprswgf7",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2269,7 +2300,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
     },
     {
       "id": "fmtkq7w40eub",
@@ -2278,7 +2311,6 @@
       "gold_cost": 0,
       "veil_cost": 4,
       "valor_cost": 0,
-      "faction_id": "fmt1zprswgf7",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2287,7 +2319,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
     },
     {
       "id": "fmtkqaiit2im",
@@ -2296,7 +2330,6 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": "fmt1zprswgf7",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2305,7 +2338,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
     },
     {
       "id": "fmtkqk2cpqpo",
@@ -2314,7 +2349,6 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": "fmt1zprswgf7",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2323,7 +2357,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7"
     },
     {
       "id": "fmtkr2t9hr20",
@@ -2332,7 +2368,6 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 2,
-      "faction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2341,7 +2376,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
     },
     {
       "id": "fmtkr6v1ibro",
@@ -2350,7 +2387,6 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 3,
-      "faction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2359,7 +2395,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
     },
     {
       "id": "fmtkrab2l5k2",
@@ -2368,7 +2406,6 @@
       "gold_cost": 0,
       "veil_cost": 4,
       "valor_cost": 0,
-      "faction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2377,7 +2414,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
     },
     {
       "id": "fmtliqc2k3nf",
@@ -2386,7 +2425,6 @@
       "gold_cost": 0,
       "veil_cost": 1,
       "valor_cost": 1,
-      "faction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2395,7 +2433,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
     },
     {
       "id": "fmtljfvtnqe0",
@@ -2404,7 +2444,6 @@
       "gold_cost": 0,
       "veil_cost": 2,
       "valor_cost": 0,
-      "faction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2413,7 +2452,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
     },
     {
       "id": "fmtljkoscq7y",
@@ -2422,7 +2463,6 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 1,
-      "faction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2431,7 +2471,9 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn"
     }
   ],
   "spellSchools": [
@@ -3266,7 +3308,8 @@
         }
       ],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt20qanmco6",
@@ -3297,7 +3340,8 @@
         }
       ],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt34wwc6rq9",
@@ -3332,7 +3376,8 @@
       "customFeats": [],
       "keyword_values": {
         "kmthzf1225ee": 16
-      }
+      },
+      "guild_id": ""
     },
     {
       "id": "hmt350gp3lj6",
@@ -3370,7 +3415,8 @@
           "valor_cost": 1
         }
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt3531huum5",
@@ -3403,7 +3449,8 @@
         }
       ],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt354wi4t8m",
@@ -3437,7 +3484,8 @@
         }
       ],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt516geko9y",
@@ -3468,7 +3516,8 @@
         }
       ],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt55yxmz7w7",
@@ -3501,7 +3550,8 @@
         }
       ],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt560up4fce",
@@ -3541,7 +3591,8 @@
           "valor_cost": 0
         }
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt5hi6faoi6",
@@ -3586,7 +3637,8 @@
       ],
       "keyword_values": {
         "kmthzf1225ee": 10
-      }
+      },
+      "guild_id": ""
     },
     {
       "id": "hmt5huluphkw",
@@ -3621,7 +3673,8 @@
           "valor_cost": 1
         }
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt7eter2x6c",
@@ -3654,7 +3707,8 @@
           "description": "The materna's spells have the reaction keyword"
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "guild_id": ""
     },
     {
       "id": "hmt7evrd6jsb",
@@ -3684,7 +3738,8 @@
           "description": "The pact fraterna may grapple an enemy unit it is in combat with. The unit must make a Dc12+body check or be stunned. The grappled unit may repeat this check when they activate."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "guild_id": ""
     },
     {
       "id": "hmt7ezs2f627",
@@ -3716,7 +3771,8 @@
           "description": "Spells cast by the warlock may be channeled through the apprenta minion. May use the apprenta model for line of sight and targeting as if the apprenta was casting the spell."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "guild_id": ""
     },
     {
       "id": "hmt89ctfdnus",
@@ -3742,7 +3798,8 @@
       "keywords": [],
       "customAbilities": [],
       "customFeats": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmt89dqlb9u7",
@@ -3774,7 +3831,8 @@
           "description": "Every friendly non-elite unit within 3\" may make a free shoot action at the target of this unit."
         }
       ],
-      "customFeats": []
+      "customFeats": [],
+      "guild_id": ""
     },
     {
       "id": "hmt89f8cgg9i",
@@ -3799,7 +3857,8 @@
       "spell_ids": [],
       "keywords": [],
       "customAbilities": [],
-      "customFeats": []
+      "customFeats": [],
+      "guild_id": ""
     },
     {
       "id": "hmtkcp81plfd",
@@ -3835,7 +3894,8 @@
       ],
       "keyword_values": {
         "kmthzf1225ee": 12
-      }
+      },
+      "guild_id": ""
     },
     {
       "id": "hmtlsufdudyk",
@@ -3867,7 +3927,8 @@
       "keywords": [
         "kmt5h8ghtsk6"
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     },
     {
       "id": "hmtlt6903azg",
@@ -3897,7 +3958,8 @@
       "description": "",
       "spell_ids": [],
       "keywords": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "guild_id": ""
     }
   ],
   "theme": {
