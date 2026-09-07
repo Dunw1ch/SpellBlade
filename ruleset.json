@@ -204,8 +204,8 @@
       "name": "Warrior",
       "description": "A vanguard who fights on the front lines. Prioritizes heavy armor and heavy weaponry to hold the line for their comrades.",
       "signature_ability": "When a warrior drops to zero body, they cling to the veil and become unwavering. Whenever a warrior in this state activates, or takes a wound, make a morale check. If the check is successful, the warrior is not removed from the game. For every wound received while in this state, -3 to the warrior's morale saves.",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": false,
       "stats": {
         "haste": 12,
@@ -244,8 +244,8 @@
       "name": "Rogue",
       "description": "Stalking ruins and woods, rogues lie in wait for the opportunity to kill without a trace.",
       "signature_ability": "A Rogue may make a bonus HIDE action if  they are within 1\" of a piece of a terrain and not within line of sight of any enemy unit. a Rogue may not be the target of an attack unless a unit within 6\" makes a successful DC15 mind check. If a Rogue begins its activation hidden, its attacks have advantage. \n\nWhile hidden the rogue gains the following reaction:  Sneak Attack: while hidden if an enemy ends it's movement within 6\" of the rogue, the rogue may immediately charge and attack that unit with advantage.",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": false,
       "stats": {
         "haste": 15,
@@ -277,8 +277,8 @@
       "name": "Wizard",
       "description": "",
       "signature_ability": "Choose a school of magic to be your focus gain the following in the chosen school\n- Reduce the spell slot level of a spell. (lvl 3 spell would only take 2 slots)\n- Choose a spell from that school as your signature spell. Reduce its mana cost by 1.\n- You may craft scrolls of that chosen school at half the cost. (in a one off skirmish game, you may add 1 of these to your parties inventory)",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": true,
       "school_focus": true,
       "stats": {
@@ -312,8 +312,8 @@
       "name": "Ranger",
       "description": "Scouts and scavengers, once a ranger has marked their prey, the only thing left is time.",
       "signature_ability": "Predator: At the beginning of a turn, name a unit on the battlefield. This is the rangers prey. All attacks against the chosen unit have advantage while the Ranger has visibility of the chosen unit. If a unit marked as prey is taken out, they grant Valor and Veil.",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": false,
       "stats": {
         "haste": 15,
@@ -346,8 +346,8 @@
       "name": "Bard",
       "description": "Feasting on the emotions of others, Bards cast powerful magics capable of empowering even the most demoralized allies.",
       "signature_ability": "as a free action, roll a D4-D20\n- Crits: For every crit, you may add 1 Valor.\n- d20 crit: heal 1 wound from a friendly unit within 6\"\n- Doubles: a Target unit within 6\" may move 3\"\n- Triple: All enemy units within 12\" are stunned.\n- Quad: All enemy units within 12\" take 1D4 damage and make a morale check",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": true,
       "stats": {
         "haste": 14,
@@ -379,9 +379,9 @@
       "id": "cmt2a5vwinpr",
       "name": "Berzerker",
       "description": "\"RAWWWWAHAHAHAHA\"",
-      "signature_ability": "The Berzerker takes 1 wound and creates 2 Veil, and enters rage until the end of their activation. While in rage you gain the following:\n- When you make a melee attack action, you may make another\n- You may re-roll wound rolls\n- You cannot be fatigued.",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "signature_ability": "The Berzerker takes 1 wound and creates 1 Veil, and enters rage until the end of their activation. While in rage you gain the following:\n- When you make a melee attack action, you may make another\n- You may re-roll wound rolls\n- You cannot be fatigued.",
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": false,
       "stats": {
         "haste": 13,
@@ -412,8 +412,8 @@
       "name": "Cleric",
       "description": "\"Keep screaming the wound is almost shut!\"",
       "signature_ability": "At the beginning of the game, choose a point on the battlefield, everything within 4\" of this area is your sanctuary. Units inside your sanctuary gain Aegis 15+. ",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": true,
       "stats": {
         "haste": 11,
@@ -447,8 +447,8 @@
       "name": "Warlock",
       "description": "Most of the denizens would rather avoid areas strong in veil ether, Warlocks however, seek it out.",
       "signature_ability": "The warlocks manifests their pain in various ways, summoning apparitions to aid them in battle\n- Pact Materna: A healing sprite\n- Pact Fraterna: A brawling tank\n- Pact Apprenta: A minion spellcaster",
-      "gold_cost": 25,
-      "max_feats": 2,
+      "gold_cost": 30,
+      "max_feats": 1,
       "can_use_magic": true,
       "stats": {
         "haste": 13,
@@ -498,7 +498,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "feat_id": "fmt3446aa8ao"
+      "feat_id": ""
     },
     {
       "id": "gmt2d27ly0mf",
@@ -520,7 +520,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "feat_id": "fmt3hvdwfw99"
+      "feat_id": ""
     },
     {
       "id": "gmt2dkbaff4f",
@@ -563,7 +563,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "feat_id": "fmt3487n6xe6"
+      "feat_id": ""
     },
     {
       "id": "gmt4p99zg8fg",
@@ -607,7 +607,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "feat_id": "fmt89aimx24d"
+      "feat_id": ""
     },
     {
       "id": "gmthncg4ljqh",
@@ -1803,9 +1803,7 @@
       "ability_description": "Add a +1D6 modifier to your wound roll.",
       "gold_cost": 10,
       "allowed_classes": [
-        "cmt1yo3sij8m",
-        "cmt1yu3wj5sl",
-        "cmt2ahfasbmg"
+        "cmt1yo3sij8m"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -1816,7 +1814,7 @@
       },
       "equip_override": [],
       "veil_cost": 0,
-      "valor_cost": 2,
+      "valor_cost": 1,
       "faction_id": ""
     },
     {
@@ -1826,7 +1824,6 @@
       "gold_cost": 5,
       "allowed_classes": [
         "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
         "cmt1yrzdvdwh",
         "cmt2a5vwinpr"
       ],
@@ -1838,13 +1835,14 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 2,
-      "valor_cost": 0
+      "veil_cost": 1,
+      "valor_cost": 0,
+      "faction_id": ""
     },
     {
       "id": "fmt218egkaek",
       "name": "ShieldBash",
-      "ability_description": "If this unit wins a clash, attacker gains FATIGUED and takes 1 wound.",
+      "ability_description": "If this unit wins a clash, attacker is Stunned and takes 1 wound.",
       "gold_cost": 5,
       "allowed_classes": [
         "cmt1ykznv7cm",
@@ -1887,40 +1885,6 @@
       "faction_id": ""
     },
     {
-      "id": "fmt3446aa8ao",
-      "name": "Five Eyes",
-      "ability_description": "Add the Poison keyword to this attack",
-      "gold_cost": 0,
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
-      "valor_cost": 0
-    },
-    {
-      "id": "fmt3487n6xe6",
-      "name": "Healing Roots",
-      "ability_description": "Once per activation, whenever you generate Veil, you may use this ability to heal 1 wound.",
-      "gold_cost": 0,
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
-      "valor_cost": 0
-    },
-    {
       "id": "fmt349jbmv7y",
       "name": "SharpShooter",
       "ability_description": "Remove negative modifiers for intervening terrain.",
@@ -1943,94 +1907,12 @@
       "faction_id": ""
     },
     {
-      "id": "fmt3hvdwfw99",
-      "name": "Smite",
-      "ability_description": "If your attack wounds, you may expend a Veil to smite the target. Roll 1D10, if the result is higher than the targets spirit stat, they take 1 wound.",
-      "gold_cost": 0,
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
-      "valor_cost": 0
-    },
-    {
       "id": "fmt3i31jsztg",
       "name": "OverCharge",
       "ability_description": "Before making a cast attack action, you may choose to overcharge. until the end of this activation you may roll to hit with advantage, and re-roll your wound roll.",
       "gold_cost": 10,
       "allowed_classes": [
         "cmt1ypdwalh2",
-        "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 2,
-      "valor_cost": 0
-    },
-    {
-      "id": "fmt3k4ke86nd",
-      "name": "Leap",
-      "ability_description": "As a bonus action, a hero may jump back 3\" from a units zone of control, attacks of opportunity have disadvantage.",
-      "gold_cost": 5,
-      "allowed_classes": [
-        "cmt1yo3sij8m",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 1
-    },
-    {
-      "id": "fmt3k9j7i9iy",
-      "name": "Shadow Step",
-      "ability_description": "As a reaction, you may move 3\" out of an opponents zone of control after they enter yours. ",
-      "gold_cost": 5,
-      "allowed_classes": [
-        "cmt1yo3sij8m",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
-      "valor_cost": 0
-    },
-    {
-      "id": "fmt3kdst6o1i",
-      "name": "QuickCast",
-      "ability_description": "If an attack generates veil, you may cast another spell as a bonus action.",
-      "gold_cost": 15,
-      "allowed_classes": [
-        "cmt1ypdwalh2",
-        "cmt1yu3wj5sl",
-        "cmt2a7xiucb2",
         "cmt2ahfasbmg"
       ],
       "stat_modifiers": {
@@ -2086,7 +1968,8 @@
       },
       "equip_override": [],
       "veil_cost": 0,
-      "valor_cost": 2
+      "valor_cost": 1,
+      "faction_id": ""
     },
     {
       "id": "fmt59v8uecj3",
@@ -2298,23 +2181,6 @@
       "equip_override": [],
       "veil_cost": 2,
       "valor_cost": 0
-    },
-    {
-      "id": "fmt89aimx24d",
-      "name": "Pack Leader",
-      "ability_description": "friendly non-elite units within 3\"  may make a melee attack against the target.",
-      "gold_cost": 0,
-      "allowed_classes": [],
-      "veil_cost": 0,
-      "valor_cost": 2,
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": []
     },
     {
       "id": "fmtkcb8hb3o2",
