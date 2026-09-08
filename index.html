@@ -92,6 +92,13 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 .step-emphasis{ border-color:var(--gold); border-width:2px; box-shadow:0 0 20px var(--gold-glow); }
 .step-emphasis .step-title{ font-size:19px; }
 .step-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
+/* The compact one-line summary a Faction/Guild step collapses to once picked — see
+   renderFactionStep()/renderGuildStep(). Less padding than a full .step, and its .step-head uses
+   center alignment (rather than the default baseline) so the "Change" button sits flush with the
+   name instead of looking vertically offset. */
+.step-collapsed{ padding:14px 20px; margin-bottom:14px; }
+.step-collapsed .step-head{ align-items:center; margin-bottom:0; }
+.step-collapsed .step-title{ font-size:15px; }
 .step-num{ font-family:var(--font-data); color:var(--muted); font-size:12px; letter-spacing:.02em; }
 .step-title{ font-family:var(--font-display); font-weight:700; font-size:17px; letter-spacing:.02em; color:var(--ink); }
 .step-count{ margin-left:auto; font-family:var(--font-data); font-size:12px; color:var(--muted); }
@@ -232,10 +239,12 @@ button.btn.small{ padding:5px 10px; font-size:11.5px; }
 button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset:2px; }
 .file-btn{ display:inline-block; }
 
-.play-tabs{ display:flex; gap:4px; flex-wrap:wrap; margin-bottom:18px; }
-.play-tabs button{ font-family:var(--font-display); font-weight:600; font-size:12.5px; padding:8px 14px; background:transparent; border:1px solid var(--rule); color:var(--muted); cursor:pointer; border-radius:4px; }
-.play-tabs button.active{ position:relative; overflow:hidden; background:linear-gradient(135deg, var(--btn-silver-dim) 0%, var(--btn-silver) 35%, var(--btn-silver-bright) 50%, var(--btn-silver) 65%, var(--btn-silver-dim) 100%); border-color:var(--btn-silver); color:var(--on-accent); box-shadow:0 0 10px var(--btn-silver-glow); text-shadow:0 1px 0 rgba(255,255,255,.4); }
+.play-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+.play-tabs button{ display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:15px; padding:12px 20px; background:transparent; border:2px solid var(--rule); color:var(--muted); cursor:pointer; border-radius:6px; }
+.play-tabs button.active{ position:relative; overflow:hidden; background:linear-gradient(135deg, var(--btn-silver-dim) 0%, var(--btn-silver) 35%, var(--btn-silver-bright) 50%, var(--btn-silver) 65%, var(--btn-silver-dim) 100%); border-color:var(--btn-silver); color:var(--on-accent); box-shadow:0 0 14px var(--btn-silver-glow); text-shadow:0 1px 0 rgba(255,255,255,.4); }
 .play-tabs button:not(.active):hover{ border-color:var(--cyan); color:var(--cyan-bright); }
+.play-tab-count{ font-family:var(--font-data); font-size:12px; font-weight:700; padding:1px 8px; border-radius:10px; background:rgba(0,0,0,.18); }
+.play-tabs button.active .play-tab-count{ background:rgba(0,0,0,.28); }
 
 .roster-list{ display:flex; flex-direction:column; gap:10px; }
 .roster-card{ display:flex; justify-content:space-between; align-items:center; gap:12px; border:1px solid var(--rule); background:var(--panel-raised); background-image:var(--noise-texture); background-blend-mode:overlay; border-radius:5px; padding:12px 14px; flex-wrap:wrap; }
@@ -538,6 +547,12 @@ let list = { goldCap:500, factionId:null, guildId:null, heroes:[], hirelings:[],
 let editingHeroId = null; // instanceId of the Hero currently open in the builder, or null to show the roster
 let mode = 'play';
 let playTab = 'characters'; // 'characters' | 'hirelings'
+// Once a Faction/Guild is actually picked, its full option grid collapses to a compact summary so
+// the rest of the builder is easier to read — these track a manual "Change" override back to the
+// full grid. Irrelevant (and ignored) whenever nothing is picked yet, since there's nothing to
+// collapse to — the full grid always shows in that case regardless of these flags.
+let factionStepExpanded = false;
+let guildStepExpanded = false;
 let adminTab = 'factions';
 let adminSortCol = null;   // index into the current tab's cols array, or null for insertion order
 let adminSortDir = 1;      // 1 = ascending, -1 = descending
@@ -1058,8 +1073,11 @@ function selectGuild(id){
   const currentCost = current ? current.gold_cost : 0;
   if(listGoldUsed() - currentCost + g.gold_cost > list.goldCap){ showStatus('Not enough gold left in the list for '+g.name+' ('+g.gold_cost+'g).'); return; }
   list.guildId = id;
+  guildStepExpanded = false;
   renderPlay();
 }
+function toggleFactionStepExpanded(){ factionStepExpanded = !factionStepExpanded; renderPlay(); }
+function toggleGuildStepExpanded(){ guildStepExpanded = !guildStepExpanded; renderPlay(); }
 function heroCost(hero){
   let total = 0;
   const cls = getHeroClass(hero);
@@ -1285,6 +1303,7 @@ function selectFaction(id){
   list.factionId = id || null;
   list.guildId = null;
   list.factionFeatIds = [];
+  factionStepExpanded = false;
   renderPlay();
 }
 function resetList(){
@@ -1655,6 +1674,18 @@ function renderTopControls(){
 // sequence actually reads as a sequence. Clicking the already-selected Faction again clears it
 // (the old dropdown's "— choose —" option, reachable now by re-clicking instead).
 function renderFactionStep(){
+  const fac = getFaction();
+  if(fac && !factionStepExpanded){
+    const guildCount = gameData.guilds.filter(g => g.faction_id === fac.id).length;
+    return '<div class="step step-emphasis step-collapsed">'
+      + '<div class="step-head">'
+        + '<span class="step-num">01</span><span class="step-title">Faction: '+escapeHtml(fac.name)+'</span>'
+        + '<span class="tag">'+guildCount+' Guild'+(guildCount!==1?'s':'')+'</span>'
+        + '<button class="btn ghost small" style="margin-left:auto;" onclick="toggleFactionStepExpanded()">Change</button>'
+      + '</div>'
+      + (fac.description? '<div class="step-sub" style="margin:6px 0 0;">'+highlightCurrency(escapeHtml(fac.description))+'</div>':'')
+    + '</div>';
+  }
   const cards = gameData.factions.slice().sort((a,b) => a.name.localeCompare(b.name)).map(f => {
     const selected = list.factionId === f.id;
     const guildCount = gameData.guilds.filter(g => g.faction_id === f.id).length;
@@ -1672,6 +1703,19 @@ function renderFactionStep(){
 // belonging to the chosen Faction; the empty state distinguishes "no Faction chosen yet" from
 // "this Faction genuinely has no Guilds", same distinction the old per-Hero version made.
 function renderGuildStep(){
+  const guild = getGuild();
+  if(guild && !guildStepExpanded){
+    const classCount = (guild.allowed_classes||[]).length;
+    return '<div class="step step-emphasis step-collapsed">'
+      + '<div class="step-head">'
+        + '<span class="step-num">02</span><span class="step-title">Guild: '+escapeHtml(guild.name)+'</span>'
+        + '<span class="tag">'+(classCount? classCount+' Class'+(classCount!==1?'es':'') : 'All Classes')+'</span>'
+        + '<button class="btn ghost small" style="margin-left:auto;" onclick="toggleGuildStepExpanded()">Change</button>'
+      + '</div>'
+      + (guild.ability_description? '<div class="step-sub" style="margin:6px 0 0;">'+highlightCurrency(escapeHtml(guild.ability_description))+'</div>':'')
+      + renderGuildUnlocksPanel(guild)
+    + '</div>';
+  }
   const cards = gameData.guilds.slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0))
     .filter(g => list.guildId === g.id || guildEligible(g))
     .map(g => {
@@ -1690,6 +1734,29 @@ function renderGuildStep(){
   return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">02</span><span class="step-title">Guild</span><span class="step-count">'+(list.guildId?'1/1':'0/1')+'</span></div>'
     + '<div class="step-sub">Optional — applies to the whole party (stat bonuses, equip access, and any Class restriction), not just one Hero.</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">'+emptyMsg+'</p>')+'</div></div>';
+}
+// Shown once a Guild is selected — a quick-reference summary of everything THIS Guild specifically
+// unlocks: Feats, Hirelings, and equipment (Weapons/Armor/Items) restricted to it. Reuses the same
+// panel styling as the Faction-Wide Feats / Guild Ability panels for a consistent look. Renders
+// nothing if the Guild happens to have no unique unlocks at all yet.
+function renderGuildUnlocksPanel(guild){
+  const feats = gameData.feats.filter(f => f.restriction_type==='guild' && f.restriction_id===guild.id);
+  const hirelings = gameData.hirelings.filter(h => h.guild_id===guild.id);
+  const equipment = []
+    .concat(gameData.weapons.filter(w => w.restriction_type==='guild' && w.restriction_id===guild.id))
+    .concat(gameData.armor.filter(a => a.restriction_type==='guild' && a.restriction_id===guild.id))
+    .concat(gameData.items.filter(it => it.restriction_type==='guild' && it.restriction_id===guild.id));
+  if(!feats.length && !hirelings.length && !equipment.length) return '';
+  function row(label, names){
+    if(!names.length) return '';
+    return '<div class="faction-feat-row"><div class="faction-feat-head"><span class="faction-feat-name">'+label+'</span></div><div class="faction-feat-desc">'+names.map(n=>escapeHtml(n)).join(', ')+'</div></div>';
+  }
+  return '<div class="faction-feats-panel" style="margin-top:8px;">'
+    + '<div class="faction-feats-title">Unlocked by '+escapeHtml(guild.name)+'</div>'
+    + row('Feats', feats.map(f => f.name+' ('+featCostText(f)+')'))
+    + row('Hirelings', hirelings.map(h => h.name))
+    + row('Equipment', equipment.map(e => e.name))
+    + '</div>';
 }
 
 // A Faction's pool of Faction-Wide Feats (marked as such in Admin -> Feats, then assigned to this
@@ -1727,10 +1794,13 @@ function toggleFactionFeat(featId){
   renderPlay();
 }
 
+// Heroes and Hirelings get built side by side in practice, so this tab bar is deliberately bigger
+// and shows live counts on both sides — meant to make "how many do I have so far, and which am I
+// looking at" visible without needing to actually switch tabs to check.
 function renderPlayTabs(){
   return '<div class="play-tabs">'
-    + '<button class="'+(playTab==='characters'?'active':'')+'" onclick="switchPlayTab(\'characters\')">Characters</button>'
-    + '<button class="'+(playTab==='hirelings'?'active':'')+'" onclick="switchPlayTab(\'hirelings\')">Hirelings</button>'
+    + '<button class="'+(playTab==='characters'?'active':'')+'" onclick="switchPlayTab(\'characters\')">Characters<span class="play-tab-count">'+list.heroes.length+'</span></button>'
+    + '<button class="'+(playTab==='hirelings'?'active':'')+'" onclick="switchPlayTab(\'hirelings\')">Hirelings<span class="play-tab-count">'+list.hirelings.length+'</span></button>'
     + '</div>';
 }
 function switchPlayTab(t){ playTab = t; renderPlay(); }
@@ -2120,9 +2190,14 @@ function renderHirelingsTabContent(){
     const weapon = hirelingWeaponInfo(h);
     const weaponTag = weapon ? '<span class="tag"><span class="stat-label">'+ICON_SWORD+rarityStyledName(weapon)+'</span>'+(weapon.damage?formatDamage(weapon.damage):'—')+'</span>' : '';
     const armorTag = statTagIcon(ICON_SHIELD,'Armor',h.armor_value);
+    const spells = (h.spell_ids||[]).map(id => byId(gameData.spells,id)).filter(Boolean);
+    // A quick visual "does this Hireling know any spells at all" cue right alongside its weapon —
+    // easy to miss otherwise, since spell details only otherwise show up once already hired.
+    const spellsTag = spells.length ? '<span class="tag" style="color:var(--cyan-bright);">&#10024; Spells: '+spells.length+'</span>' : '';
     const loadout = '<div class="hireling-loadout">'
       + '<div class="hireling-loadout-label">Weapon &amp; Armor</div>'
-      + '<div class="opt-tags">'+weaponTag+armorTag+'</div>'
+      + '<div class="opt-tags">'+weaponTag+armorTag+spellsTag+'</div>'
+      + (spells.length? '<div class="unit-card-ability">Spells: '+spells.map(s=>escapeHtml(s.name)).join(', ')+'</div>':'')
       + (h.customAbilities&&h.customAbilities.length? '<div class="unit-card-ability">'+namedEntriesList(h.customAbilities,true).join('<br>')+'</div>':'')
       + (h.customFeats&&h.customFeats.length? '<div class="unit-card-ability">'+namedEntriesList(h.customFeats,true).join('<br>')+'</div>':'')
       + '</div>';
@@ -2152,7 +2227,7 @@ function renderHirelingsTabContent(){
   }).join('');
 
   return '<div class="step"><div class="step-head"><span class="step-title">Available Hirelings</span></div>'
-    + '<div class="step-sub">Only Hirelings belonging to your chosen Faction can be added. You may add more than one of the same Hireling.</div>'
+    + '<div class="step-sub">Only Hirelings belonging to your chosen Faction (and Guild, if any) can be added. You may add more than one of the same Hireling.</div>'
     + '<div class="option-grid">'+(availCards||'<p class="empty-note">No hirelings yet — add one in Admin Mode.</p>')+'</div></div>'
     + '<div class="step"><div class="step-head"><span class="step-title">Hirelings in List</span><span class="step-count">'+list.hirelings.length+'</span></div>'
     + '<div class="roster-list">'+(pickRows||'<p class="empty-note">None added yet.</p>')+'</div></div>';
