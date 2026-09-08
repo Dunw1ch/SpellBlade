@@ -140,6 +140,20 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 .hireling-loadout-label{ font-family:var(--font-data); font-size:10px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); margin-bottom:6px; }
 .hireling-loadout .opt-tags{ margin:0 0 6px; }
 .hireling-loadout .opt-tags:last-child{ margin-bottom:0; }
+/* The base-vs-Veteran comparison panel, shown when "Upgrade to Veteran" is clicked on a Hireling's
+   card — spans the card's full grid width (not boxed to one cell) so both sides have room to
+   breathe. Gold accent matches the other "this unlocks something special" panels (Guild unlocks,
+   Party Leader). */
+.veteran-compare-panel{ grid-column:1 / -1; padding:14px 16px; border:2px solid var(--gold); border-radius:6px; background:var(--panel-raised); }
+.veteran-compare-title{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; color:var(--gold); margin-bottom:10px; }
+.veteran-compare-grid{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:start; }
+.veteran-compare-side{ padding:10px 12px; border:1px solid var(--rule); border-radius:5px; }
+.veteran-compare-arrow{ align-self:center; font-size:22px; color:var(--gold); }
+.veteran-compare-actions{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+@media (max-width:640px){
+  .veteran-compare-grid{ grid-template-columns:1fr; }
+  .veteran-compare-arrow{ transform:rotate(90deg); justify-self:center; }
+}
 .hireling-loadout .tag{
   font-size:12.5px; color:var(--pink-bright); border:1px solid var(--rule); font-weight:600; padding:3px 9px;
   background:var(--bg-alt);
@@ -678,6 +692,9 @@ function hirelingFactionGuildLabel(h){
   const g = hirelingGuildLabel(h);
   return hirelingFactionLabel(h) + (g ? ' \u00b7 '+g+' Guild' : '');
 }
+// The single Hireling (if any) bound as the Veteran upgrade of this one, via that Hireling's own
+// veteran_of field — a reverse lookup, same pattern as guildForFeat().
+function veteranUpgradeFor(baseId){ return gameData.hirelings.find(h => h.veteran_of === baseId) || null; }
 function weaponName(id){ const w = byId(gameData.weapons, id); return w ? w.name : '—'; }
 // Some Hirelings have a natural weapon (claws, bite, etc.) that isn't worth a full Weapons catalog
 // entry. If a custom weapon name is set it takes priority for display; otherwise falls back to the
@@ -1624,16 +1641,32 @@ function toggleHeroSpell(instanceId, spellId){
 
 /* ============================= HIRELING MANAGEMENT ============================= */
 function addHireling(hirelingId){
-  const h = byId(gameData.hirelings, hirelingId); if(!h) return;
-  if(h.is_warlock_minion) return; // Warlock Minions are only ever pickable via a Warlock's Familial Pact panel
-  if(!hirelingEligible(h)){ showStatus(hirelingLockReason(h)); return; }
-  if(listGoldUsed() + h.gold_cost > list.goldCap){ showStatus('Not enough gold left in the list for '+h.name+' ('+h.gold_cost+'g).'); return; }
+  const h = byId(gameData.hirelings, hirelingId); if(!h) return false;
+  if(h.is_warlock_minion) return false; // Warlock Minions are only ever pickable via a Warlock's Familial Pact panel
+  if(!hirelingEligible(h)){ showStatus(hirelingLockReason(h)); return false; }
+  if(listGoldUsed() + h.gold_cost > list.goldCap){ showStatus('Not enough gold left in the list for '+h.name+' ('+h.gold_cost+'g).'); return false; }
   list.hirelings.push({ instanceId: genId('hire'), hirelingId: hirelingId });
   renderPlay();
+  return true;
 }
 function removeHireling(instanceId){
   list.hirelings = list.hirelings.filter(p => p.instanceId !== instanceId);
   renderPlay();
+}
+// The Veteran-upgrade compare flow: right now this only affects RECRUITING (List Builder) — pick
+// the Veteran outright instead of the base at the point of hire. Upgrading a Hireling already in
+// the List mid-campaign is deliberately out of scope for now.
+let veteranCompareId = null; // instanceId... actually the BASE Hireling's catalog id, whose compare panel is open
+function openVeteranCompare(baseId){ veteranCompareId = baseId; renderPlay(); }
+function closeVeteranCompare(){ veteranCompareId = null; renderPlay(); }
+function confirmVeteranUpgrade(baseId){
+  const veteran = veteranUpgradeFor(baseId);
+  if(!veteran) { closeVeteranCompare(); return; }
+  const added = addHireling(veteran.id);
+  if(added){
+    veteranCompareId = null;
+    renderPlay(); // addHireling() already re-rendered once, but with the stale (still-open) compare state — this second pass reflects the panel actually closing
+  }
 }
 
 /* ============================= PLAY RENDER ============================= */
@@ -1803,7 +1836,7 @@ function renderPlayTabs(){
     + '<button class="'+(playTab==='hirelings'?'active':'')+'" onclick="switchPlayTab(\'hirelings\')">Hirelings<span class="play-tab-count">'+list.hirelings.length+'</span></button>'
     + '</div>';
 }
-function switchPlayTab(t){ playTab = t; renderPlay(); }
+function switchPlayTab(t){ playTab = t; if(t!=='hirelings') veteranCompareId = null; renderPlay(); }
 
 function renderRoster(){
   const cards = list.heroes.map(hero => {
@@ -2181,9 +2214,52 @@ function renderHeroSchoolFocusStep(hero){
     + '</div>';
 }
 
+// A compact stat/loadout summary for one side of the Veteran-upgrade comparison — deliberately
+// smaller than the full picker card (no description/keywords), since the point here is a fast
+// side-by-side read, not the complete reference.
+function renderHirelingMiniSummary(h){
+  const weapon = hirelingWeaponInfo(h);
+  const spells = (h.spell_ids||[]).map(id => byId(gameData.spells,id)).filter(Boolean);
+  return '<div class="veteran-compare-side">'
+    + '<div class="opt-cost">'+h.gold_cost+'g</div>'
+    + '<div class="opt-name">'+escapeHtml(h.name)+'</div>'
+    + statBlock([
+        {label:'Haste', value:h.stats.haste},
+        {label:'Move', value:h.stats.move},
+        {label:'Armor', value:h.armor_value},
+        {label:'Body', value:h.stats.body},
+        {label:'Mind', value:h.stats.mind},
+        {label:'Spirit', value:h.stats.spirit},
+      ])
+    + (weapon? '<div class="unit-card-ability">Weapon: '+escapeHtml(weapon.name)+(weapon.damage?' ('+formatDamage(weapon.damage)+')':'')+'</div>':'')
+    + (spells.length? '<div class="unit-card-ability">Spells: '+spells.map(s=>escapeHtml(s.name)).join(', ')+'</div>':'')
+    + (h.customAbilities&&h.customAbilities.length? '<div class="unit-card-ability">'+namedEntriesList(h.customAbilities,true).join('<br>')+'</div>':'')
+    + '</div>';
+}
+// The base-vs-veteran comparison shown when a player clicks "Upgrade to Veteran" on a Hireling's
+// card — lets them see exactly what changes (and what it costs) before committing. Confirming
+// recruits the Veteran directly; it's a separate catalog entry, so nothing further needs to treat
+// it specially anywhere else in the app (Battle Mode, print, gold total all just read its own data).
+function renderVeteranComparePanel(base, veteran){
+  const delta = veteran.gold_cost - base.gold_cost;
+  return '<div class="veteran-compare-panel">'
+    + '<div class="veteran-compare-title">Upgrade to Veteran <span class="tag" style="color:var(--gold);border-color:var(--gold);">'+(delta>=0?'+':'')+delta+'g</span></div>'
+    + '<div class="veteran-compare-grid">'
+      + renderHirelingMiniSummary(base)
+      + '<div class="veteran-compare-arrow">&#8594;</div>'
+      + renderHirelingMiniSummary(veteran)
+    + '</div>'
+    + '<div class="veteran-compare-actions">'
+      + '<button class="btn primary small" onclick="event.stopPropagation(); confirmVeteranUpgrade(\''+base.id+'\')">Confirm \u2014 Recruit '+escapeHtml(veteran.name)+'</button>'
+      + '<button class="btn ghost small" onclick="event.stopPropagation(); closeVeteranCompare()">Cancel</button>'
+    + '</div>'
+    + '</div>';
+}
 function renderHirelingsTabContent(){
-  // Warlock Minions are reserved exclusively for a Warlock Hero's Familial Pact panel — hidden here.
-  const availCards = gameData.hirelings.filter(h => !h.is_warlock_minion && hirelingEligible(h)).slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0)).map(h => {
+  // Warlock Minions are reserved exclusively for a Warlock Hero's Familial Pact panel, and a
+  // Veteran Hireling only ever shows up via the base's own "Upgrade to Veteran" flow below — both
+  // are hidden from the normal picker grid.
+  const availCards = gameData.hirelings.filter(h => !h.is_warlock_minion && !h.veteran_of && hirelingEligible(h)).slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0)).map(h => {
     const eligible = hirelingEligible(h);
     const reason = hirelingLockReason(h);
     const count = list.hirelings.filter(p => p.hirelingId===h.id).length;
@@ -2201,6 +2277,12 @@ function renderHirelingsTabContent(){
       + (h.customAbilities&&h.customAbilities.length? '<div class="unit-card-ability">'+namedEntriesList(h.customAbilities,true).join('<br>')+'</div>':'')
       + (h.customFeats&&h.customFeats.length? '<div class="unit-card-ability">'+namedEntriesList(h.customFeats,true).join('<br>')+'</div>':'')
       + '</div>';
+    const veteran = veteranUpgradeFor(h.id);
+    const veteranAvailable = veteran && hirelingEligible(veteran);
+    const comparing = veteranCompareId === h.id;
+    const upgradeButton = veteranAvailable
+      ? '<button class="btn ghost small" style="margin-top:8px;" onclick="event.stopPropagation(); '+(comparing?'closeVeteranCompare()':"openVeteranCompare('"+h.id+"')")+'">'+(comparing?'Hide Comparison':'\u2605 Upgrade to Veteran')+'</button>'
+      : '';
     return '<div class="opt-card '+(!eligible?'locked':'')+'" '+cardAttrs("addHireling('"+h.id+"')")+'>'
       + '<div class="opt-cost">'+h.gold_cost+'g</div>'
       + '<div class="opt-name">'+escapeHtml(h.name)+'</div>'
@@ -2217,12 +2299,14 @@ function renderHirelingsTabContent(){
       + keywordChipsHTML(h.keywords, h.keyword_values)
       + (count>0? '<div class="opt-lock-note" style="color:var(--cyan);">In list: '+count+'</div>':'')
       + (!eligible? '<div class="opt-lock-note">'+reason+'</div>':'')
-      + '</div>';
+      + upgradeButton
+      + '</div>'
+      + (comparing && veteranAvailable? renderVeteranComparePanel(h, veteran) : '');
   }).join('');
 
   const pickRows = list.hirelings.map(p => {
     const h = byId(gameData.hirelings, p.hirelingId);
-    return '<div class="roster-card"><div class="roster-card-main"><div class="opt-name">'+escapeHtml(h?h.name:'Unknown')+'</div></div>'
+    return '<div class="roster-card"><div class="roster-card-main"><div class="opt-name">'+escapeHtml(h?h.name:'Unknown')+(h&&h.veteran_of?' <span class="tag" style="color:var(--gold);border-color:var(--gold);">Veteran</span>':'')+'</div></div>'
       + '<div class="roster-card-actions"><span class="cost-badge">'+(h?h.gold_cost:0)+'g</span><button class="btn danger small" onclick="removeHireling(\''+p.instanceId+'\')">Remove</button></div></div>';
   }).join('');
 
@@ -3050,6 +3134,7 @@ function deleteEntry(tab, id){
   if(tab==='hirelings'){
     list.hirelings = list.hirelings.filter(p => p.hirelingId!==id);
     list.heroes.forEach(h => { if(h.pactHirelingId === id) h.pactHirelingId = null; });
+    gameData.hirelings.forEach(h => { if(h.veteran_of === id) h.veteran_of = ''; });
   }
   if(tab==='keywords'){
     gameData.weapons.forEach(w => w.keywords = w.keywords.filter(k => k!==id));
@@ -3158,6 +3243,7 @@ function renderAdminTable(tab){
         { label:'Warlock Minion?', get:h=>h.is_warlock_minion? 'Yes' : 'No', sort:h=>h.is_warlock_minion?1:0 },
         { label:'Faction', get:h=>escapeHtml(hirelingFactionLabel(h)), sort:h=>hirelingFactionLabel(h) },
         { label:'Guild', get:h=>hirelingGuildLabel(h)? escapeHtml(hirelingGuildLabel(h)) : '—', sort:h=>hirelingGuildLabel(h) },
+        { label:'Veteran Of', get:h=>h.veteran_of? escapeHtml((byId(gameData.hirelings,h.veteran_of)||{}).name||'—') : '—', sort:h=>h.veteran_of? (byId(gameData.hirelings,h.veteran_of)||{}).name||'' : '' },
         { label:'Weapon', get:h=>{ const w = hirelingWeaponInfo(h); return w ? (w.isCustom? escapeHtml(w.name)+' (custom)' : escapeHtml(w.name)) : '—'; } },
         { label:'Proficiency', get:h=>{ const b = hirelingWeaponToHitBonus(h); return b>0 ? toHitBonusLabel(b).replace('&#9733; ','') : 'None'; }, sort:h=>hirelingWeaponToHitBonus(h) },
         { label:'Gold', get:h=>h.gold_cost+'g', sort:h=>h.gold_cost||0 },
@@ -3466,6 +3552,11 @@ function hirelingFields(e){
       + (gameData.guilds.map(g=>'<option value="'+g.id+'" '+(e&&e.guild_id===g.id?'selected':'')+'>'+escapeHtml(g.name)+' ('+escapeHtml(factionName(g.faction_id))+')</option>').join(''))
     + '</select></label>'
     + '<p class="empty-note" style="margin:-8px 0 12px;">A Guild-specific Hireling only shows up once at least one Hero in the List actually belongs to that Guild.</p>'
+    + '<label class="field"><span>Veteran Upgrade Of</span><select name="veteran_of">'
+      + '<option value="" '+(!e||!e.veteran_of?'selected':'')+'>Not a Veteran Upgrade</option>'
+      + (gameData.hirelings.filter(h2=>!e||h2.id!==e.id).filter(h2=>!h2.veteran_of).map(h2=>'<option value="'+h2.id+'" '+(e&&e.veteran_of===h2.id?'selected':'')+'>'+escapeHtml(h2.name)+'</option>').join(''))
+    + '</select></label>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">Binds this Hireling as the Veteran version of the one picked above — in List Builder, an "Upgrade to Veteran" option then appears on that base Hireling\u2019s card, recruiting this one instead once confirmed. Its own Gold cost below is what actually gets charged.</p>'
     + '<label class="field"><span>Weapon</span><select name="weapon_id">'
       + '<option value="">— none —</option>'
       + gameData.weapons.map(w=>'<option value="'+w.id+'" '+(e&&e.weapon_id===w.id?'selected':'')+'>'+escapeHtml(w.name)+'</option>').join('')
@@ -3616,6 +3707,7 @@ function saveEntry(event, tab, id){
   if(tab==='hirelings'){
     obj.name = fd.get('name'); obj.faction_id = fd.get('faction_id') || '';
     obj.guild_id = fd.get('guild_id') || '';
+    obj.veteran_of = fd.get('veteran_of') || '';
     obj.is_warlock_minion = fd.has('is_warlock_minion');
     obj.weapon_id = fd.get('weapon_id') || '';
     obj.custom_weapon_name = (fd.get('custom_weapon_name') || '').trim();
@@ -3701,7 +3793,7 @@ function normalizeRuleset(parsed){
   parsed.classes.forEach(c => { if(!Array.isArray(c.mastery_skills)) c.mastery_skills = []; if(c.stats) delete c.stats.mastery; if(c.max_feats==null) c.max_feats = 2; if(!Array.isArray(c.keywords)) c.keywords = []; if(c.has_pact===undefined) c.has_pact = false; });
   const zeroMods = { haste:0, move:0, body:0, mind:0, spirit:0 };
   parsed.weapons.forEach(w => { if(!w.rarity) w.rarity = 'common'; if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroMods); if(w.restriction_type===undefined){ w.restriction_type = 'none'; w.restriction_id = ''; } });
-  parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(h.weapon_proficiency===undefined) h.weapon_proficiency = 'none'; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false; if(h.guild_id===undefined) h.guild_id = '';
+  parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(h.weapon_proficiency===undefined) h.weapon_proficiency = 'none'; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false; if(h.guild_id===undefined) h.guild_id = ''; if(h.veteran_of===undefined) h.veteran_of = '';
     if(!Array.isArray(h.customAbilities)){
       const old = h.abilities || '';
       const title = abilityTitle(old);

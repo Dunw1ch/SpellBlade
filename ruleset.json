@@ -3309,7 +3309,8 @@
       ],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt20qanmco6",
@@ -3341,7 +3342,8 @@
       ],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt34wwc6rq9",
@@ -3377,7 +3379,8 @@
       "keyword_values": {
         "kmthzf1225ee": 16
       },
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt350gp3lj6",
@@ -3416,7 +3419,8 @@
         }
       ],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt3531huum5",
@@ -3450,7 +3454,8 @@
       ],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt354wi4t8m",
@@ -3485,7 +3490,8 @@
       ],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt516geko9y",
@@ -3517,7 +3523,8 @@
       ],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt55yxmz7w7",
@@ -3551,7 +3558,8 @@
       ],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt560up4fce",
@@ -3592,7 +3600,8 @@
         }
       ],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt5hi6faoi6",
@@ -3638,7 +3647,8 @@
       "keyword_values": {
         "kmthzf1225ee": 10
       },
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt5huluphkw",
@@ -3674,7 +3684,8 @@
         }
       ],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt7eter2x6c",
@@ -3708,7 +3719,8 @@
         }
       ],
       "customFeats": [],
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt7evrd6jsb",
@@ -3739,7 +3751,8 @@
         }
       ],
       "customFeats": [],
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt7ezs2f627",
@@ -3772,7 +3785,8 @@
         }
       ],
       "customFeats": [],
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt89ctfdnus",
@@ -3799,7 +3813,8 @@
       "customAbilities": [],
       "customFeats": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt89dqlb9u7",
@@ -3832,7 +3847,8 @@
         }
       ],
       "customFeats": [],
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmt89f8cgg9i",
@@ -3858,7 +3874,8 @@
       "keywords": [],
       "customAbilities": [],
       "customFeats": [],
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmtkcp81plfd",
@@ -3895,7 +3912,8 @@
       "keyword_values": {
         "kmthzf1225ee": 12
       },
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmtlsufdudyk",
@@ -3928,7 +3946,8 @@
         "kmt5h8ghtsk6"
       ],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     },
     {
       "id": "hmtlt6903azg",
@@ -3959,7 +3978,8 @@
       "spell_ids": [],
       "keywords": [],
       "keyword_values": {},
-      "guild_id": ""
+      "guild_id": "",
+      "veteran_of": ""
     }
   ],
   "theme": {
