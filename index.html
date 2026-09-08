@@ -146,7 +146,7 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
    Party Leader). */
 .veteran-compare-panel{ grid-column:1 / -1; padding:14px 16px; border:2px solid var(--gold); border-radius:6px; background:var(--panel-raised); }
 .veteran-compare-title{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; color:var(--gold); margin-bottom:10px; }
-.veteran-compare-grid{ display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:start; }
+.veteran-compare-grid{ display:grid; gap:14px; align-items:start; } /* grid-template-columns set inline per-render — varies with how many Veteran paths a base has */
 .veteran-compare-side{ padding:10px 12px; border:1px solid var(--rule); border-radius:5px; }
 .veteran-compare-arrow{ align-self:center; font-size:22px; color:var(--gold); }
 .veteran-compare-actions{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
@@ -259,6 +259,27 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .play-tabs button:not(.active):hover{ border-color:var(--cyan); color:var(--cyan-bright); }
 .play-tab-count{ font-family:var(--font-data); font-size:12px; font-weight:700; padding:1px 8px; border-radius:10px; background:rgba(0,0,0,.18); }
 .play-tabs button.active .play-tab-count{ background:rgba(0,0,0,.28); }
+
+/* ============================= CAMPAIGN MODE (bones — Map + Party + Chapter) ============================= */
+/* Deliberately mirrors .play-tabs' visual language rather than introducing a new tab style — same
+   "sibling mode, sibling look" reasoning applies here as it did for List Builder's own sub-tabs. */
+.campaign-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+.campaign-tabs button{ font-family:var(--font-display); font-weight:700; font-size:15px; padding:12px 20px; background:transparent; border:2px solid var(--rule); color:var(--muted); cursor:pointer; border-radius:6px; }
+.campaign-tabs button.active{ position:relative; overflow:hidden; background:linear-gradient(135deg, var(--btn-silver-dim) 0%, var(--btn-silver) 35%, var(--btn-silver-bright) 50%, var(--btn-silver) 65%, var(--btn-silver-dim) 100%); border-color:var(--btn-silver); color:var(--on-accent); box-shadow:0 0 14px var(--btn-silver-glow); text-shadow:0 1px 0 rgba(255,255,255,.4); }
+.campaign-tabs button:not(.active):hover{ border-color:var(--cyan); color:var(--cyan-bright); }
+/* The Chapter track — a simple linear stand-in for a real explorable map, until Exploration
+   Locations exist to actually place on one. */
+.campaign-map-track{ display:flex; align-items:center; flex-wrap:wrap; gap:0; margin-top:14px; }
+.campaign-map-node{ width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-data); font-weight:700; font-size:14px; border:2px solid var(--rule); color:var(--muted); flex-shrink:0; }
+.campaign-map-node-done{ background:var(--btn-silver-dim); border-color:var(--btn-silver); color:var(--on-accent); }
+.campaign-map-node-current{ background:var(--gold); border-color:var(--gold); color:var(--on-accent); box-shadow:0 0 14px var(--gold-glow); }
+.campaign-map-node-future{ background:var(--panel); }
+.campaign-map-connector{ width:22px; height:2px; background:var(--rule); flex-shrink:0; }
+.campaign-currency-row{ display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; }
+.campaign-currency{ flex:1 1 160px; padding:14px; border:1px solid var(--rule); border-radius:6px; background:var(--panel-raised); text-align:center; }
+.campaign-currency-label{ font-family:var(--font-data); font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); margin-bottom:6px; }
+.campaign-currency-value{ font-family:var(--font-display); font-size:28px; font-weight:700; color:var(--ink); margin-bottom:10px; }
+.campaign-currency-btns{ display:flex; gap:8px; justify-content:center; }
 
 .roster-list{ display:flex; flex-direction:column; gap:10px; }
 .roster-card{ display:flex; justify-content:space-between; align-items:center; gap:12px; border:1px solid var(--rule); background:var(--panel-raised); background-image:var(--noise-texture); background-blend-mode:overlay; border-radius:5px; padding:12px 14px; flex-wrap:wrap; }
@@ -520,6 +541,7 @@ table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-
   <nav class="mode-tabs">
     <button data-mode="play" class="active" onclick="switchMode('play')">List Builder</button>
     <button data-mode="battle" onclick="switchMode('battle')">Battle Mode</button>
+    <button data-mode="campaign" onclick="switchMode('campaign')">Campaign</button>
     <button data-mode="admin" onclick="switchMode('admin')">Admin Mode</button>
   </nav>
 </header>
@@ -539,6 +561,10 @@ table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-
 
   <section id="battlePanel" class="mode-panel" style="display:none">
     <div id="battleContent"></div>
+  </section>
+
+  <section id="campaignPanel" class="mode-panel" style="display:none">
+    <div id="campaignContent"></div>
   </section>
 
   <section id="adminPanel" class="mode-panel" style="display:none">
@@ -694,7 +720,7 @@ function hirelingFactionGuildLabel(h){
 }
 // The single Hireling (if any) bound as the Veteran upgrade of this one, via that Hireling's own
 // veteran_of field — a reverse lookup, same pattern as guildForFeat().
-function veteranUpgradeFor(baseId){ return gameData.hirelings.find(h => h.veteran_of === baseId) || null; }
+function veteranUpgradesFor(baseId){ return gameData.hirelings.filter(h => h.veteran_of === baseId); }
 function weaponName(id){ const w = byId(gameData.weapons, id); return w ? w.name : '—'; }
 // Some Hirelings have a natural weapon (claws, bite, etc.) that isn't worth a full Weapons catalog
 // entry. If a custom weapon name is set it takes priority for display; otherwise falls back to the
@@ -1659,9 +1685,9 @@ function removeHireling(instanceId){
 let veteranCompareId = null; // instanceId... actually the BASE Hireling's catalog id, whose compare panel is open
 function openVeteranCompare(baseId){ veteranCompareId = baseId; renderPlay(); }
 function closeVeteranCompare(){ veteranCompareId = null; renderPlay(); }
-function confirmVeteranUpgrade(baseId){
-  const veteran = veteranUpgradeFor(baseId);
-  if(!veteran) { closeVeteranCompare(); return; }
+function confirmVeteranUpgrade(baseId, veteranId){
+  const veteran = byId(gameData.hirelings, veteranId);
+  if(!veteran || veteran.veteran_of !== baseId) { closeVeteranCompare(); return; }
   const added = addHireling(veteran.id);
   if(added){
     veteranCompareId = null;
@@ -2217,11 +2243,15 @@ function renderHeroSchoolFocusStep(hero){
 // A compact stat/loadout summary for one side of the Veteran-upgrade comparison — deliberately
 // smaller than the full picker card (no description/keywords), since the point here is a fast
 // side-by-side read, not the complete reference.
-function renderHirelingMiniSummary(h){
+// The `base` param is only passed when rendering a VETERAN option being compared against it —
+// that's what triggers showing the cost delta and this option's own "Confirm" button. Called
+// without it (for the base's own column) it's just a plain read-only summary.
+function renderHirelingMiniSummary(h, base){
   const weapon = hirelingWeaponInfo(h);
   const spells = (h.spell_ids||[]).map(id => byId(gameData.spells,id)).filter(Boolean);
+  const delta = base ? h.gold_cost - base.gold_cost : null;
   return '<div class="veteran-compare-side">'
-    + '<div class="opt-cost">'+h.gold_cost+'g</div>'
+    + '<div class="opt-cost">'+h.gold_cost+'g'+(delta!=null? ' <span style="color:var(--gold);">('+(delta>=0?'+':'')+delta+'g)</span>':'')+'</div>'
     + '<div class="opt-name">'+escapeHtml(h.name)+'</div>'
     + statBlock([
         {label:'Haste', value:h.stats.haste},
@@ -2234,23 +2264,25 @@ function renderHirelingMiniSummary(h){
     + (weapon? '<div class="unit-card-ability">Weapon: '+escapeHtml(weapon.name)+(weapon.damage?' ('+formatDamage(weapon.damage)+')':'')+'</div>':'')
     + (spells.length? '<div class="unit-card-ability">Spells: '+spells.map(s=>escapeHtml(s.name)).join(', ')+'</div>':'')
     + (h.customAbilities&&h.customAbilities.length? '<div class="unit-card-ability">'+namedEntriesList(h.customAbilities,true).join('<br>')+'</div>':'')
+    + (base? '<button class="btn primary small" style="margin-top:8px;width:100%;" onclick="event.stopPropagation(); confirmVeteranUpgrade(\''+base.id+'\',\''+h.id+'\')">Confirm \u2014 Recruit</button>':'')
     + '</div>';
 }
-// The base-vs-veteran comparison shown when a player clicks "Upgrade to Veteran" on a Hireling's
-// card — lets them see exactly what changes (and what it costs) before committing. Confirming
-// recruits the Veteran directly; it's a separate catalog entry, so nothing further needs to treat
-// it specially anywhere else in the app (Battle Mode, print, gold total all just read its own data).
-function renderVeteranComparePanel(base, veteran){
-  const delta = veteran.gold_cost - base.gold_cost;
+// The base-vs-veteran(s) comparison shown when a player clicks "Upgrade to Veteran" on a Hireling's
+// card — lets them see exactly what changes (and what it costs) before committing. A base can have
+// more than one Veteran path bound to it (e.g. "Veteran Archer" vs "Veteran Berserker"); all of
+// them show side by side here, each with its own Confirm button, rather than making the player
+// choose a path before seeing what it actually offers. Confirming recruits that Veteran directly;
+// it's a separate catalog entry, so nothing further needs to treat it specially anywhere else in
+// the app (Battle Mode, print, gold total all just read its own data).
+function renderVeteranComparePanel(base, veterans){
   return '<div class="veteran-compare-panel">'
-    + '<div class="veteran-compare-title">Upgrade to Veteran <span class="tag" style="color:var(--gold);border-color:var(--gold);">'+(delta>=0?'+':'')+delta+'g</span></div>'
-    + '<div class="veteran-compare-grid">'
+    + '<div class="veteran-compare-title">Upgrade to Veteran'+(veterans.length>1?' \u2014 choose a path':'')+'</div>'
+    + '<div class="veteran-compare-grid" style="grid-template-columns:1fr auto repeat('+veterans.length+',1fr);">'
       + renderHirelingMiniSummary(base)
       + '<div class="veteran-compare-arrow">&#8594;</div>'
-      + renderHirelingMiniSummary(veteran)
+      + veterans.map(v => renderHirelingMiniSummary(v, base)).join('')
     + '</div>'
     + '<div class="veteran-compare-actions">'
-      + '<button class="btn primary small" onclick="event.stopPropagation(); confirmVeteranUpgrade(\''+base.id+'\')">Confirm \u2014 Recruit '+escapeHtml(veteran.name)+'</button>'
       + '<button class="btn ghost small" onclick="event.stopPropagation(); closeVeteranCompare()">Cancel</button>'
     + '</div>'
     + '</div>';
@@ -2277,11 +2309,11 @@ function renderHirelingsTabContent(){
       + (h.customAbilities&&h.customAbilities.length? '<div class="unit-card-ability">'+namedEntriesList(h.customAbilities,true).join('<br>')+'</div>':'')
       + (h.customFeats&&h.customFeats.length? '<div class="unit-card-ability">'+namedEntriesList(h.customFeats,true).join('<br>')+'</div>':'')
       + '</div>';
-    const veteran = veteranUpgradeFor(h.id);
-    const veteranAvailable = veteran && hirelingEligible(veteran);
+    const veterans = veteranUpgradesFor(h.id).filter(v => hirelingEligible(v));
+    const veteranAvailable = veterans.length > 0;
     const comparing = veteranCompareId === h.id;
     const upgradeButton = veteranAvailable
-      ? '<button class="btn ghost small" style="margin-top:8px;" onclick="event.stopPropagation(); '+(comparing?'closeVeteranCompare()':"openVeteranCompare('"+h.id+"')")+'">'+(comparing?'Hide Comparison':'\u2605 Upgrade to Veteran')+'</button>'
+      ? '<button class="btn ghost small" style="margin-top:8px;" onclick="event.stopPropagation(); '+(comparing?'closeVeteranCompare()':"openVeteranCompare('"+h.id+"')")+'">'+(comparing?'Hide Comparison':'\u2605 Upgrade to Veteran'+(veterans.length>1?' ('+veterans.length+' paths)':''))+'</button>'
       : '';
     return '<div class="opt-card '+(!eligible?'locked':'')+'" '+cardAttrs("addHireling('"+h.id+"')")+'>'
       + '<div class="opt-cost">'+h.gold_cost+'g</div>'
@@ -2301,7 +2333,7 @@ function renderHirelingsTabContent(){
       + (!eligible? '<div class="opt-lock-note">'+reason+'</div>':'')
       + upgradeButton
       + '</div>'
-      + (comparing && veteranAvailable? renderVeteranComparePanel(h, veteran) : '');
+      + (comparing && veteranAvailable? renderVeteranComparePanel(h, veterans) : '');
   }).join('');
 
   const pickRows = list.hirelings.map(p => {
@@ -2366,10 +2398,12 @@ function switchMode(m){
   mode = m;
   document.getElementById('playPanel').style.display = m==='play' ? 'block' : 'none';
   document.getElementById('battlePanel').style.display = m==='battle' ? 'block' : 'none';
+  document.getElementById('campaignPanel').style.display = m==='campaign' ? 'block' : 'none';
   document.getElementById('adminPanel').style.display = m==='admin' ? 'block' : 'none';
   document.querySelectorAll('.mode-tabs button').forEach(b => b.classList.toggle('active', b.dataset.mode===m));
   if(m==='play') renderPlay();
   else if(m==='battle') renderBattle();
+  else if(m==='campaign') renderCampaign();
   else renderAdmin();
 }
 // Refreshes whichever mode panel is actually on screen right now. A few actions (moving Party
@@ -2378,6 +2412,7 @@ function switchMode(m){
 // that actually updates, instead of always assuming List Builder.
 function renderCurrentMode(){
   if(mode==='battle') renderBattle();
+  else if(mode==='campaign') renderCampaign();
   else if(mode==='admin') renderAdmin();
   else renderPlay();
 }
@@ -3921,5 +3956,6 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+<script src="./campaign.js"></script>
 </body>
 </html>
