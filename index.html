@@ -328,8 +328,13 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .tracker-valor .tracker-value{ color:var(--cyan-bright); background:var(--cyan-glow); }
 .activation-panel{ background:var(--panel); background-image:var(--noise-texture); background-blend-mode:overlay; border:1px solid var(--rule); border-radius:5px; padding:14px 16px; margin-bottom:20px; }
 .activation-panel-title{ font-family:var(--font-display); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--cyan-bright); margin-bottom:8px; }
-.activation-row{ display:flex; align-items:center; gap:10px; padding:7px 6px; border-bottom:1px solid var(--rule); cursor:pointer; border-radius:3px; }
-.activation-row:last-child{ border-bottom:none; }
+.activation-row{ display:flex; align-items:center; gap:10px; padding:7px 6px; cursor:pointer; border-radius:3px; }
+/* Each row now lives inside its own .activation-row-wrap (to hold its optional expanded detail
+   right underneath), so the divider between units belongs on the wrapper — :last-child on the bare
+   row itself would always match (each is an only-child within its own wrapper) and never remove
+   the border from the genuinely last unit. */
+.activation-row-wrap{ border-bottom:1px solid var(--rule); }
+.activation-row-wrap:last-child{ border-bottom:none; }
 .activation-row:hover{ background:var(--panel-raised); background-image:var(--noise-texture); background-blend-mode:overlay; }
 .activation-row:focus-visible{ outline:2px solid var(--pink-bright); outline-offset:-2px; }
 .activation-rank{ font-family:var(--font-data); font-size:11px; color:var(--muted); width:18px; text-align:right; flex-shrink:0; }
@@ -337,6 +342,15 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .activation-name{ font-family:var(--font-display); font-weight:700; font-size:13.5px; color:var(--ink); }
 .activation-sub{ font-size:11.5px; color:var(--muted); }
 .activation-haste{ font-family:var(--font-data); font-weight:800; font-size:16px; color:var(--pink-bright); min-width:28px; text-align:right; flex-shrink:0; }
+/* The Activation Order row is now the ONLY place a unit is listed — no separate card list below
+   it. Each row stays this compact by default (rank/name/sub/Haste/Armor/chevron only); tapping it
+   toggles battleExpandedIds and reveals renderBattleHeroCard/renderBattleHirelingCard's full detail
+   underneath, right in place. */
+.activation-stat{ font-family:var(--font-data); font-weight:800; font-size:16px; color:var(--pink-bright); min-width:30px; text-align:right; flex-shrink:0; display:inline-flex; align-items:center; justify-content:flex-end; }
+.activation-armor{ color:var(--ink); }
+.activation-armor .stat-icon{ margin-right:3px; }
+.activation-toggle{ font-size:12px; color:var(--muted); flex-shrink:0; width:14px; text-align:center; }
+.activation-row-detail{ padding:2px 6px 12px; }
 .unit-card{ background:var(--panel); background-image:var(--noise-texture); background-blend-mode:overlay; border:1px solid var(--rule); border-radius:5px; margin-bottom:14px; overflow:hidden; transition:box-shadow .3s ease, border-color .3s ease; }
 .unit-card.flash-highlight{ border-color:var(--pink); box-shadow:0 0 16px var(--pink-glow), 0 3px 10px rgba(0,0,0,.55); }
 .unit-card-head{ display:flex; flex-direction:column; gap:10px; padding:14px 18px; cursor:pointer; }
@@ -346,7 +360,7 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .unit-card-title{ display:flex; flex-direction:column; gap:2px; }
 .unit-card-name{ font-family:var(--font-display); font-weight:700; font-size:16px; color:var(--ink); }
 .unit-card-sub{ font-size:12px; color:var(--muted); }
-.unit-card-stats-wrap{ display:flex; flex-direction:column; gap:6px; width:100%; }
+.unit-card-stats-wrap{ display:flex; flex-direction:column; gap:4px; width:100%; }
 .unit-card-stats{ display:flex; gap:8px; flex-wrap:wrap; }
 .unit-card-ability{ font-size:12.5px; color:var(--cyan-bright); }
 .unit-card-stats .tag, .stat-tags .tag{
@@ -362,26 +376,26 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .stat-block-label{ font-family:var(--font-data); font-size:10px; text-transform:uppercase; letter-spacing:.03em; color:var(--cyan-bright); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 .stat-block-value{ font-family:var(--font-data); font-size:15px; font-weight:700; color:var(--pink-bright); margin-top:3px; }
 
-.battle-stat-table, .battle-weapon-table{ width:100%; border-collapse:collapse; margin:2px 0 6px; }
-.battle-stat-table th, .battle-weapon-table th{ font-family:var(--font-display); font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:2px 4px 5px; white-space:nowrap; }
+.battle-stat-table, .battle-weapon-table{ width:100%; border-collapse:collapse; margin:2px 0 4px; }
+.battle-stat-table th, .battle-weapon-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:1px 4px 3px; white-space:nowrap; }
 .battle-stat-table th{ color:var(--cyan-bright); }
 .battle-weapon-table th{ color:var(--pink-bright); }
 .battle-weapon-table th:first-child, .battle-weapon-table td:first-child,
 .battle-weapon-table th:last-child, .battle-weapon-table td:last-child{ text-align:left; }
-.battle-stat-table .divider-row td{ padding:0; height:3px; border:none; background:linear-gradient(90deg, var(--cyan), var(--cyan-bright), var(--cyan)); box-shadow:0 0 8px var(--cyan-glow); }
-.battle-weapon-table .divider-row td{ padding:0; height:3px; border:none; background:linear-gradient(90deg, var(--pink), var(--pink-bright), var(--pink)); box-shadow:0 0 8px var(--pink-glow); }
-.battle-stat-table td{ text-align:center; font-family:var(--font-data); font-weight:700; font-size:15px; color:var(--pink-bright); padding:4px 4px 2px; text-shadow:0 0 8px var(--pink-glow); }
-.battle-weapon-table td{ text-align:center; font-family:var(--font-data); font-weight:600; font-size:12.5px; color:var(--ink); padding:6px 5px; border-bottom:1px solid var(--rule); vertical-align:top; }
+.battle-stat-table .divider-row td{ padding:0; height:2px; border:none; background:linear-gradient(90deg, var(--cyan), var(--cyan-bright), var(--cyan)); box-shadow:0 0 8px var(--cyan-glow); }
+.battle-weapon-table .divider-row td{ padding:0; height:2px; border:none; background:linear-gradient(90deg, var(--pink), var(--pink-bright), var(--pink)); box-shadow:0 0 8px var(--pink-glow); }
+.battle-stat-table td{ text-align:center; font-family:var(--font-data); font-weight:700; font-size:13px; color:var(--pink-bright); padding:2px 4px; text-shadow:0 0 8px var(--pink-glow); }
+.battle-weapon-table td{ text-align:center; font-family:var(--font-data); font-weight:600; font-size:12px; color:var(--ink); padding:4px 5px; border-bottom:1px solid var(--rule); vertical-align:top; }
 .battle-weapon-table tr:last-child td{ border-bottom:none; }
 .battle-weapon-table .wt-name{ font-weight:700; color:var(--ink); font-family:var(--font-display); }
 .battle-weapon-table .wt-dmg{ color:var(--pink-bright); font-weight:800; }
 
-.battle-spell-table{ width:100%; border-collapse:collapse; margin:2px 0 6px; }
-.battle-spell-table th{ font-family:var(--font-display); font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:2px 4px 5px; white-space:nowrap; color:var(--gold); }
+.battle-spell-table{ width:100%; border-collapse:collapse; margin:2px 0 4px; }
+.battle-spell-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:1px 4px 3px; white-space:nowrap; color:var(--gold); }
 .battle-spell-table th:first-child, .battle-spell-table td:first-child,
 .battle-spell-table th:last-child, .battle-spell-table td:last-child{ text-align:left; }
-.battle-spell-table .divider-row td{ padding:0; height:3px; border:none; background:linear-gradient(90deg, var(--gold), #e6c88a, var(--gold)); box-shadow:0 0 8px var(--gold-glow); }
-.battle-spell-table td{ text-align:center; font-family:var(--font-data); font-weight:600; font-size:12.5px; color:var(--ink); padding:6px 5px; border-bottom:1px solid var(--rule); vertical-align:top; }
+.battle-spell-table .divider-row td{ padding:0; height:2px; border:none; background:linear-gradient(90deg, var(--gold), #e6c88a, var(--gold)); box-shadow:0 0 8px var(--gold-glow); }
+.battle-spell-table td{ text-align:center; font-family:var(--font-data); font-weight:600; font-size:12px; color:var(--ink); padding:4px 5px; border-bottom:1px solid var(--rule); vertical-align:top; }
 .battle-spell-table tr:last-child td{ border-bottom:none; }
 .battle-spell-table .st-name{ font-weight:700; color:var(--ink); font-family:var(--font-display); }
 .battle-spell-table .st-dmg{ color:var(--gold); font-weight:800; }
@@ -487,16 +501,16 @@ footer.foot{ text-align:center; color:var(--muted); font-size:12.5px; padding:26
 .print-empty{ color:#666 !important; font-size:9px; }
 .print-card-title{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:15px; border-bottom:1.5px solid #111; padding-bottom:2px; margin-bottom:1px; letter-spacing:.01em; }
 .print-card-sub{ font-size:8.5px; color:#444 !important; margin-bottom:3px; }
-table.print-stat-table, table.print-weapon-table, table.print-spell-table{ width:auto; border-collapse:collapse; margin-bottom:3px; }
-table.print-stat-table th, table.print-weapon-table th, table.print-spell-table th{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:7.5px; text-transform:uppercase; letter-spacing:.03em; text-align:center; padding:1px 9px 2px; }
+table.print-stat-table, table.print-weapon-table, table.print-spell-table{ width:auto; border-collapse:collapse; margin-bottom:2px; }
+table.print-stat-table th, table.print-weapon-table th, table.print-spell-table th{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:7.5px; text-transform:uppercase; letter-spacing:.03em; text-align:center; padding:1px 5px 1px; }
 table.print-weapon-table th:first-child, table.print-weapon-table td:first-child,
 table.print-weapon-table th:last-child, table.print-weapon-table td:last-child,
 table.print-spell-table th:first-child, table.print-spell-table td:first-child,
 table.print-spell-table th:last-child, table.print-spell-table td:last-child{ text-align:left; }
-#printSheet .print-divider-teal td{ background:#5b93b8 !important; padding:0; height:2.5px; border:none; }
-#printSheet .print-divider-pink td{ background:#d9789e !important; padding:0; height:2.5px; border:none; }
-#printSheet .print-divider-gold td{ background:#c9a227 !important; padding:0; height:2.5px; border:none; }
-table.print-stat-table td, table.print-weapon-table td, table.print-spell-table td{ text-align:center; font-family:'JetBrains Mono','Consolas',monospace; font-weight:700; font-size:9.5px; padding:2px 9px 3px; }
+#printSheet .print-divider-teal td{ background:#5b93b8 !important; padding:0; height:2px; border:none; }
+#printSheet .print-divider-pink td{ background:#d9789e !important; padding:0; height:2px; border:none; }
+#printSheet .print-divider-gold td{ background:#c9a227 !important; padding:0; height:2px; border:none; }
+table.print-stat-table td, table.print-weapon-table td, table.print-spell-table td{ text-align:center; font-family:'JetBrains Mono','Consolas',monospace; font-weight:700; font-size:9px; padding:1px 5px 2px; }
 table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-child){ border-right:1px solid #ccc; }
 .print-spell-desc{ font-size:8.5px; color:#333 !important; margin:1px 0 4px; }
 .print-flavor-text{ font-size:8.5px; font-style:italic; color:#333 !important; margin:1px 0 4px; }
@@ -615,13 +629,14 @@ const ADMIN_TABS = [
   { key:'armor', label:'Armor' },
   { key:'items', label:'Items' },
   { key:'feats', label:'Feats' },
+  { key:'wounds', label:'Wounds' },
   { key:'spellSchools', label:'Schools' },
   { key:'spells', label:'Spells' },
   { key:'hirelings', label:'Hirelings' },
   { key:'keywords', label:'Keywords' },
   { key:'theme', label:'Colors' },
 ];
-const SINGULAR = { factions:'faction', classes:'class', guilds:'guild', weapons:'weapon', armor:'armor', items:'item', feats:'feat', spellSchools:'school', spells:'spell', hirelings:'hireling', keywords:'keyword' };
+const SINGULAR = { factions:'faction', classes:'class', guilds:'guild', weapons:'weapon', armor:'armor', items:'item', feats:'feat', wounds:'wound', spellSchools:'school', spells:'spell', hirelings:'hireling', keywords:'keyword' };
 
 /* ============================= HELPERS ============================= */
 function byId(arr, id){ return arr.find(x => x.id === id); }
@@ -2469,6 +2484,7 @@ function battleActivationOrder(){
       name: heroDisplayName(hero),
       sub: cls ? cls.name : 'No Class',
       haste: heroHaste,
+      armor: heroEffectiveArmor(hero),
       isLeader: list.partyLeaderId === hero.instanceId,
     });
     // A Warlock's (or any has_pact Class's) Familial Pact minion fights as its own independent
@@ -2480,7 +2496,7 @@ function battleActivationOrder(){
         const pactInstanceId = 'pact-'+hero.instanceId;
         units.push({
           kind:'pactMinion', ref:{ instanceId:pactInstanceId, hirelingId:minion.id }, ownerName:(heroDisplayName(hero)),
-          instanceId:pactInstanceId, name: minion.name, sub:'Familial Pact', haste: heroHaste, isLeader:false,
+          instanceId:pactInstanceId, name: minion.name, sub:'Familial Pact', haste: heroHaste, armor: minion.armor_value, isLeader:false,
         });
       }
     }
@@ -2490,7 +2506,7 @@ function battleActivationOrder(){
     if(!h) return;
     units.push({
       kind:'hireling', ref:pick, instanceId:pick.instanceId,
-      name: h.name, sub:'Hireling', haste: h.stats.haste, isLeader:false,
+      name: h.name, sub:'Hireling', haste: h.stats.haste, armor: h.armor_value, isLeader:false,
     });
   });
   units.sort((a,b) => (b.haste - a.haste) || a.name.localeCompare(b.name));
@@ -2508,30 +2524,33 @@ function groupUnitsHeroesFirst(units){
   return heroesAndPacts.concat(hirelings);
 }
 
+// This is now the ONLY place units are listed in Battle Mode — there's no separate card list below
+// it anymore. Each row shows just Haste and Armor (the two stats worth a glance without opening
+// anything) and expands in place, in true Haste order, when tapped — full stats, weapons, spells,
+// abilities, everything else lives behind that tap via renderBattleHeroCard/renderBattleHirelingCard.
 function renderActivationPanel(units){
   if(!units.length) return '';
   return '<div class="activation-panel">'
     + '<div class="activation-panel-title">Activation Order — Haste, High to Low</div>'
-    + units.map((u,i) =>
-        '<div class="activation-row" '+cardAttrs("jumpToBattleUnit('battle-unit-"+u.instanceId+"')")+'>'
-          + '<span class="activation-rank">'+(i+1)+'</span>'
-          + '<div class="activation-info"><span class="activation-name">'+(u.isLeader?'<span style="color:var(--gold);" title="Party Leader (+1 Haste)">&#9733;</span> ':'')+escapeHtml(u.name)+'</span><span class="activation-sub">'+escapeHtml(u.sub)+'</span></div>'
-          + '<span class="activation-haste">'+u.haste+'</span>'
-        + '</div>'
-      ).join('')
+    + units.map((u,i) => renderActivationRow(u, i)).join('')
     + '</div>';
 }
-
-// Scrolls a unit's card into view from an Activation Order row and briefly flashes its border/glow
-// so it's easy to spot, e.g. when checking who's up next mid-game.
-function jumpToBattleUnit(domId){
-  const el = document.getElementById(domId);
-  if(!el) return;
-  el.scrollIntoView({behavior:'smooth', block:'center'});
-  el.classList.add('flash-highlight');
-  setTimeout(() => el.classList.remove('flash-highlight'), 1400);
+function renderActivationRow(u, i){
+  const expanded = battleExpandedIds.includes(u.instanceId);
+  const detailHtml = expanded
+    ? (u.kind==='hero' ? renderBattleHeroCard(u.ref) : renderBattleHirelingCard(u.ref, u.kind==='pactMinion' ? u.ownerName : undefined, u.kind==='pactMinion' ? u.haste : undefined))
+    : '';
+  return '<div class="activation-row-wrap">'
+    + '<div class="activation-row" '+cardAttrs("toggleBattleCard('"+u.instanceId+"')")+'>'
+      + '<span class="activation-rank">'+(i+1)+'</span>'
+      + '<div class="activation-info"><span class="activation-name">'+(u.isLeader?'<span style="color:var(--gold);" title="Party Leader (+1 Haste)">&#9733;</span> ':'')+escapeHtml(u.name)+'</span><span class="activation-sub">'+escapeHtml(u.sub)+'</span></div>'
+      + '<span class="activation-stat" title="Haste">'+u.haste+'</span>'
+      + '<span class="activation-stat activation-armor" title="Armor">'+ICON_SHIELD+u.armor+'</span>'
+      + '<span class="activation-toggle">'+(expanded?'&#9650;':'&#9660;')+'</span>'
+    + '</div>'
+    + (expanded ? '<div class="activation-row-detail">'+detailHtml+'</div>' : '')
+    + '</div>';
 }
-
 // Shown once, at the top of Battle Mode, for whichever Faction the List has selected — the
 // Faction's own bespoke "Ability" concept has been retired in favor of Faction-Wide Feats (picked
 // in List Builder via renderFactionFeatPicker, up to 4 of them, capped at list.factionFeatIds).
@@ -2619,7 +2638,6 @@ function renderBattle(){
 
   const units = battleActivationOrder();
   html += renderActivationPanel(units);
-  html += groupUnitsHeroesFirst(units).map(u => u.kind==='hero' ? renderBattleHeroCard(u.ref) : renderBattleHirelingCard(u.ref, u.kind==='pactMinion' ? u.ownerName : undefined, u.kind==='pactMinion' ? u.haste : undefined)).join('');
 
   document.getElementById('battleContent').innerHTML = html;
 }
@@ -2638,7 +2656,7 @@ function battleStatTableHTML(stats){
 function battleWeaponTableHTML(rows){
   if(!rows.length) return '';
   const table = '<table class="battle-weapon-table">'
-    + '<tr><th>Weapon</th><th>Range</th><th>Damage</th><th>Accuracy</th><th>Keywords</th></tr>'
+    + '<tr><th>Weapon</th><th>Range</th><th>Dmg</th><th>Acc</th><th>Keywords</th></tr>'
     + '<tr class="divider-row"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td class="wt-name">'+r.name+'</td><td>'+r.range+'</td><td class="wt-dmg">'+r.damage+'</td><td>'+(r.accuracy>0?'+':'')+r.accuracy+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
@@ -2660,7 +2678,7 @@ function groupHeroWeapons(hero){
 function battleSpellTableHTML(rows){
   if(!rows.length) return '';
   return '<table class="battle-spell-table">'
-    + '<tr><th>Spell</th><th>Lvl</th><th>Range</th><th>Damage</th><th>Keywords</th></tr>'
+    + '<tr><th>Spell</th><th>Lvl</th><th>Range</th><th>Dmg</th><th>Keywords</th></tr>'
     + '<tr class="divider-row"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td class="st-name">'+r.name+'</td><td>'+r.level+'</td><td>'+r.range+'</td><td class="st-dmg">'+r.damage+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
@@ -2672,7 +2690,6 @@ function renderBattleHeroCard(hero){
   const items = hero.itemIds.map(id => byId(gameData.items,id)).filter(Boolean);
   const feats = hero.featIds.map(id => byId(gameData.feats,id)).filter(Boolean);
   const spells = hero.spellIds.map(id => byId(gameData.spells,id)).filter(Boolean);
-  const expanded = battleExpandedIds.includes(hero.instanceId);
 
   const weaponTableHTML = battleWeaponTableHTML(groupHeroWeapons(hero).map(g => {
     const w = g.w;
@@ -2697,13 +2714,11 @@ function renderBattleHeroCard(hero){
     keywords: keywordChipsInline(s.keywords, s.keyword_values) || '\u2014',
   })));
 
-  const isLeader = list.partyLeaderId === hero.instanceId;
-  const subParts = [ cls ? escapeHtml(cls.name) : 'No Class' ];
-  if(isLeader) subParts.push('<span style="color:var(--gold);">&#9733; Party Leader</span>');
   const abilityLine = (cls && cls.signature_ability) ? '<div class="unit-card-ability">'+escapeHtml(signatureAbilityDisplayName(cls))+'</div>' : '';
   const classKeywordsLine = cls ? keywordChipsHTML(cls.keywords, cls.keyword_values) : '';
   const featsLine = feats.length ? '<div class="unit-card-ability">Feats: '+feats.map(f => escapeHtml(f.name)+' ('+highlightCurrency(escapeHtml(featCostText(f)))+')').join(', ')+'</div>' : '';
   const armorAbilityLine = (armorObj && armorObj.abilities) ? '<div class="unit-card-ability">'+rarityStyledName(armorObj)+': '+highlightCurrency(escapeHtml(armorObj.abilities))+'</div>' : '';
+  const itemsLine = items.length ? '<div class="unit-card-ability">Items: '+items.map(it => rarityStyledName(it)).join(', ')+'</div>' : '';
   const focus = hero.schoolFocus;
   const focusSpell = focus && focus.spellId ? byId(gameData.spells, focus.spellId) : null;
   const focusLine = (focus && focus.school && focus.effectType && focusSpell)
@@ -2745,14 +2760,11 @@ function renderBattleHeroCard(hero){
   }
   if(!body) body = '<p class="empty-note">No further details recorded for this Hero.</p>';
 
-  return '<div class="unit-card '+(expanded?'expanded':'')+'" id="battle-unit-'+hero.instanceId+'">'
-    + '<div class="unit-card-head" '+cardAttrs("toggleBattleCard('"+hero.instanceId+"')")+'>'
-      + '<div class="unit-card-head-top">'
-        + '<div class="unit-card-title"><span class="unit-card-name">'+escapeHtml(heroDisplayName(hero))+'</span><span class="unit-card-sub">'+subParts.join(' · ')+'</span></div>'
-        + '<span class="unit-card-toggle">'+(expanded?'&#9650; Hide details':'&#9660; Show details')+'</span>'
-      + '</div>'
-      + '<div class="unit-card-stats-wrap">'+weaponTableHTML+statBlockHTML+spellTableHTML+abilityLine+classKeywordsLine+featsLine+armorAbilityLine+focusLine+'</div>'
-    + '</div>'
+  // No clickable head/name here anymore — the Activation Order row above already owns the
+  // name/Haste/Armor/expand-collapse trigger; this function is now only ever called once expanded,
+  // to render everything else in one go.
+  return '<div class="unit-card expanded">'
+    + '<div class="unit-card-stats-wrap">'+weaponTableHTML+statBlockHTML+spellTableHTML+abilityLine+classKeywordsLine+featsLine+armorAbilityLine+itemsLine+focusLine+'</div>'
     + '<div class="unit-card-body">'+body+'</div>'
     + '</div>';
 }
@@ -2760,7 +2772,6 @@ function renderBattleHeroCard(hero){
 function renderBattleHirelingCard(pick, pactOwnerName, hasteOverride){
   const h = byId(gameData.hirelings, pick.hirelingId);
   if(!h) return '';
-  const expanded = battleExpandedIds.includes(pick.instanceId);
   const weapon = hirelingWeaponInfo(h);
   const toHitBonus = hirelingWeaponToHitBonus(h);
   const weaponRows = weapon ? [{
@@ -2787,11 +2798,12 @@ function renderBattleHirelingCard(pick, pactOwnerName, hasteOverride){
   const displayedHaste = hasteOverride!=null ? hasteOverride : h.stats.haste;
   const statBlockHTML = battleStatTableHTML({ haste:displayedHaste, move:h.stats.move, armor:h.armor_value, body:h.stats.body, mind:h.stats.mind, spirit:h.stats.spirit });
 
-  // A pact minion (pactOwnerName set) shows who summoned it instead of the generic Faction/Hireling
-  // subtitle — same card, same stat block, just a different, more informative sub-line.
-  const subParts = pactOwnerName
-    ? [ '<span style="color:var(--cyan-bright);">Familial Pact</span> — summoned by '+escapeHtml(pactOwnerName) ]
-    : [ escapeHtml(hirelingFactionGuildLabel(h))+' Hireling' ];
+  // A pact minion (pactOwnerName set) gets a line naming who summoned it — genuinely useful context
+  // that the Activation Order row's generic "Familial Pact" sub-label doesn't carry on its own.
+  // Ordinary Hirelings get their Faction/Guild affiliation instead, same as before.
+  const subLine = '<div class="unit-card-ability">'+(pactOwnerName
+    ? '<span style="color:var(--cyan-bright);">Familial Pact</span> \u2014 summoned by '+escapeHtml(pactOwnerName)
+    : escapeHtml(hirelingFactionGuildLabel(h))+' Hireling')+'</div>';
   const abilityNames = (h.customAbilities||[]).map(a=>a.name).filter(Boolean).concat((h.customFeats||[]).map(f=>f.name).filter(Boolean));
   const abilityLine = abilityNames.length ? '<div class="unit-card-ability">Ability: '+escapeHtml(abilityNames.join(', '))+'</div>' : '';
   const keywordsLine = keywordChipsHTML(h.keywords, h.keyword_values);
@@ -2822,14 +2834,10 @@ function renderBattleHirelingCard(pick, pactOwnerName, hasteOverride){
   }
   if(!body) body = '<p class="empty-note">No further details recorded for this Hireling.</p>';
 
-  return '<div class="unit-card '+(expanded?'expanded':'')+'" id="battle-unit-'+pick.instanceId+'">'
-    + '<div class="unit-card-head" '+cardAttrs("toggleBattleCard('"+pick.instanceId+"')")+'>'
-      + '<div class="unit-card-head-top">'
-        + '<div class="unit-card-title"><span class="unit-card-name">'+escapeHtml(h.name)+'</span><span class="unit-card-sub">'+subParts.join(' · ')+'</span></div>'
-        + '<span class="unit-card-toggle">'+(expanded?'&#9650; Hide details':'&#9660; Show details')+'</span>'
-      + '</div>'
-      + '<div class="unit-card-stats-wrap">'+weaponTableHTML+statBlockHTML+spellTableHTML+abilityLine+keywordsLine+'</div>'
-    + '</div>'
+  // No clickable head/name here anymore — the Activation Order row above already owns the
+  // name/Haste/Armor/expand-collapse trigger; this function is now only ever called once expanded.
+  return '<div class="unit-card expanded">'
+    + '<div class="unit-card-stats-wrap">'+subLine+weaponTableHTML+statBlockHTML+spellTableHTML+abilityLine+keywordsLine+'</div>'
     + '<div class="unit-card-body">'+body+'</div>'
     + '</div>';
 }
@@ -2862,7 +2870,7 @@ function buildPrintStatTableHTML(stats){
 function buildPrintWeaponTableHTML(rows){
   if(!rows.length) return '';
   const table = '<table class="print-weapon-table">'
-    + '<tr><th>Weapon</th><th>Range</th><th>Damage</th><th>Accuracy</th><th>Keywords</th></tr>'
+    + '<tr><th>Weapon</th><th>Range</th><th>Dmg</th><th>Acc</th><th>Keywords</th></tr>'
     + '<tr class="print-divider-pink"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td>'+r.name+'</td><td>'+r.range+'</td><td>'+r.damage+'</td><td>'+(r.accuracy>0?'+':'')+r.accuracy+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
@@ -2876,7 +2884,7 @@ function buildPrintWeaponTableHTML(rows){
 function buildPrintSpellTableHTML(rows){
   if(!rows.length) return '';
   const table = '<table class="print-spell-table">'
-    + '<tr><th>Spell</th><th>Lvl</th><th>Range</th><th>Damage</th><th>Keywords</th></tr>'
+    + '<tr><th>Spell</th><th>Lvl</th><th>Range</th><th>Dmg</th><th>Keywords</th></tr>'
     + '<tr class="print-divider-gold"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td>'+r.name+'</td><td>'+r.level+'</td><td>'+r.range+'</td><td>'+r.damage+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
@@ -3259,6 +3267,11 @@ function renderAdminTable(tab){
         { label:'Equip Override', get:f=>escapeHtml(equipOverrideSummary(f.equip_override)) },
         { label:'Effect', get:f=>highlightCurrency(escapeHtml(f.ability_description)) },
       ]},
+    wounds: { data: gameData.wounds, cols: [
+        { label:'Name', get:w=>escapeHtml(w.name), sort:w=>w.name },
+        { label:'Stat Mods', get:w=>escapeHtml(statModSummary(w.stat_modifiers)) },
+        { label:'Effect', get:w=>highlightCurrency(escapeHtml(w.description)) },
+      ]},
     spellSchools: { data: gameData.spellSchools, cols: [
         { label:'Name', get:sc=>escapeHtml(sc.name), sort:sc=>sc.name },
       ]},
@@ -3345,6 +3358,7 @@ function renderAdminForm(tab, id){
   if(tab==='armor') fields = armorFields(existing);
   if(tab==='items') fields = itemFields(existing);
   if(tab==='feats') fields = featFields(existing);
+  if(tab==='wounds') fields = woundFields(existing);
   if(tab==='spellSchools') fields = spellSchoolFields(existing);
   if(tab==='spells') fields = spellFields(existing);
   if(tab==='hirelings') fields = hirelingFields(existing);
@@ -3550,6 +3564,16 @@ function featFields(e){
     + statModifierFieldset(e)
     + equipOverrideFieldset(e);
 }
+// Wounds are inflicted on a Hero (via a future Recovery Check, run automatically after each
+// battle), not chosen or purchased — so unlike Feats there's no cost or restriction here, just a
+// name, flavor/effect text, and the same mechanical stat_modifiers vocabulary Feats/Guilds/Weapons
+// already use. The actual "apply a Wound to a Hero" mechanic lives with the Roster/Recovery Check
+// system; this is just the catalog those pull from.
+function woundFields(e){
+  return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'" placeholder="e.g. Broken Arm, Concussed, Deep Gash"></label>'
+    + '<label class="field wide"><span>Effect</span><textarea name="description" rows="2">'+escapeHtml(e&&e.description)+'</textarea></label>'
+    + statModifierFieldset(e);
+}
 function spellSchoolFields(e){
   return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'"></label>';
 }
@@ -3725,6 +3749,10 @@ function saveEntry(event, tab, id){
     obj.stat_modifiers = { haste:num(fd,'mod_haste'), move:num(fd,'mod_move'), body:num(fd,'mod_body'), mind:num(fd,'mod_mind'), spirit:num(fd,'mod_spirit') };
     obj.equip_override = fd.getAll('equip_override');
   }
+  if(tab==='wounds'){
+    obj.name = fd.get('name'); obj.description = fd.get('description') || '';
+    obj.stat_modifiers = { haste:num(fd,'mod_haste'), move:num(fd,'mod_move'), body:num(fd,'mod_body'), mind:num(fd,'mod_mind'), spirit:num(fd,'mod_spirit') };
+  }
   if(tab==='spellSchools'){
     obj.name = fd.get('name');
   }
@@ -3825,6 +3853,12 @@ function normalizeRuleset(parsed){
   const required = ['keywords','factions','classes','guilds','weapons','armor','items','feats','spells','hirelings'];
   required.forEach(k => { if(!Array.isArray(parsed[k])) throw new Error('Missing "'+k+'" list'); });
   if(!Array.isArray(parsed.spellSchools)) parsed.spellSchools = [];
+  // Wounds is a newer catalog — older uploaded rulesets won't have it at all, so it's backfilled
+  // as an empty list here rather than being in the `required` set above (which would reject any
+  // pre-Wounds ruleset outright).
+  if(!Array.isArray(parsed.wounds)) parsed.wounds = [];
+  const zeroModsForWounds = { haste:0, move:0, body:0, mind:0, spirit:0 };
+  parsed.wounds.forEach(w => { if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroModsForWounds); if(w.description===undefined) w.description = ''; });
   parsed.spells.forEach(s => { if(!Array.isArray(s.allowed_classes)) s.allowed_classes = []; if(s.range===undefined) s.range = null; if(s.restriction_type===undefined){ s.restriction_type = 'none'; s.restriction_id = ''; } if(!Array.isArray(s.action_types)) s.action_types = []; });
   parsed.classes.forEach(c => { if(!Array.isArray(c.mastery_skills)) c.mastery_skills = []; if(c.stats) delete c.stats.mastery; if(c.max_feats==null) c.max_feats = 2; if(!Array.isArray(c.keywords)) c.keywords = []; if(c.has_pact===undefined) c.has_pact = false; });
   const zeroMods = { haste:0, move:0, body:0, mind:0, spirit:0 };
