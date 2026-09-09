@@ -547,10 +547,11 @@ table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-
 </header>
 
 <main class="wrap">
-  <p class="lede">A small slice of a larger list-builder. Choose a Faction and a Gold Cap for your list, then add
-  Heroes — each built through Class, Guild, Weapons, Armor, Items, Feats, and Spells — plus any Hirelings your
-  Faction allows. Every Hero and every Hireling counts against one shared gold budget. Switch to Admin Mode to add
-  or edit the rules this builder reads from.</p>
+  <p class="lede">Welcome to the SpellBlade Alpha listbuilder. Below choose your faction, and optionally a guild if you wish to add
+  another twist to your playstyle. Party Wide feats are available at all times, barring you can pay their cost. 
+  Heroes are special elite characters that are the core of your party, choose their gear and give
+  them feats to excel in battle. Hirelings are your factions available warriors to hire for adventuring, they may be upgraded if you
+  have the gold! Onec you are done, you can head to the battle mode and use that during play, or print out a PDF of your list.</p>
 
   <section id="playPanel" class="mode-panel">
     <div class="play-layout">
@@ -1721,8 +1722,8 @@ function renderTopControls(){
   return '<div class="step">'
     + '<div class="step-head"><span class="step-num">SET</span><span class="step-title">List Settings</span></div>'
     + '<div class="top-controls">'
-    + '<label class="field"><span>Gold cap</span><select onchange="list.goldCap=parseInt(this.value); renderPlay();">'
-    + [200,300,400,500,600,750].map(v => '<option value="'+v+'" '+(list.goldCap===v?'selected':'')+'>'+v+'g</option>').join('')
+    + '<label class="field"><span>Select your game size by choosing your starting Gold, 500 is recommended for beginners.</span><select onchange="list.goldCap=parseInt(this.value); renderPlay();">'
+    + [500,750,1000].map(v => '<option value="'+v+'" '+(list.goldCap===v?'selected':'')+'>'+v+'g</option>').join('')
     + '</select></label>'
     + '</div></div>';
 }
@@ -1755,7 +1756,7 @@ function renderFactionStep(){
       + '</div>';
   }).join('');
   return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">01</span><span class="step-title">Faction</span><span class="step-count">'+(list.factionId?'1/1':'0/1')+'</span></div>'
-    + '<div class="step-sub">Choose your Faction first — it determines which Guilds (and soon, which units) are available to this List.</div>'
+    + '<div class="step-sub">Choose your faction.</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">No factions yet — add one in Admin Mode.</p>')+'</div></div>';
 }
 // Guild is a party-wide choice, sibling to Faction — not a per-Hero pick. Only shows Guilds
@@ -1791,7 +1792,7 @@ function renderGuildStep(){
     ? 'Choose a Faction above first — Guilds are tied to one.'
     : 'This Faction has no Guilds yet — add one in Admin Mode.';
   return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">02</span><span class="step-title">Guild</span><span class="step-count">'+(list.guildId?'1/1':'0/1')+'</span></div>'
-    + '<div class="step-sub">Optional — applies to the whole party (stat bonuses, equip access, and any Class restriction), not just one Hero.</div>'
+    + '<div class="step-sub">Your party may be comprised of members from your factions many guilds, choose one if you wish</div>'
     + '<div class="option-grid">'+(cards||'<p class="empty-note">'+emptyMsg+'</p>')+'</div></div>';
 }
 // Shown once a Guild is selected — a quick-reference summary of everything THIS Guild specifically
