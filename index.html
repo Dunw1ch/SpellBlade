@@ -376,7 +376,7 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .stat-block-label{ font-family:var(--font-data); font-size:10px; text-transform:uppercase; letter-spacing:.03em; color:var(--cyan-bright); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 .stat-block-value{ font-family:var(--font-data); font-size:15px; font-weight:700; color:var(--pink-bright); margin-top:3px; }
 
-.battle-stat-table, .battle-weapon-table{ width:100%; border-collapse:collapse; margin:2px 0 4px; }
+.battle-stat-table, .battle-weapon-table{ width:auto; max-width:100%; align-self:flex-start; border-collapse:collapse; margin:2px 0 4px; }
 .battle-stat-table th, .battle-weapon-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:1px 4px 3px; white-space:nowrap; }
 .battle-stat-table th{ color:var(--cyan-bright); }
 .battle-weapon-table th{ color:var(--pink-bright); }
@@ -390,7 +390,7 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .battle-weapon-table .wt-name{ font-weight:700; color:var(--ink); font-family:var(--font-display); }
 .battle-weapon-table .wt-dmg{ color:var(--pink-bright); font-weight:800; }
 
-.battle-spell-table{ width:100%; border-collapse:collapse; margin:2px 0 4px; }
+.battle-spell-table{ width:auto; max-width:100%; align-self:flex-start; border-collapse:collapse; margin:2px 0 4px; }
 .battle-spell-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:1px 4px 3px; white-space:nowrap; color:var(--gold); }
 .battle-spell-table th:first-child, .battle-spell-table td:first-child,
 .battle-spell-table th:last-child, .battle-spell-table td:last-child{ text-align:left; }
