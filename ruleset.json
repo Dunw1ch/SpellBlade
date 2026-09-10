@@ -18,7 +18,8 @@
     {
       "id": "kmt1yxnqybek",
       "name": "Brutal",
-      "description": "Brutal weapons add +1 wound when beating targets armor."
+      "description": "When an attack with this weapon hits, it automatically deals 1 wound to the target.",
+      "parameterized": false
     },
     {
       "id": "kmt1z27eyq8o",
@@ -526,7 +527,7 @@
       "name": "Pact of the Wild Roots",
       "faction_id": "fmt1zprswgf7",
       "gold_cost": 5,
-      "ability_description": "Guild members gain access to the \"Healing Roots\" feat.",
+      "ability_description": "parties of the wild roots guild cannot contain Berzerkers or warlocks.",
       "allowed_classes": [
         "cmt1ykznv7cm",
         "cmt1yo3sij8m",
@@ -550,12 +551,16 @@
       "name": "Marauders Guild",
       "faction_id": "fmt1zviucpcj",
       "gold_cost": 5,
-      "ability_description": "Mauraders are adept at group tactics and gain access to the pack leader feat.",
+      "ability_description": "The Marauders Guild specializes in the pack tactics of the red banners army. Mauraders",
       "allowed_classes": [
         "cmt1ykznv7cm",
         "cmt1yo3sij8m",
+        "cmt1ypdwalh2",
+        "cmt1yrzdvdwh",
+        "cmt1yu3wj5sl",
         "cmt2a5vwinpr",
-        "cmt2a7xiucb2"
+        "cmt2a7xiucb2",
+        "cmt2ahfasbmg"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -572,11 +577,13 @@
       "name": "Way of the forbidden past",
       "faction_id": "fmt1zviucpcj",
       "gold_cost": 10,
-      "ability_description": "As a bonus action this unit may deal 2 wounds to a friendly unit within 6\" Gain 1 Veil and 1 temporary Mana.",
+      "ability_description": "Parties of this guild cannot take Bards or Clerics. Members of this guild gain access to the \"Dark Ritual\" party feat.",
       "allowed_classes": [
+        "cmt1ykznv7cm",
+        "cmt1yo3sij8m",
         "cmt1ypdwalh2",
-        "cmt1yu3wj5sl",
-        "cmt2a7xiucb2",
+        "cmt1yrzdvdwh",
+        "cmt2a5vwinpr",
         "cmt2ahfasbmg"
       ],
       "stat_modifiers": {
@@ -3544,15 +3551,13 @@
       "keywords": [
         "kmt5h9et9rwt"
       ],
-      "customAbilities": [],
-      "customFeats": [
+      "customAbilities": [
         {
           "name": "Move!",
-          "description": "All non-elite units within 3\" of a marauder may make one standard move action. they must end this move action still within 3\" of the Maurader.",
-          "veil_cost": 0,
-          "valor_cost": 1
+          "description": "When an Orc Marauder moves, All non-elite units within 3\" of a marauder may make one standard move action. they must end this move action still within 3\" of the Maurader."
         }
       ],
+      "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
       "veteran_of": ""
@@ -3712,17 +3717,18 @@
       ],
       "customAbilities": [
         {
-          "name": "hail of arrows(2 Valor)",
-          "description": "Every friendly non-elite unit within 3\" may make a free shoot action at the target of this unit."
+          "name": "Leading shot",
+          "description": "Whenever a gnoll archer makes a shoot action, you may make a shoot action with 1 goblin archer within 3\" of this unit/"
         }
       ],
       "customFeats": [],
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "keyword_values": {}
     },
     {
       "id": "hmt89f8cgg9i",
-      "name": "Kobold Archer",
+      "name": "Goblin Archer",
       "faction_id": "fmt1zviucpcj",
       "is_warlock_minion": false,
       "weapon_id": "wmt221m7l57l",
@@ -3745,7 +3751,8 @@
       "customAbilities": [],
       "customFeats": [],
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "keyword_values": {}
     },
     {
       "id": "hmtkcp81plfd",
@@ -3986,33 +3993,105 @@
       ],
       "keywords": [],
       "keyword_values": {}
+    },
+    {
+      "id": "hmtvkdws6jou",
+      "name": "Troll",
+      "faction_id": "fmt1zviucpcj",
+      "guild_id": "",
+      "veteran_of": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt21y1cmxqg",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "skilled",
+      "gold_cost": 70,
+      "armor_value": 8,
+      "stats": {
+        "haste": 10,
+        "move": 6,
+        "body": 4,
+        "mind": 1,
+        "spirit": 3
+      },
+      "customAbilities": [
+        {
+          "name": "Sweeping Blows",
+          "description": "Whena troll makes a melee attack action, it can make a melee attack against all units it is in combat with."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [],
+      "keywords": [
+        "kmt5h8ghtsk6"
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmtvto9c5nsl",
+      "name": "BogWyrm",
+      "faction_id": "fmt1ygkuhwdn",
+      "guild_id": "",
+      "veteran_of": "",
+      "is_warlock_minion": false,
+      "weapon_id": "",
+      "custom_weapon_name": "Bite",
+      "custom_weapon_damage": "d12",
+      "weapon_proficiency": "mastery",
+      "gold_cost": 100,
+      "armor_value": 10,
+      "stats": {
+        "haste": 10,
+        "move": 8,
+        "body": 5,
+        "mind": 4,
+        "spirit": 8
+      },
+      "customAbilities": [
+        {
+          "name": "Circling the skies",
+          "description": "The Bog-Wyrm is circling the skies above the battlefield and does engage until it is needed. Once a party has amassed 4 valor the dragon descends into the fray. For the rest of the game, whenever the Bog-Wyrm activates reduce your valor by 1. If this cost cannot be paid then the Wyrm Leaves the battlefield."
+        }
+      ],
+      "customFeats": [],
+      "description": "The fearsome black scaled wyrms from the swamps of barrowmore produce sickly sprays of poison against all of the kingdoms foes.",
+      "spell_ids": [
+        "smt3irga3nyb",
+        "smt32rf32diy"
+      ],
+      "keywords": [
+        "kmt3kgiuotcm"
+      ],
+      "keyword_values": {}
     }
   ],
   "theme": {
-    "bg": "#f6eeda",
-    "bgAlt": "#e8d9b8",
-    "panel": "#faf3e3",
-    "panelRaised": "#efe1c2",
-    "rule": "#c2a876",
-    "ink": "#2a1f14",
-    "inkDim": "#4d3c28",
-    "muted": "#8a7658",
-    "neutralFill": "#ddc99e",
-    "pink": "#a83454",
-    "pinkBright": "#7a1638",
-    "btnSilver": "#c2a25c",
-    "btnSilverBright": "#eddca0",
-    "btnSilverDim": "#8a723f",
-    "cyan": "#146b5c",
-    "cyanBright": "#0a4438",
-    "gold": "#9c711f",
-    "danger": "#a52a20",
-    "onAccent": "#2a1f14",
-    "rarityCommon": "#2a1f14",
-    "rarityRare": "#2c5490",
-    "rarityLegendary": "#6b3a72",
-    "bodyGradStart": "#f8f0dd",
-    "bodyGradMid": "#f3e7cf",
-    "bodyGradEnd": "#ecdcb0"
-  }
+    "bg": "#0a0605",
+    "bgAlt": "#070403",
+    "panel": "#150c0c",
+    "panelRaised": "#1f1312",
+    "rule": "#4a2620",
+    "ink": "#f0ece4",
+    "inkDim": "#c7bdb3",
+    "muted": "#8f8078",
+    "neutralFill": "#4a3f3a",
+    "pink": "#b8203f",
+    "pinkBright": "#e8425f",
+    "btnSilver": "#aab0b8",
+    "btnSilverBright": "#f5f7fa",
+    "btnSilverDim": "#5c6068",
+    "cyan": "#1f7a63",
+    "cyanBright": "#5fe0bb",
+    "gold": "#b8862f",
+    "danger": "#c2451f",
+    "onAccent": "#140b0a",
+    "rarityCommon": "#f0ece4",
+    "rarityRare": "#3f5fa0",
+    "rarityLegendary": "#7a3f8f",
+    "bodyGradStart": "#0d1210",
+    "bodyGradMid": "#1a0808",
+    "bodyGradEnd": "#050302"
+  },
+  "wounds": []
 }
