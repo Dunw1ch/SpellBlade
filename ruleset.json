@@ -2351,6 +2351,120 @@
         "spirit": 0
       },
       "equip_override": []
+    },
+    {
+      "id": "fmtx0nxbmaem",
+      "name": "Enraged Horde",
+      "ability_description": "All non elite red banner units in combat with  an enemy unit may make a free attack action, reactions cannot be used for this attack.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 4,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtx0r0kusn9",
+      "name": "Dark Arts",
+      "ability_description": "remove a non-elite unit from the battlefield (this unit is killed in campaign play). You may re-deploy an elite unit that is not a hero who was previously incapacitated on any board edge. ",
+      "gold_cost": 0,
+      "veil_cost": 6,
+      "valor_cost": 0,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtx11i45q99",
+      "name": "Intimidating Warcry",
+      "ability_description": "At the start of the turn, Lower an enemy units haste value by 2.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 3,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtx1dva3ve6",
+      "name": "Veil Thorns",
+      "ability_description": "When a wounded Red Banner unit finishes a charge action in the combat zone of an enemy unit, you may use this ability to inflict  damage to the target equal to half the wounds on the charging unit rounded down.",
+      "gold_cost": 0,
+      "veil_cost": 3,
+      "valor_cost": 0,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtx1h3i6v2x",
+      "name": "Brothers of the sea",
+      "ability_description": "If a Red banner unit becomes the target of a charge, you may select a friendly Red banner unit within 8\" of the charged unit and move them into the combat zone of the charging unit.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmtx2h47c46z",
+      "name": "Arcane Ambush",
+      "ability_description": "2 red banner units may make a free move action, this move may also pass through terrain freely.",
+      "gold_cost": 0,
+      "veil_cost": 3,
+      "valor_cost": 0,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
     }
   ],
   "spellSchools": [
