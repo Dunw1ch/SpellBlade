@@ -366,7 +366,9 @@
           "Magi Ranged",
           "Light Armor",
           "Medium Armor"
-        ]
+        ],
+        "pmu1mm7wyspw": [],
+        "pmu1o0k2d38t": []
       }
     },
     {
@@ -434,7 +436,9 @@
           "Light Armor",
           "Medium Armor",
           "Heavy Armor"
-        ]
+        ],
+        "pmu1mm7wyspw": [],
+        "pmu1o0k2d38t": []
       }
     },
     {
@@ -469,7 +473,9 @@
           "Magi Ranged",
           "Light Armor",
           "Medium Armor"
-        ]
+        ],
+        "pmu1mm7wyspw": [],
+        "pmu1o0k2d38t": []
       }
     }
   ],
@@ -1124,6 +1130,54 @@
       },
       "restriction_type": "none",
       "restriction_id": ""
+    },
+    {
+      "id": "wmu1p8h7sivh",
+      "name": "Judge Blade",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "d8",
+      "gold_cost": 20,
+      "rarity": "common",
+      "party_limit": 2,
+      "abilities": "Smite causes 2 wounds instead of 1.",
+      "keywords": [],
+      "keyword_values": {},
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt2d27ly0mf"
+    },
+    {
+      "id": "wmu1pt04vuw6",
+      "name": "Mage Sword",
+      "category": "Martial",
+      "type": "Melee",
+      "range": null,
+      "damage": "d8",
+      "gold_cost": 15,
+      "rarity": "common",
+      "party_limit": 0,
+      "abilities": "",
+      "keywords": [
+        "kmt1ywt3xv6u"
+      ],
+      "keyword_values": {},
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmthnvht5rb7"
     }
   ],
   "armor": [
@@ -1253,7 +1307,8 @@
       "gold_cost": 45,
       "rarity": "rare",
       "keywords": [
-        "kmt3kg2lfx39"
+        "kmt3kg2lfx39",
+        "kmt3kgiuotcm"
       ],
       "stat_modifiers": {
         "haste": -2,
@@ -1262,8 +1317,11 @@
         "mind": 0,
         "spirit": 0
       },
-      "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_type": "guild",
+      "restriction_id": "gmthnvht5rb7",
+      "party_limit": 0,
+      "abilities": "",
+      "keyword_values": {}
     },
     {
       "id": "amtbz18dwpes",
@@ -1358,6 +1416,32 @@
       },
       "restriction_type": "none",
       "restriction_id": ""
+    },
+    {
+      "id": "amu1p9x4rmph",
+      "name": "Plate of the first Paladin",
+      "category": "Heavy",
+      "armor_value": 10,
+      "gold_cost": 40,
+      "rarity": "common",
+      "party_limit": 1,
+      "abilities": "Veil of the lost king: This armor has aegis +10 while standing on a veil rift. ",
+      "keywords": [
+        "kmt3kfnljcm0",
+        "kmthzf1225ee"
+      ],
+      "keyword_values": {
+        "kmthzf1225ee": 10
+      },
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt2d27ly0mf"
     }
   ],
   "items": [
@@ -1673,6 +1757,44 @@
       },
       "restriction_type": "none",
       "restriction_id": ""
+    },
+    {
+      "id": "imu1pkzju6fj",
+      "name": "Relic of the past",
+      "slots": 1,
+      "gold_cost": 0,
+      "rarity": "common",
+      "party_limit": 0,
+      "requires_hand": false,
+      "abilities": "Raises this units spirit by 2",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 2
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt2d27ly0mf"
+    },
+    {
+      "id": "imu1pvaxhfx5",
+      "name": "Sorcery Focus",
+      "slots": 1,
+      "gold_cost": 20,
+      "rarity": "common",
+      "party_limit": 0,
+      "requires_hand": false,
+      "abilities": "Equipped unit may make spell attack reactions.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmthnvht5rb7"
     }
   ],
   "feats": [
@@ -2456,6 +2578,25 @@
       "valor_cost": 0,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmu1oyo6erbt",
+      "name": "Smite",
+      "ability_description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "valor_cost": 0,
+      "restriction_type": "guild",
+      "restriction_id": "gmt2d27ly0mf",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -4023,15 +4164,15 @@
     {
       "id": "hmts99jrw8zl",
       "name": "Paladin",
-      "faction_id": "",
+      "faction_id": "fmt1ygkuhwdn",
       "guild_id": "gmt2d27ly0mf",
       "veteran_of": "hmt20lgvlh3b",
       "is_warlock_minion": false,
-      "weapon_id": "wmt223ixgkyv",
+      "weapon_id": "wmt33qeguvqf",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "weapon_proficiency": "pmu1mm7wyspw",
-      "gold_cost": 65,
+      "gold_cost": 75,
       "armor_value": 10,
       "stats": {
         "haste": 10,
@@ -4044,16 +4185,17 @@
       "customFeats": [
         {
           "name": "Smite",
-          "description": "Smitey Smite",
+          "description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
           "veil_cost": 1,
           "valor_cost": 0
         }
       ],
       "description": "",
       "spell_ids": [
-        "smt34c4wdbms"
+        "smt3iv1pdcze"
       ],
       "keywords": [
+        "kmt5h9et9rwt",
         "kmthzf1225ee"
       ],
       "keyword_values": {
@@ -4204,6 +4346,42 @@
       ],
       "keyword_values": {},
       "replaces": ""
+    },
+    {
+      "id": "hmu1pdn1b1ao",
+      "name": "Clergy Zealot",
+      "faction_id": "fmt1ygkuhwdn",
+      "guild_id": "gmt2d27ly0mf",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt223ixgkyv",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu1o0k2d38t",
+      "gold_cost": 40,
+      "armor_value": 6,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 2,
+        "mind": 3,
+        "spirit": 4
+      },
+      "customAbilities": [
+        {
+          "name": "Unnerving Hymn",
+          "description": "Enemy units within 6\" of a Clergy Zealot may not be the target of healing spells."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [
+        "smt3hp7zw36s",
+        "smt3hrc5hrw8"
+      ],
+      "keywords": [],
+      "keyword_values": {}
     }
   ],
   "theme": {
@@ -4238,11 +4416,16 @@
     {
       "id": "pmu1mm7wy5yv",
       "name": "Skilled",
-      "bonus": 2
+      "bonus": 6
     },
     {
       "id": "pmu1mm7wyspw",
       "name": "Mastery",
+      "bonus": 8
+    },
+    {
+      "id": "pmu1o0k2d38t",
+      "name": "Novice",
       "bonus": 4
     }
   ]
