@@ -181,17 +181,17 @@
     {
       "id": "fmt1ygkuhwdn",
       "name": "BarrowMoor Kingdoms",
-      "description": "The dwindling remnants of BarrowMoor hold their lineage with steel and might."
+      "description": "The dwindling remnants of BarrowMoor hold their lineage with steel and might. Adventuring parties of the BarrowMoor Kingdoms are defensive and resilient, utilizing armor to outlast their foes."
     },
     {
       "id": "fmt1zprswgf7",
       "name": "Willow Enclave",
-      "description": "Dense forests can be found all across AldMarke, watchful eyes and careful steps ensure the woods stay unbothered."
+      "description": "Dense forests can be found all across AldeMar, watchful eyes and careful steps ensure the woods stay unbothered. Willow Parties utilize range and movement to outclass their foes."
     },
     {
       "id": "fmt1zviucpcj",
       "name": "Red Banner",
-      "description": "Though some of their denizens may be considered 'lesser' the ragtag factions of the Red Banner would have you "
+      "description": "Though overshadowed by a dark history, the Red Banner has risen to be a prominent naval power in Aldemar. Red Banner parties rely on numbers to overwhelm their foes."
     }
   ],
   "classes": [
@@ -210,30 +210,26 @@
         "mind": 4,
         "spirit": 6
       },
-      "skills": [
-        "Simple Melee",
-        "Simple Ranged",
-        "Martial Melee",
-        "Martial Ranged",
-        "Heavy Melee",
-        "Heavy Ranged",
-        "Medium Armor",
-        "Heavy Armor"
-      ],
-      "mastery_skills": [
-        "Simple Melee",
-        "Simple Ranged",
-        "Martial Melee",
-        "Martial Ranged",
-        "Heavy Melee",
-        "Heavy Ranged"
-      ],
       "signature_ability_label": "Unwavering",
       "school_focus": false,
       "allowed_schools": [],
       "keywords": [],
       "has_pact": false,
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Medium Armor",
+          "Heavy Armor"
+        ],
+        "pmu1mm7wyspw": [
+          "Simple Melee",
+          "Simple Ranged",
+          "Martial Melee",
+          "Martial Ranged",
+          "Heavy Melee",
+          "Heavy Ranged"
+        ]
+      }
     },
     {
       "id": "cmt1yo3sij8m",
@@ -250,15 +246,6 @@
         "mind": 4,
         "spirit": 5
       },
-      "skills": [
-        "Simple Melee",
-        "Simple Ranged",
-        "Light Armor"
-      ],
-      "mastery_skills": [
-        "Simple Melee",
-        "Simple Ranged"
-      ],
       "signature_ability_label": "Hide",
       "school_focus": false,
       "allowed_schools": [],
@@ -266,7 +253,16 @@
         "kmt7z51ibt3v"
       ],
       "has_pact": false,
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Light Armor"
+        ],
+        "pmu1mm7wyspw": [
+          "Simple Melee",
+          "Simple Ranged"
+        ]
+      }
     },
     {
       "id": "cmt1ypdwalh2",
@@ -284,15 +280,6 @@
         "mind": 6,
         "spirit": 5
       },
-      "skills": [
-        "Magi Melee",
-        "Magi Ranged",
-        "Light Armor"
-      ],
-      "mastery_skills": [
-        "Magi Melee",
-        "Magi Ranged"
-      ],
       "signature_ability_label": "Study The Arcane",
       "allowed_schools": [
         "Destruction",
@@ -301,7 +288,16 @@
       ],
       "keywords": [],
       "has_pact": false,
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Light Armor"
+        ],
+        "pmu1mm7wyspw": [
+          "Magi Melee",
+          "Magi Ranged"
+        ]
+      }
     },
     {
       "id": "cmt1yrzdvdwh",
@@ -318,16 +314,6 @@
         "mind": 5,
         "spirit": 4
       },
-      "skills": [
-        "Simple Melee",
-        "Simple Ranged",
-        "Martial Ranged",
-        "Heavy Ranged",
-        "Light Armor"
-      ],
-      "mastery_skills": [
-        "Martial Ranged"
-      ],
       "signature_ability_label": "",
       "school_focus": false,
       "allowed_schools": [],
@@ -335,7 +321,18 @@
         "kmt7z51ibt3v"
       ],
       "has_pact": false,
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Simple Melee",
+          "Simple Ranged",
+          "Heavy Ranged",
+          "Light Armor"
+        ],
+        "pmu1mm7wyspw": [
+          "Martial Ranged"
+        ]
+      }
     },
     {
       "id": "cmt1yu3wj5sl",
@@ -352,15 +349,6 @@
         "mind": 4,
         "spirit": 6
       },
-      "skills": [
-        "Simple Melee",
-        "Simple Ranged",
-        "Magi Melee",
-        "Magi Ranged",
-        "Light Armor",
-        "Medium Armor"
-      ],
-      "mastery_skills": [],
       "signature_ability_label": "Performance",
       "school_focus": false,
       "keywords": [],
@@ -369,7 +357,17 @@
         "Restoration",
         "Conjuration"
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Simple Melee",
+          "Simple Ranged",
+          "Magi Melee",
+          "Magi Ranged",
+          "Light Armor",
+          "Medium Armor"
+        ]
+      }
     },
     {
       "id": "cmt2a5vwinpr",
@@ -386,22 +384,22 @@
         "mind": 2,
         "spirit": 5
       },
-      "skills": [
-        "Simple Melee",
-        "Martial Melee",
-        "Heavy Melee",
-        "Light Armor"
-      ],
-      "mastery_skills": [
-        "Martial Melee",
-        "Heavy Melee"
-      ],
       "signature_ability_label": "Rage",
       "school_focus": false,
       "allowed_schools": [],
       "keywords": [],
       "has_pact": false,
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Simple Melee",
+          "Light Armor"
+        ],
+        "pmu1mm7wyspw": [
+          "Martial Melee",
+          "Heavy Melee"
+        ]
+      }
     },
     {
       "id": "cmt2a7xiucb2",
@@ -418,16 +416,6 @@
         "mind": 4,
         "spirit": 6
       },
-      "skills": [
-        "Simple Melee",
-        "Martial Melee",
-        "Magi Melee",
-        "Magi Ranged",
-        "Light Armor",
-        "Medium Armor",
-        "Heavy Armor"
-      ],
-      "mastery_skills": [],
       "signature_ability_label": "Sanctuary",
       "school_focus": false,
       "keywords": [],
@@ -436,7 +424,18 @@
         "Restoration",
         "Transmutation"
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Simple Melee",
+          "Martial Melee",
+          "Magi Melee",
+          "Magi Ranged",
+          "Light Armor",
+          "Medium Armor",
+          "Heavy Armor"
+        ]
+      }
     },
     {
       "id": "cmt2ahfasbmg",
@@ -453,15 +452,6 @@
         "mind": 5,
         "spirit": 6
       },
-      "skills": [
-        "Simple Melee",
-        "Martial Melee",
-        "Magi Melee",
-        "Magi Ranged",
-        "Light Armor",
-        "Medium Armor"
-      ],
-      "mastery_skills": [],
       "signature_ability_label": "Familial Pact",
       "school_focus": false,
       "keywords": [],
@@ -470,7 +460,17 @@
         "Destruction",
         "Conjuration"
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "proficiencies": {
+        "pmu1mm7wy5yv": [
+          "Simple Melee",
+          "Martial Melee",
+          "Magi Melee",
+          "Magi Ranged",
+          "Light Armor",
+          "Medium Armor"
+        ]
+      }
     }
   ],
   "guilds": [
@@ -1673,25 +1673,6 @@
       },
       "restriction_type": "none",
       "restriction_id": ""
-    },
-    {
-      "id": "imu1jgdxo1in",
-      "name": "Church relic",
-      "slots": 1,
-      "gold_cost": 15,
-      "rarity": "common",
-      "party_limit": 2,
-      "requires_hand": false,
-      "abilities": "this artifact increases the spirit of  its holder by two",
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 2
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmt2d27ly0mf"
     }
   ],
   "feats": [
@@ -3306,7 +3287,7 @@
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "keywords": [
         "kmt5h9et9rwt"
       ],
@@ -3320,7 +3301,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt20qanmco6",
@@ -3341,7 +3323,7 @@
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "keywords": [],
       "is_warlock_minion": false,
       "customAbilities": [
@@ -3353,7 +3335,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt34wwc6rq9",
@@ -3374,7 +3357,7 @@
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "keywords": [
         "kmthzf1225ee"
       ],
@@ -3390,7 +3373,8 @@
         "kmthzf1225ee": 16
       },
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt350gp3lj6",
@@ -3411,7 +3395,7 @@
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "keywords": [],
       "is_warlock_minion": false,
       "customAbilities": [
@@ -3430,7 +3414,8 @@
       ],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt3531huum5",
@@ -3451,7 +3436,7 @@
       "custom_weapon_name": "Claws",
       "custom_weapon_damage": "d8",
       "spell_ids": [],
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "keywords": [
         "kmt5h8ghtsk6"
       ],
@@ -3465,7 +3450,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt354wi4t8m",
@@ -3486,7 +3472,7 @@
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "spell_ids": [],
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "keywords": [
         "kmt5h9et9rwt",
         "kmt7z51ibt3v"
@@ -3501,7 +3487,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt516geko9y",
@@ -3522,7 +3509,7 @@
       "abilities": "Swift Footed (1 Valor): This unit may shoot in a turn it also made a run action.",
       "description": "\"The willow knows the way\"",
       "spell_ids": [],
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "keywords": [],
       "is_warlock_minion": false,
       "customAbilities": [
@@ -3534,7 +3521,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt55yxmz7w7",
@@ -3543,7 +3531,7 @@
       "weapon_id": "wmt55u30py6d",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 25,
       "armor_value": 6,
       "stats": {
@@ -3569,7 +3557,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt560up4fce",
@@ -3578,7 +3567,7 @@
       "weapon_id": "wmt2mgstaff1",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "none",
+      "weapon_proficiency": "",
       "gold_cost": 70,
       "armor_value": 6,
       "stats": {
@@ -3611,7 +3600,8 @@
       ],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt5hi6faoi6",
@@ -3621,7 +3611,7 @@
       "weapon_id": "wmt20jq62wlh",
       "custom_weapon_name": "Titans Fists(Dual)",
       "custom_weapon_damage": "d10",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 120,
       "armor_value": 10,
       "stats": {
@@ -3658,7 +3648,8 @@
         "kmthzf1225ee": 10
       },
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt5huluphkw",
@@ -3668,7 +3659,7 @@
       "weapon_id": "wmt33diwnsi8",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "none",
+      "weapon_proficiency": "",
       "gold_cost": 70,
       "armor_value": 8,
       "stats": {
@@ -3693,7 +3684,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt7eter2x6c",
@@ -3703,7 +3695,7 @@
       "weapon_id": "wmt1z35fsbp8",
       "custom_weapon_name": "Veil thrash",
       "custom_weapon_damage": "d4",
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "gold_cost": 0,
       "armor_value": 6,
       "stats": {
@@ -3728,7 +3720,8 @@
       ],
       "customFeats": [],
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt7evrd6jsb",
@@ -3738,7 +3731,7 @@
       "weapon_id": "",
       "custom_weapon_name": "Veil thump",
       "custom_weapon_damage": "d8",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 0,
       "armor_value": 10,
       "stats": {
@@ -3760,7 +3753,8 @@
       ],
       "customFeats": [],
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt7ezs2f627",
@@ -3770,7 +3764,7 @@
       "weapon_id": "",
       "custom_weapon_name": "Veil thrash",
       "custom_weapon_damage": "d4",
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "gold_cost": 0,
       "armor_value": 6,
       "stats": {
@@ -3794,7 +3788,8 @@
       ],
       "customFeats": [],
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt89ctfdnus",
@@ -3804,7 +3799,7 @@
       "weapon_id": "wmt21xj74ru5",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "none",
+      "weapon_proficiency": "",
       "gold_cost": 20,
       "armor_value": 6,
       "stats": {
@@ -3822,7 +3817,8 @@
       "customFeats": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmt89dqlb9u7",
@@ -3832,7 +3828,7 @@
       "weapon_id": "wmt221m7l57l",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "gold_cost": 45,
       "armor_value": 8,
       "stats": {
@@ -3857,7 +3853,8 @@
       "customFeats": [],
       "guild_id": "",
       "veteran_of": "",
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     },
     {
       "id": "hmt89f8cgg9i",
@@ -3867,7 +3864,7 @@
       "weapon_id": "wmt221m7l57l",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "none",
+      "weapon_proficiency": "",
       "gold_cost": 25,
       "armor_value": 6,
       "stats": {
@@ -3885,7 +3882,8 @@
       "customFeats": [],
       "guild_id": "",
       "veteran_of": "",
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     },
     {
       "id": "hmtkcp81plfd",
@@ -3895,7 +3893,7 @@
       "weapon_id": "wmt20bivm8lw",
       "custom_weapon_name": "Arcane LongGun",
       "custom_weapon_damage": "d10",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 50,
       "armor_value": 6,
       "stats": {
@@ -3923,7 +3921,8 @@
         "kmthzf1225ee": 12
       },
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmtlsufdudyk",
@@ -3933,7 +3932,7 @@
       "weapon_id": "",
       "custom_weapon_name": "Claws(2x)",
       "custom_weapon_damage": "d8",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 60,
       "armor_value": 10,
       "stats": {
@@ -3957,7 +3956,8 @@
       ],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmtlt6903azg",
@@ -3967,7 +3967,7 @@
       "weapon_id": "wmt221142461",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 50,
       "armor_value": 8,
       "stats": {
@@ -3989,7 +3989,8 @@
       "keywords": [],
       "keyword_values": {},
       "guild_id": "",
-      "veteran_of": ""
+      "veteran_of": "",
+      "replaces": ""
     },
     {
       "id": "hmts98c3kvux",
@@ -4001,7 +4002,7 @@
       "weapon_id": "wmt33qeguvqf",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 70,
       "armor_value": 10,
       "stats": {
@@ -4016,7 +4017,8 @@
       "description": "",
       "spell_ids": [],
       "keywords": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     },
     {
       "id": "hmts99jrw8zl",
@@ -4028,7 +4030,7 @@
       "weapon_id": "wmt223ixgkyv",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 65,
       "armor_value": 10,
       "stats": {
@@ -4056,7 +4058,8 @@
       ],
       "keyword_values": {
         "kmthzf1225ee": 16
-      }
+      },
+      "replaces": ""
     },
     {
       "id": "hmtswqcsn8i6",
@@ -4068,7 +4071,7 @@
       "weapon_id": "wmt21xj74ru5",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 65,
       "armor_value": 10,
       "stats": {
@@ -4094,7 +4097,8 @@
         "smt333q99ynw"
       ],
       "keywords": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     },
     {
       "id": "hmtswtbl020e",
@@ -4106,7 +4110,7 @@
       "weapon_id": "wmt1z35fsbp8",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 50,
       "armor_value": 8,
       "stats": {
@@ -4125,7 +4129,8 @@
         "smt32v8kvjgh"
       ],
       "keywords": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     },
     {
       "id": "hmtvkdws6jou",
@@ -4137,7 +4142,7 @@
       "weapon_id": "wmt21y1cmxqg",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
-      "weapon_proficiency": "skilled",
+      "weapon_proficiency": "pmu1mm7wy5yv",
       "gold_cost": 70,
       "armor_value": 8,
       "stats": {
@@ -4159,7 +4164,8 @@
       "keywords": [
         "kmt5h8ghtsk6"
       ],
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     },
     {
       "id": "hmtvto9c5nsl",
@@ -4171,7 +4177,7 @@
       "weapon_id": "",
       "custom_weapon_name": "Bite",
       "custom_weapon_damage": "d12",
-      "weapon_proficiency": "mastery",
+      "weapon_proficiency": "pmu1mm7wyspw",
       "gold_cost": 100,
       "armor_value": 10,
       "stats": {
@@ -4196,42 +4202,8 @@
       "keywords": [
         "kmt3kgiuotcm"
       ],
-      "keyword_values": {}
-    },
-    {
-      "id": "hmu1hk2qthr0",
-      "name": "Clergy Zealot",
-      "faction_id": "fmt1ygkuhwdn",
-      "guild_id": "gmt2d27ly0mf",
-      "veteran_of": "",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt223ixgkyv",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "skilled",
-      "gold_cost": 40,
-      "armor_value": 6,
-      "stats": {
-        "haste": 14,
-        "move": 6,
-        "body": 2,
-        "mind": 3,
-        "spirit": 4
-      },
-      "customAbilities": [
-        {
-          "name": "Choir Hymn",
-          "description": "Friendly units that activate within 3\" of a Clergy Zealot regain 1 wound."
-        }
-      ],
-      "customFeats": [],
-      "description": "The clergy of the church of the lost king ensure no one forgets the once great ruler through song and fire.",
-      "spell_ids": [
-        "smt34c4wdbms",
-        "smt3hp7zw36s"
-      ],
-      "keywords": [],
-      "keyword_values": {}
+      "keyword_values": {},
+      "replaces": ""
     }
   ],
   "theme": {
@@ -4261,5 +4233,17 @@
     "bodyGradMid": "#f3e7cf",
     "bodyGradEnd": "#ecdcb0"
   },
-  "wounds": []
+  "wounds": [],
+  "proficiencyTiers": [
+    {
+      "id": "pmu1mm7wy5yv",
+      "name": "Skilled",
+      "bonus": 2
+    },
+    {
+      "id": "pmu1mm7wyspw",
+      "name": "Mastery",
+      "bonus": 4
+    }
+  ]
 }
