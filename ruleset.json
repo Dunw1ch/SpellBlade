@@ -1673,6 +1673,25 @@
       },
       "restriction_type": "none",
       "restriction_id": ""
+    },
+    {
+      "id": "imu1jgdxo1in",
+      "name": "Church relic",
+      "slots": 1,
+      "gold_cost": 15,
+      "rarity": "common",
+      "party_limit": 2,
+      "requires_hand": false,
+      "abilities": "this artifact increases the spirit of  its holder by two",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 2
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt2d27ly0mf"
     }
   ],
   "feats": [
@@ -4178,34 +4197,69 @@
         "kmt3kgiuotcm"
       ],
       "keyword_values": {}
+    },
+    {
+      "id": "hmu1hk2qthr0",
+      "name": "Clergy Zealot",
+      "faction_id": "fmt1ygkuhwdn",
+      "guild_id": "gmt2d27ly0mf",
+      "veteran_of": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt223ixgkyv",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "skilled",
+      "gold_cost": 40,
+      "armor_value": 6,
+      "stats": {
+        "haste": 14,
+        "move": 6,
+        "body": 2,
+        "mind": 3,
+        "spirit": 4
+      },
+      "customAbilities": [
+        {
+          "name": "Choir Hymn",
+          "description": "Friendly units that activate within 3\" of a Clergy Zealot regain 1 wound."
+        }
+      ],
+      "customFeats": [],
+      "description": "The clergy of the church of the lost king ensure no one forgets the once great ruler through song and fire.",
+      "spell_ids": [
+        "smt34c4wdbms",
+        "smt3hp7zw36s"
+      ],
+      "keywords": [],
+      "keyword_values": {}
     }
   ],
   "theme": {
-    "bg": "#0a0605",
-    "bgAlt": "#070403",
-    "panel": "#150c0c",
-    "panelRaised": "#1f1312",
-    "rule": "#4a2620",
-    "ink": "#f0ece4",
-    "inkDim": "#c7bdb3",
-    "muted": "#8f8078",
-    "neutralFill": "#4a3f3a",
-    "pink": "#b8203f",
-    "pinkBright": "#e8425f",
-    "btnSilver": "#aab0b8",
-    "btnSilverBright": "#f5f7fa",
-    "btnSilverDim": "#5c6068",
-    "cyan": "#1f7a63",
-    "cyanBright": "#5fe0bb",
-    "gold": "#b8862f",
-    "danger": "#c2451f",
-    "onAccent": "#140b0a",
-    "rarityCommon": "#f0ece4",
-    "rarityRare": "#3f5fa0",
-    "rarityLegendary": "#7a3f8f",
-    "bodyGradStart": "#0d1210",
-    "bodyGradMid": "#1a0808",
-    "bodyGradEnd": "#050302"
+    "bg": "#f6eeda",
+    "bgAlt": "#e8d9b8",
+    "panel": "#faf3e3",
+    "panelRaised": "#efe1c2",
+    "rule": "#c2a876",
+    "ink": "#2a1f14",
+    "inkDim": "#4d3c28",
+    "muted": "#8a7658",
+    "neutralFill": "#ddc99e",
+    "pink": "#a83454",
+    "pinkBright": "#7a1638",
+    "btnSilver": "#c2a25c",
+    "btnSilverBright": "#eddca0",
+    "btnSilverDim": "#8a723f",
+    "cyan": "#146b5c",
+    "cyanBright": "#0a4438",
+    "gold": "#9c711f",
+    "danger": "#a52a20",
+    "onAccent": "#2a1f14",
+    "rarityCommon": "#2a1f14",
+    "rarityRare": "#2c5490",
+    "rarityLegendary": "#6b3a72",
+    "bodyGradStart": "#f8f0dd",
+    "bodyGradMid": "#f3e7cf",
+    "bodyGradEnd": "#ecdcb0"
   },
   "wounds": []
 }
