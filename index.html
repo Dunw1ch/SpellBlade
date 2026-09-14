@@ -651,10 +651,11 @@ const ADMIN_TABS = [
   { key:'spellSchools', label:'Schools' },
   { key:'spells', label:'Spells' },
   { key:'hirelings', label:'Hirelings' },
+  { key:'proficiencyTiers', label:'Proficiency' },
   { key:'keywords', label:'Keywords' },
   { key:'theme', label:'Colors' },
 ];
-const SINGULAR = { factions:'faction', classes:'class', guilds:'guild', weapons:'weapon', armor:'armor', items:'item', feats:'feat', wounds:'wound', spellSchools:'school', spells:'spell', hirelings:'hireling', keywords:'keyword' };
+const SINGULAR = { factions:'faction', classes:'class', guilds:'guild', weapons:'weapon', armor:'armor', items:'item', feats:'feat', wounds:'wound', spellSchools:'school', spells:'spell', hirelings:'hireling', proficiencyTiers:'proficiency tier', keywords:'keyword' };
 
 /* ============================= HELPERS ============================= */
 function byId(arr, id){ return arr.find(x => x.id === id); }
@@ -755,6 +756,14 @@ function hirelingFactionGuildLabel(h){
 // The single Hireling (if any) bound as the Veteran upgrade of this one, via that Hireling's own
 // veteran_of field — a reverse lookup, same pattern as guildForFeat().
 function veteranUpgradesFor(baseId){ return gameData.hirelings.filter(h => h.veteran_of === baseId); }
+// The Hireling (if any) currently standing in for `baseId` via its own `replaces` link — distinct
+// from a Veteran Upgrade (an optional, player-chosen recruit-time swap): a replacement is automatic
+// and silent. It's only "active" while it's itself actually eligible (its own Faction/Guild
+// requirements are met) — a Guild-specific replacement that isn't currently available doesn't hide
+// its base, so switching Guilds mid-build correctly brings the original back.
+function activeReplacementFor(baseId){
+  return gameData.hirelings.find(h => h.replaces === baseId && hirelingEligible(h)) || null;
+}
 function weaponName(id){ const w = byId(gameData.weapons, id); return w ? w.name : '—'; }
 // Some Hirelings have a natural weapon (claws, bite, etc.) that isn't worth a full Weapons catalog
 // entry. If a custom weapon name is set it takes priority for display; otherwise falls back to the
@@ -1253,12 +1262,41 @@ function heroEffectiveStats(hero){
   STAT_KEYS.forEach(k => { if(eff[k] < 0) eff[k] = 0; });
   return eff;
 }
-// A Hero's equip-skill list after the party's Guild (party-wide, not per-Hero) and this Hero's own
-// Feat equip_override entries are unioned on top of the Class's own Skilled list — these only ever
-// ADD access, never take it away.
+// The single highest-bonus Proficiency Tier a Class has assigned `categoryType` (e.g. "Martial
+// Melee" or "Light Armor") to, or null if the Class has no tier assigned to it at all. A category
+// can only ever be assigned to one tier per Class at a time (Admin -> Classes), so "highest" here
+// is really just "whichever one it's actually in" — the max() is a safety net, not a real contest.
+function classTierFor(cls, categoryType){
+  if(!cls || !cls.proficiencies) return null;
+  let best = null;
+  gameData.proficiencyTiers.forEach(tier => {
+    const list = cls.proficiencies[tier.id];
+    if(list && list.includes(categoryType) && (!best || tier.bonus > best.bonus)) best = tier;
+  });
+  return best;
+}
+// Every category a Class has ANY Proficiency Tier in, flattened across all tiers — this is what
+// actually grants equip access (having any tier at all is enough to wear/wield it; which specific
+// tier only changes the to-hit bonus, handled separately by heroWeaponToHitBonus).
+function classAllProficientCategories(cls){
+  if(!cls || !cls.proficiencies) return [];
+  let all = [];
+  gameData.proficiencyTiers.forEach(tier => { all = all.concat(cls.proficiencies[tier.id] || []); });
+  return Array.from(new Set(all));
+}
+// The tier with the smallest bonus value — Guild/Feat equip_override grants (which unlock a
+// category with no Class backing it at all) always land here, never at a higher tier, mirroring
+// the old hardcoded behavior where an override could grant Skilled-level access but never Mastery.
+function lowestProficiencyTier(){
+  if(!gameData.proficiencyTiers.length) return null;
+  return gameData.proficiencyTiers.reduce((min, t) => (!min || t.bonus < min.bonus) ? t : min, null);
+}
+// A Hero's equip-category list after the party's Guild (party-wide, not per-Hero) and this Hero's
+// own Feat equip_override entries are unioned on top of the Class's own Proficiency Tier
+// categories — these only ever ADD access, never take it away.
 function heroEquipSkills(hero){
   const cls = getHeroClass(hero);
-  let skills = cls ? cls.skills.slice() : [];
+  let skills = classAllProficientCategories(cls);
   const guild = getGuild();
   if(guild && guild.equip_override) skills = skills.concat(guild.equip_override);
   (hero.featIds||[]).forEach(fid => {
@@ -1269,33 +1307,44 @@ function heroEquipSkills(hero){
 }
 function weaponEligible(hero, w){ const cls = getHeroClass(hero); if(!cls) return false; return heroEquipSkills(hero).includes(w.category+' '+w.type); }
 function armorEligible(hero, a){ const cls = getHeroClass(hero); if(!cls) return false; return heroEquipSkills(hero).includes(a.category+' Armor'); }
-// Mastery is a state on a weapon CATEGORY (e.g. "Martial Melee"), not something picked per
-// Hero — any equipped weapon in one of the Class's Mastery categories gets +4 to hit automatically.
-function weaponMastered(hero, w){
-  const cls = getHeroClass(hero);
-  if(!cls || !w) return false;
-  return (cls.mastery_skills||[]).includes(w.category+' '+w.type);
-}
-// The to-hit bonus for a weapon attack: Skilled (proficient but not specialized) is +2, Mastery
-// (specialized) is +4 and supersedes Skilled rather than stacking with it, no proficiency is +0.
-// Heroes derive this from their Class (any weapon they have equipped is by definition at least
-// Skilled, since equipping requires it — see weaponEligible/toggleHeroWeapon). Hirelings have no
-// Class to derive it from, so it's set explicitly per-Hireling in Admin via `weapon_proficiency`.
+// The to-hit bonus for a weapon attack, derived from whichever Proficiency Tier applies: the
+// Class's own tier for that category wins if it has one at all (regardless of whether it's the
+// lowest or highest defined tier); otherwise, if a Guild/Feat equip_override is the only reason
+// this Hero can equip it, that grants the lowest tier's bonus instead of nothing. Hirelings have no
+// Class to derive this from, so it's set explicitly per-Hireling in Admin via `weapon_proficiency`
+// (a direct Proficiency Tier reference).
 function heroWeaponToHitBonus(hero, w){
-  if(weaponMastered(hero, w)) return 4;
-  if(weaponEligible(hero, w)) return 2;
+  const cls = getHeroClass(hero);
+  const categoryType = w.category+' '+w.type;
+  const classTier = classTierFor(cls, categoryType);
+  if(classTier) return classTier.bonus;
+  if(weaponEligible(hero, w)){ const t = lowestProficiencyTier(); return t ? t.bonus : 0; }
   return 0;
 }
 function hirelingWeaponToHitBonus(h){
-  if(h.weapon_proficiency==='mastery') return 4;
-  if(h.weapon_proficiency==='skilled') return 2;
-  return 0;
+  const tier = h.weapon_proficiency ? byId(gameData.proficiencyTiers, h.weapon_proficiency) : null;
+  return tier ? tier.bonus : 0;
 }
-// Small reusable label for either bonus tier — used on Weapon displays in List Builder and Battle Mode.
+// Small reusable label for a to-hit bonus value — used on Weapon displays in List Builder and
+// Battle Mode. Looks the value back up against the Proficiency Tier catalog so it shows whatever
+// that tier is actually named (not a hardcoded "Skilled"/"Mastery"); the star marks the single
+// highest-bonus tier currently defined, whatever it's called.
+// Whether a weapon is at the single highest-bonus Proficiency Tier currently defined for this Hero
+// — generalizes what used to be a hardcoded "Mastery" check. Used by exportList's human-readable
+// summary to call out a Hero's top-tier weapons specifically.
+function weaponMastered(hero, w){
+  const cls = getHeroClass(hero);
+  const tier = classTierFor(cls, w.category+' '+w.type);
+  if(!tier || !gameData.proficiencyTiers.length) return false;
+  const maxBonus = Math.max(...gameData.proficiencyTiers.map(t => t.bonus));
+  return tier.bonus === maxBonus;
+}
 function toHitBonusLabel(bonus){
-  if(bonus>=4) return '&#9733; Mastery (+4 to hit)';
-  if(bonus>=2) return 'Skilled (+2 to hit)';
-  return '';
+  if(!bonus) return '';
+  const tier = gameData.proficiencyTiers.find(t => t.bonus === bonus);
+  if(!tier) return '+'+bonus+' to hit';
+  const maxBonus = Math.max(...gameData.proficiencyTiers.map(t => t.bonus));
+  return (tier.bonus === maxBonus ? '&#9733; ' : '')+escapeHtml(tier.name)+' (+'+tier.bonus+' to hit)';
 }
 const HANDS_MAX = 2; // hidden — every Hero/Hireling has 2 hands; not shown as a stat, just gates equip choices
 function weaponHasKeyword(w, keywordName){ return w.keywords.some(id => { const k = byId(gameData.keywords,id); return k && k.name===keywordName; }); }
@@ -1329,8 +1378,8 @@ function partyItemCount(itemId){
   count += list.partyInventory.filter(p => p.itemId === itemId).length;
   return count;
 }
-function weaponSkillsOf(cls){ return cls.skills.filter(s => !s.endsWith(' Armor')); }
-function armorSkillsOf(cls){ return cls.skills.filter(s => s.endsWith(' Armor')); }
+function weaponSkillsOf(cls){ return classAllProficientCategories(cls).filter(s => !s.endsWith(' Armor')); }
+function armorSkillsOf(cls){ return classAllProficientCategories(cls).filter(s => s.endsWith(' Armor')); }
 function heroWeaponSkills(hero){ return heroEquipSkills(hero).filter(s => !s.endsWith(' Armor')); }
 function heroArmorSkills(hero){ return heroEquipSkills(hero).filter(s => s.endsWith(' Armor')); }
 function guildForFeat(featId){ return gameData.guilds.find(g => g.feat_id === featId) || null; }
@@ -1991,9 +2040,10 @@ function renderHeroClassStep(hero){
           {label:'Spirit', value:c.stats.spirit},
         ])
       + (c.can_use_magic? '<div class="opt-tags" style="margin-top:0;"><span class="tag">Spellcaster</span></div>':'')
-      + '<div class="equip-line"><span class="stat-label">Skilled (Weapons):</span> '+escapeHtml(weaponSkillsOf(c).join(', ')||'—')+'</div>'
-      + '<div class="equip-line"><span class="stat-label">Skilled (Armor):</span> '+escapeHtml(armorSkillsOf(c).join(', ')||'—')+'</div>'
-      + '<div class="equip-line"><span class="stat-label">Mastery (+4 to hit):</span> '+(c.mastery_skills&&c.mastery_skills.length? escapeHtml(c.mastery_skills.join(', ')) : 'none yet')+'</div>'
+      + gameData.proficiencyTiers.slice().sort((a,b) => b.bonus-a.bonus).map(tier => {
+          const cats = (c.proficiencies && c.proficiencies[tier.id]) || [];
+          return '<div class="equip-line"><span class="stat-label">'+escapeHtml(tier.name)+' (+'+tier.bonus+'):</span> '+(cats.length? escapeHtml(cats.join(', ')) : 'none yet')+'</div>';
+        }).join('')
       + keywordChipsHTML(c.keywords, c.keyword_values)
       + (c.signature_ability? '<div class="opt-desc" style="font-style:normal;"><strong style="color:var(--cyan-bright);">'+escapeHtml(signatureAbilityDisplayName(c))+':</strong> <span style="color:var(--ink);">'+highlightCurrency(escapeHtml(signatureAbilityRulesText(c)))+'</span></div>':'')
       + (locked? '<div class="opt-lock-note">'+escapeHtml(lockReason)+'</div>':'')
@@ -2322,10 +2372,11 @@ function renderVeteranComparePanel(base, veterans){
     + '</div>';
 }
 function renderHirelingsTabContent(){
-  // Warlock Minions are reserved exclusively for a Warlock Hero's Familial Pact panel, and a
-  // Veteran Hireling only ever shows up via the base's own "Upgrade to Veteran" flow below — both
-  // are hidden from the normal picker grid.
-  const availCards = gameData.hirelings.filter(h => !h.is_warlock_minion && !h.veteran_of && hirelingEligible(h)).slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0)).map(h => {
+  // Warlock Minions are reserved exclusively for a Warlock Hero's Familial Pact panel, a Veteran
+  // Hireling only ever shows up via its base's own "Upgrade to Veteran" flow below, and a Hireling
+  // currently standing in for another one (see activeReplacementFor) hides that other one entirely
+  // — all three are excluded from the normal picker grid here.
+  const availCards = gameData.hirelings.filter(h => !h.is_warlock_minion && !h.veteran_of && hirelingEligible(h) && !activeReplacementFor(h.id)).slice().sort((a,b) => (a.gold_cost||0)-(b.gold_cost||0)).map(h => {
     const eligible = hirelingEligible(h);
     const reason = hirelingLockReason(h);
     const count = list.hirelings.filter(p => p.hirelingId===h.id).length;
@@ -3197,6 +3248,7 @@ function deleteEntry(tab, id){
     list.hirelings = list.hirelings.filter(p => p.hirelingId!==id);
     list.heroes.forEach(h => { if(h.pactHirelingId === id) h.pactHirelingId = null; });
     gameData.hirelings.forEach(h => { if(h.veteran_of === id) h.veteran_of = ''; });
+    gameData.hirelings.forEach(h => { if(h.replaces === id) h.replaces = ''; });
   }
   if(tab==='keywords'){
     gameData.weapons.forEach(w => w.keywords = w.keywords.filter(k => k!==id));
@@ -3206,6 +3258,13 @@ function deleteEntry(tab, id){
     gameData.spells.forEach(s => { if(Array.isArray(s.keywords)) s.keywords = s.keywords.filter(k => k!==id); });
     gameData.classes.forEach(c => { if(Array.isArray(c.keywords)) c.keywords = c.keywords.filter(k => k!==id); });
     gameData.hirelings.forEach(h => { if(Array.isArray(h.keywords)) h.keywords = h.keywords.filter(k => k!==id); });
+  }
+  if(tab==='proficiencyTiers'){
+    // A Class's category assignments for the deleted tier simply disappear (those categories go
+    // back to "not proficient" for that Class, same as if they'd never been checked) — same
+    // never-block-on-delete philosophy as every other cascade here.
+    gameData.classes.forEach(c => { if(c.proficiencies) delete c.proficiencies[id]; });
+    gameData.hirelings.forEach(h => { if(h.weapon_proficiency === id) h.weapon_proficiency = ''; });
   }
   if(editingId===id) editingId = null;
   renderAdmin();
@@ -3226,8 +3285,10 @@ function renderAdminTable(tab){
         { label:'Schools', get:c=> !c.can_use_magic ? 'None' : (c.allowed_schools==null ? 'All' : (c.allowed_schools.length? escapeHtml(c.allowed_schools.join(', ')) : 'None')) },
         { label:'School Focus', get:c=>c.school_focus? 'Yes' : 'No', sort:c=>c.school_focus?1:0 },
         { label:'Familial Pact', get:c=>c.has_pact? 'Yes' : 'No', sort:c=>c.has_pact?1:0 },
-        { label:'Skills', get:c=>escapeHtml(c.skills.join(', ')||'—') },
-        { label:'Mastery', get:c=>(c.mastery_skills&&c.mastery_skills.length)? escapeHtml(c.mastery_skills.join(', ')) : '—' },
+        ...gameData.proficiencyTiers.map(tier => ({
+          label: tier.name+' (+'+tier.bonus+')',
+          get: c => { const cats = (c.proficiencies && c.proficiencies[tier.id]) || []; return cats.length? escapeHtml(cats.join(', ')) : '—'; },
+        })),
         { label:'Keywords', get:c=>keywordChipsInline(c.keywords, c.keyword_values) || '—' },
         { label:'Mind', get:c=>c.stats.mind, sort:c=>c.stats.mind },
         { label:'Signature Ability', get:c=>c.signature_ability? highlightCurrency(escapeHtml(c.signature_ability)) : '—' },
@@ -3311,6 +3372,7 @@ function renderAdminTable(tab){
         { label:'Faction', get:h=>escapeHtml(hirelingFactionLabel(h)), sort:h=>hirelingFactionLabel(h) },
         { label:'Guild', get:h=>hirelingGuildLabel(h)? escapeHtml(hirelingGuildLabel(h)) : '—', sort:h=>hirelingGuildLabel(h) },
         { label:'Veteran Of', get:h=>h.veteran_of? escapeHtml((byId(gameData.hirelings,h.veteran_of)||{}).name||'—') : '—', sort:h=>h.veteran_of? (byId(gameData.hirelings,h.veteran_of)||{}).name||'' : '' },
+        { label:'Replaces', get:h=>h.replaces? escapeHtml((byId(gameData.hirelings,h.replaces)||{}).name||'—') : '—', sort:h=>h.replaces? (byId(gameData.hirelings,h.replaces)||{}).name||'' : '' },
         { label:'Weapon', get:h=>{ const w = hirelingWeaponInfo(h); return w ? (w.isCustom? escapeHtml(w.name)+' (custom)' : escapeHtml(w.name)) : '—'; } },
         { label:'Proficiency', get:h=>{ const b = hirelingWeaponToHitBonus(h); return b>0 ? toHitBonusLabel(b).replace('&#9733; ','') : 'None'; }, sort:h=>hirelingWeaponToHitBonus(h) },
         { label:'Gold', get:h=>h.gold_cost+'g', sort:h=>h.gold_cost||0 },
@@ -3323,6 +3385,10 @@ function renderAdminTable(tab){
     keywords: { data: gameData.keywords, cols: [
         { label:'Name', get:k=>escapeHtml(k.name), sort:k=>k.name },
         { label:'Description', get:k=>highlightCurrency(escapeHtml(k.description)) },
+      ]},
+    proficiencyTiers: { data: gameData.proficiencyTiers, cols: [
+        { label:'Name', get:t=>escapeHtml(t.name), sort:t=>t.name },
+        { label:'To-Hit Bonus', get:t=>'+'+t.bonus, sort:t=>t.bonus },
       ]},
   };
   const cfg = configs[tab];
@@ -3381,18 +3447,27 @@ function renderAdminForm(tab, id, inline){
   if(tab==='spells') fields = spellFields(existing);
   if(tab==='hirelings') fields = hirelingFields(existing);
   if(tab==='keywords') fields = keywordFields(existing);
+  if(tab==='proficiencyTiers') fields = proficiencyTierFields(existing);
 
-  // Inline mode (nested inside a Faction/Guild panel) saves via saveInlineEntry/closeInlineEdit
-  // instead of the top-level saveEntry/cancelForm, and uses a slightly tighter wrapper — otherwise
-  // identical, since it's the exact same *Fields() functions either way.
-  const saveFn = inline ? 'saveInlineEntry' : 'saveEntry';
-  const cancelFn = inline ? 'closeInlineEdit()' : 'cancelForm()';
-  const wrapClass = inline ? 'step form-step form-step-nested' : 'step form-step';
-  return '<div class="'+wrapClass+'">'
+  // HTML does not allow a form element nested inside another form element — browsers silently drop the inner
+  // tag, which breaks the inner Save button entirely (it ends up submitting the OUTER form
+  // instead). Since a related entity's inline editor renders inside the Faction/Guild's own
+  // form tag, it can't be a form itself — it's a plain div, and its Save button (type="button",
+  // not "submit") manually collects the field values via collectContainerFormData() instead of
+  // relying on the browser's native FormData(form) constructor, which requires a real form element.
+  if(inline){
+    return '<div class="step form-step form-step-nested">'
+      + '<div class="step-head"><span class="step-title">'+(isNew?'Add':'Edit')+' '+SINGULAR[tab]+'</span></div>'
+      + '<div class="inline-entity-fields">'
+        + fields
+        + '<div class="form-actions"><button type="button" class="btn primary" onclick="saveInlineEntry(this,\''+tab+'\',\''+id+'\')">Save</button><button type="button" class="btn ghost" onclick="closeInlineEdit()">Cancel</button></div>'
+      + '</div></div>';
+  }
+  return '<div class="step form-step">'
     + '<div class="step-head"><span class="step-title">'+(isNew?'Add':'Edit')+' '+SINGULAR[tab]+'</span></div>'
-    + '<form onsubmit="return '+saveFn+'(event,\''+tab+'\',\''+id+'\')">'
+    + '<form onsubmit="return saveEntry(event,\''+tab+'\',\''+id+'\')">'
     + fields
-    + '<div class="form-actions"><button type="submit" class="btn primary">Save</button><button type="button" class="btn ghost" onclick="'+cancelFn+'">Cancel</button></div>'
+    + '<div class="form-actions"><button type="submit" class="btn primary">Save</button><button type="button" class="btn ghost" onclick="cancelForm()">Cancel</button></div>'
     + '</form></div>';
 }
 
@@ -3407,7 +3482,7 @@ function blankEntityFor(tab){
   if(tab==='weapons') return { name:'New Weapon', category:'Simple', type:'Melee', range:null, damage:'', gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
   if(tab==='armor') return { name:'New Armor', category:'Light', armor_value:0, gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
   if(tab==='items') return { name:'New Item', slots:1, gold_cost:0, rarity:'common', party_limit:0, requires_hand:false, abilities:'', stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
-  if(tab==='hirelings') return { name:'New Hireling', faction_id:'', guild_id:'', veteran_of:'', is_warlock_minion:false, weapon_id:'', custom_weapon_name:'', custom_weapon_damage:'', weapon_proficiency:'none', gold_cost:0, armor_value:0, stats:Object.assign({},zero), customAbilities:[], customFeats:[], description:'', spell_ids:[], keywords:[], keyword_values:{} };
+  if(tab==='hirelings') return { name:'New Hireling', faction_id:'', guild_id:'', veteran_of:'', replaces:'', is_warlock_minion:false, weapon_id:'', custom_weapon_name:'', custom_weapon_damage:'', weapon_proficiency:'', gold_cost:0, armor_value:0, stats:Object.assign({},zero), customAbilities:[], customFeats:[], description:'', spell_ids:[], keywords:[], keyword_values:{} };
   return { name:'New '+SINGULAR[tab] };
 }
 // Creates a new entity of `tab`, pre-linked to a Faction/Guild via `presetFields` (e.g.
@@ -3474,6 +3549,15 @@ function keywordFields(e){
     + '</div>'
     + '<p class="empty-note" style="margin:4px 0 0;">When checked, anywhere this Keyword is selected (on a Weapon, Armor, etc.) will show a number field next to it, so each one can carry its own value — e.g. one weapon can have Critical 1 while another has Critical 3.</p>';
 }
+// Proficiency Tiers are the "Skilled"/"Mastery" system, but no longer hardcoded to exactly those
+// two — a Class assigns each Weapon/Armor category it can use to one of these tiers (Admin ->
+// Classes), and whichever tier applies determines both equip access AND the to-hit bonus. A
+// Hireling picks one tier directly (Admin -> Hirelings) instead of deriving it from a Class.
+function proficiencyTierFields(e){
+  return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'" placeholder="e.g. Skilled, Mastery, Expert"></label>'
+    + '<label class="field"><span>To-Hit Bonus</span><input type="number" name="bonus" value="'+(e&&e.bonus!=null?e.bonus:0)+'"></label>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">Whichever tier gives the HIGHEST bonus for a given Weapon/Armor category always wins \u2014 a Class or Hireling is never penalized for also qualifying for a lower tier on the same item.</p>';
+}
 function factionFields(e){
   return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'"></label>'
     + '<label class="field wide"><span>Description</span><textarea name="description" rows="2">'+escapeHtml(e&&e.description)+'</textarea></label>'
@@ -3535,7 +3619,6 @@ function restrictionSummary(e){
 }
 function classFields(e){
   const s = (e && e.stats) || {};
-  const has = (arr,v) => e && e[arr] && e[arr].includes(v);
   const rawAllowedSchools = e ? e.allowed_schools : null;
   const isNoneState = Array.isArray(rawAllowedSchools) && rawAllowedSchools.length === 0;
   const schoolChecked = (name) => rawAllowedSchools == null ? true : rawAllowedSchools.includes(name);
@@ -3560,15 +3643,14 @@ function classFields(e){
       + '<label class="chk"><input type="checkbox" name="allowed_schools_none" '+(isNoneState?'checked':'')+' onchange="if(this.checked){this.form.querySelectorAll(\'input[name=allowed_schools]\').forEach(function(cb){cb.checked=false;});}"> None (this Class cannot pick Spells from any School)</label>'
       + (gameData.spellSchools.map(sc=>'<label class="chk"><input type="checkbox" name="allowed_schools" value="'+escapeAttr(sc.name)+'" '+(schoolChecked(sc.name)?'checked':'')+' onchange="if(this.checked){var n=this.form.querySelector(\'input[name=allowed_schools_none]\'); if(n) n.checked=false;}"> '+escapeHtml(sc.name)+'</label>').join('') || '<p class="empty-note">No Schools yet — add one in the Schools tab.</p>')
     + '</fieldset>'
-    + '<fieldset class="check-group"><legend>Skilled — Weapons (what this Class can equip)</legend>'
-      + WEAPON_SKILL_OPTS.map(o => '<label class="chk"><input type="checkbox" name="skills" value="'+o+'" '+(has('skills',o)?'checked':'')+'> '+o+'</label>').join('')
-    + '</fieldset>'
-    + '<fieldset class="check-group"><legend>Skilled — Armor (what this Class can equip)</legend>'
-      + ARMOR_SKILL_OPTS.map(o => '<label class="chk"><input type="checkbox" name="skills" value="'+o+'" '+(has('skills',o)?'checked':'')+'> '+o+'</label>').join('')
-    + '</fieldset>'
-    + '<fieldset class="check-group"><legend>Mastery — Weapons (this Class gets +4 to hit automatically with any equipped weapon of these types — shown starred \u2605 during character creation)</legend>'
-      + WEAPON_SKILL_OPTS.map(o => '<label class="chk"><input type="checkbox" name="mastery_skills" value="'+o+'" '+(has('mastery_skills',o)?'checked':'')+'> '+o+'</label>').join('')
-    + '</fieldset>'
+    + gameData.proficiencyTiers.map(tier => {
+        const catsForTier = (e && e.proficiencies && e.proficiencies[tier.id]) || [];
+        const hasCat = (cat) => catsForTier.includes(cat);
+        return '<fieldset class="check-group"><legend>'+escapeHtml(tier.name)+' (+'+tier.bonus+' to hit) \u2014 Weapons &amp; Armor this Class can equip at this tier</legend>'
+          + WEAPON_SKILL_OPTS.concat(ARMOR_SKILL_OPTS).map(o => '<label class="chk"><input type="checkbox" name="proficiency_'+tier.id+'" value="'+o+'" '+(hasCat(o)?'checked':'')+'> '+o+'</label>').join('')
+        + '</fieldset>';
+      }).join('')
+    + (gameData.proficiencyTiers.length===0? '<p class="empty-note">No Proficiency Tiers defined yet \u2014 add some in Admin \u2192 Proficiency (e.g. "Skilled" +2, "Mastery" +4) before a Class can equip anything.</p>':'')
     + '<fieldset class="check-group"><legend>Keywords</legend>'
       + keywordCheckboxesHTML(e&&e.keywords, e&&e.keyword_values)
     + '</fieldset>';
@@ -3603,7 +3685,7 @@ function renderGuildRelatedEntitiesHTML(guild){
     + renderRelatedEntitiesSection('weapons', 'Weapons', gameData.weapons.filter(w => w.restriction_type==='guild' && w.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, w => w.gold_cost+'g \u00b7 '+(w.damage?formatDamage(w.damage):'\u2014'))
     + renderRelatedEntitiesSection('armor', 'Armor', gameData.armor.filter(a => a.restriction_type==='guild' && a.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, a => a.gold_cost+'g \u00b7 Armor '+a.armor_value)
     + renderRelatedEntitiesSection('items', 'Items', gameData.items.filter(it => it.restriction_type==='guild' && it.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, it => it.gold_cost+'g')
-    + renderRelatedEntitiesSection('hirelings', 'Units', gameData.hirelings.filter(h => h.guild_id===guild.id), 'guild', {guild_id:guild.id}, h => h.gold_cost+'g')
+    + renderRelatedEntitiesSection('hirelings', 'Units', gameData.hirelings.filter(h => h.guild_id===guild.id), 'guild', {guild_id:guild.id}, h => h.gold_cost+'g'+(h.replaces? ' \u00b7 replaces '+((byId(gameData.hirelings,h.replaces)||{}).name||'?') : ''))
     + renderRelatedEntitiesSection('feats', 'Feats', gameData.feats.filter(f => f.restriction_type==='guild' && f.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, f => featCostText(f))
     + '</div>';
 }
@@ -3714,6 +3796,11 @@ function hirelingFields(e){
       + (gameData.guilds.map(g=>'<option value="'+g.id+'" '+(e&&e.guild_id===g.id?'selected':'')+'>'+escapeHtml(g.name)+' ('+escapeHtml(factionName(g.faction_id))+')</option>').join(''))
     + '</select></label>'
     + '<p class="empty-note" style="margin:-8px 0 12px;">A Guild-specific Hireling only shows up once at least one Hero in the List actually belongs to that Guild.</p>'
+    + '<label class="field"><span>Replaces (Guild-Specific)</span><select name="replaces">'
+      + '<option value="" '+(!e||!e.replaces?'selected':'')+'>Does Not Replace Anything</option>'
+      + (gameData.hirelings.filter(h2=>!e||h2.id!==e.id).map(h2=>'<option value="'+h2.id+'" '+(e&&e.replaces===h2.id?'selected':'')+'>'+escapeHtml(h2.name)+'</option>').join(''))
+    + '</select></label>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">While this Hireling is available (per its own Faction/Guild above), the one picked here is hidden from the normal Hireling picker entirely \u2014 e.g. a Guild-specific "Trapper" set to replace "Pikemen" means Pikemen simply isn\u2019t offered once the party has that Guild. The replaced Hireling reappears normally if this one stops being available (different Guild, etc.).</p>'
     + '<label class="field"><span>Veteran Upgrade Of</span><select name="veteran_of">'
       + '<option value="" '+(!e||!e.veteran_of?'selected':'')+'>Not a Veteran Upgrade</option>'
       + (gameData.hirelings.filter(h2=>!e||h2.id!==e.id).filter(h2=>!h2.veteran_of).map(h2=>'<option value="'+h2.id+'" '+(e&&e.veteran_of===h2.id?'selected':'')+'>'+escapeHtml(h2.name)+'</option>').join(''))
@@ -3727,9 +3814,8 @@ function hirelingFields(e){
     + '<label class="field"><span>Custom Weapon damage</span>'+damageSelectHTML(e?e.custom_weapon_damage:'', 'custom_weapon_damage')+'</label>'
     + '<p class="empty-note" style="margin:-8px 0 12px;">If a Custom Weapon name is filled in, it\u2019s shown instead of the Weapon dropdown above.</p>'
     + '<label class="field"><span>Weapon Proficiency</span><select name="weapon_proficiency">'
-      + '<option value="none" '+(!e||!e.weapon_proficiency||e.weapon_proficiency==='none'?'selected':'')+'>None</option>'
-      + '<option value="skilled" '+(e&&e.weapon_proficiency==='skilled'?'selected':'')+'>Skilled (+2 to hit)</option>'
-      + '<option value="mastery" '+(e&&e.weapon_proficiency==='mastery'?'selected':'')+'>Mastery (+4 to hit)</option>'
+      + '<option value="" '+(!e||!e.weapon_proficiency?'selected':'')+'>None</option>'
+      + gameData.proficiencyTiers.map(tier => '<option value="'+tier.id+'" '+(e&&e.weapon_proficiency===tier.id?'selected':'')+'>'+escapeHtml(tier.name)+' (+'+tier.bonus+' to hit)</option>').join('')
     + '</select></label>'
     + '<p class="empty-note" style="margin:-8px 0 12px;">Hirelings have no Class to derive this from, so it\u2019s set directly here — applies to whichever weapon (catalog or Custom) this Hireling carries.</p>'
     + '<label class="field"><span>Gold cost</span><input type="number" name="gold_cost" min="0" value="'+(e?e.gold_cost:0)+'"></label>'
@@ -3759,23 +3845,52 @@ function saveEntry(event, tab, id){
   renderAdmin();
   return false;
 }
-// Same commit, but for a related-entity form nested inside a Faction/Guild's own edit panel
+// Same commit, but for a related-entity editor nested inside a Faction/Guild's own edit panel
 // (see renderRelatedEntitiesSection) — closes just the nested inline editor afterward, leaving
 // the PARENT Faction/Guild's own top-level editingId untouched, so saving e.g. a Feat from inside
-// the Faction panel doesn't also close the Faction's own form out from under the admin.
-function saveInlineEntry(event, tab, id){
-  event.preventDefault();
-  commitEntryFromForm(event.target, tab, id);
+// the Faction panel doesn't also close the Faction's own form out from under the admin. Takes the
+// clicked button itself (not an event) since there's no real form/submit event here — see the
+// note on renderAdminForm's inline branch for why.
+function saveInlineEntry(buttonEl, tab, id){
+  const container = buttonEl.closest('.inline-entity-fields');
+  if(!container) return;
+  commitEntryFromForm(container, tab, id);
   inlineEditTarget = null;
   renderAdmin();
-  return false;
+}
+// A minimal stand-in for the browser's native FormData(form), for containers that aren't allowed
+// to be a real form element (nested-form case — see renderAdminForm). Walks every named input/select/
+// textarea under `container` and replicates the handful of FormData behaviors commitEntryFromForm
+// actually relies on: get() the first value, getAll() every value in DOM order (checked checkboxes,
+// repeated same-name inputs, multi-selects), has() presence for boolean flag checkboxes.
+function collectContainerFormData(container){
+  const fields = {};
+  container.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
+    const name = el.name;
+    if(!fields[name]) fields[name] = [];
+    if(el.type === 'checkbox' || el.type === 'radio'){
+      if(el.checked) fields[name].push(el.value!==undefined && el.value!=='' ? el.value : 'on');
+    } else if(el.tagName === 'SELECT' && el.multiple){
+      Array.from(el.selectedOptions).forEach(o => fields[name].push(o.value));
+    } else {
+      fields[name].push(el.value);
+    }
+  });
+  return {
+    get(name){ return (fields[name] && fields[name].length) ? fields[name][0] : null; },
+    getAll(name){ return fields[name] || []; },
+    has(name){ return !!(fields[name] && fields[name].length); },
+  };
 }
 // The actual per-tab field-parsing and gameData commit logic, shared by both save paths above —
 // pulled out so there's exactly one place that knows how to turn a submitted form into a saved
 // Weapon/Feat/Hireling/etc., regardless of which UI context (a tab's own form, or a related-entity
-// row nested inside a different tab's panel) triggered the save.
+// container nested inside a different tab's panel) triggered the save. `form` is a real form element for
+// the top-level path (native FormData applies) or a plain div for the inline path (the collector
+// above stands in for it) — either way it only needs get()/getAll()/has(), so everything below is
+// unchanged regardless of which one it actually is.
 function commitEntryFromForm(form, tab, id){
-  const fd = new FormData(form);
+  const fd = (form.tagName === 'FORM') ? new FormData(form) : collectContainerFormData(form);
   const isNew = id === '__new__';
   const obj = isNew ? { id: genId(tab) } : Object.assign({}, byId(gameData[tab], id));
 
@@ -3791,6 +3906,9 @@ function commitEntryFromForm(form, tab, id){
       delete obj.value_min; delete obj.value_max; delete obj.value_default; delete obj.value_suffix;
     }
   }
+  if(tab==='proficiencyTiers'){
+    obj.name = fd.get('name'); obj.bonus = num(fd,'bonus');
+  }
   if(tab==='factions'){
     obj.name = fd.get('name'); obj.description = fd.get('description') || '';
   }
@@ -3804,8 +3922,8 @@ function commitEntryFromForm(form, tab, id){
     obj.school_focus = fd.has('school_focus');
     obj.has_pact = fd.has('has_pact');
     obj.stats = { haste:num(fd,'haste'), move:num(fd,'move'), body:num(fd,'body'), mind:num(fd,'mind'), spirit:num(fd,'spirit') };
-    obj.skills = fd.getAll('skills');
-    obj.mastery_skills = fd.getAll('mastery_skills');
+    obj.proficiencies = {};
+    gameData.proficiencyTiers.forEach(tier => { obj.proficiencies[tier.id] = fd.getAll('proficiency_'+tier.id); });
     obj.allowed_schools = (!obj.can_use_magic || fd.has('allowed_schools_none')) ? [] : fd.getAll('allowed_schools');
     obj.keywords = fd.getAll('keywords');
     obj.keyword_values = parseKeywordValues(fd, obj.keywords);
@@ -3894,11 +4012,12 @@ function commitEntryFromForm(form, tab, id){
     obj.name = fd.get('name'); obj.faction_id = fd.get('faction_id') || '';
     obj.guild_id = fd.get('guild_id') || '';
     obj.veteran_of = fd.get('veteran_of') || '';
+    obj.replaces = fd.get('replaces') || '';
     obj.is_warlock_minion = fd.has('is_warlock_minion');
     obj.weapon_id = fd.get('weapon_id') || '';
     obj.custom_weapon_name = (fd.get('custom_weapon_name') || '').trim();
     obj.custom_weapon_damage = fd.get('custom_weapon_damage') || '';
-    obj.weapon_proficiency = fd.get('weapon_proficiency') || 'none';
+    obj.weapon_proficiency = fd.get('weapon_proficiency') || '';
     obj.gold_cost = num(fd,'gold_cost'); obj.armor_value = num(fd,'armor_value');
     obj.stats = { haste:num(fd,'haste'), move:num(fd,'move'), body:num(fd,'body'), mind:num(fd,'mind'), spirit:num(fd,'spirit') };
     obj.customAbilities = zipRepeatRows(fd.getAll('ability_name'), fd.getAll('ability_desc'));
@@ -3979,11 +4098,51 @@ function normalizeRuleset(parsed){
   if(!Array.isArray(parsed.wounds)) parsed.wounds = [];
   const zeroModsForWounds = { haste:0, move:0, body:0, mind:0, spirit:0 };
   parsed.wounds.forEach(w => { if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroModsForWounds); if(w.description===undefined) w.description = ''; });
+  // Proficiency Tiers replace the old hardcoded "Skilled"(+2)/"Mastery"(+4) pair with an
+  // admin-editable catalog. A ruleset from before this existed has no proficiencyTiers at all —
+  // seeded here with those same two tiers (same names, same bonuses) so nothing about an existing
+  // ruleset's balance changes on load; the IDs generated here are then used immediately below to
+  // migrate every Class's old skills/mastery_skills arrays and every Hireling's old
+  // weapon_proficiency string onto real tier references.
+  let skilledTierId = null, masteryTierId = null;
+  if(!Array.isArray(parsed.proficiencyTiers)){
+    skilledTierId = genId('proficiencyTiers');
+    masteryTierId = genId('proficiencyTiers');
+    parsed.proficiencyTiers = [
+      { id: skilledTierId, name:'Skilled', bonus:2 },
+      { id: masteryTierId, name:'Mastery', bonus:4 },
+    ];
+  } else {
+    // Already has a real tier catalog (a previously-migrated or hand-authored ruleset) — nothing to
+    // seed, but still try to find Skilled/Mastery by name in case any Class below still has the
+    // pre-migration array fields lingering (e.g. hand-edited JSON).
+    const skilledTier = parsed.proficiencyTiers.find(t => t.name==='Skilled');
+    const masteryTier = parsed.proficiencyTiers.find(t => t.name==='Mastery');
+    skilledTierId = skilledTier ? skilledTier.id : null;
+    masteryTierId = masteryTier ? masteryTier.id : null;
+  }
+  parsed.classes.forEach(c => {
+    if(!c.proficiencies){
+      const skilled = Array.isArray(c.skills) ? c.skills : [];
+      const mastery = Array.isArray(c.mastery_skills) ? c.mastery_skills : [];
+      const skilledOnly = skilled.filter(cat => !mastery.includes(cat));
+      c.proficiencies = {};
+      if(skilledOnly.length && skilledTierId) c.proficiencies[skilledTierId] = skilledOnly;
+      if(mastery.length && masteryTierId) c.proficiencies[masteryTierId] = mastery;
+    }
+    delete c.skills; delete c.mastery_skills;
+  });
+  parsed.hirelings.forEach(h => {
+    if(h.weapon_proficiency==='mastery') h.weapon_proficiency = masteryTierId || '';
+    else if(h.weapon_proficiency==='skilled') h.weapon_proficiency = skilledTierId || '';
+    else if(h.weapon_proficiency==='none' || h.weapon_proficiency===undefined) h.weapon_proficiency = '';
+    // else: already a real tier id (or intentionally blank) — left as-is
+  });
   parsed.spells.forEach(s => { if(!Array.isArray(s.allowed_classes)) s.allowed_classes = []; if(s.range===undefined) s.range = null; if(s.restriction_type===undefined){ s.restriction_type = 'none'; s.restriction_id = ''; } if(!Array.isArray(s.action_types)) s.action_types = []; });
-  parsed.classes.forEach(c => { if(!Array.isArray(c.mastery_skills)) c.mastery_skills = []; if(c.stats) delete c.stats.mastery; if(c.max_feats==null) c.max_feats = 2; if(!Array.isArray(c.keywords)) c.keywords = []; if(c.has_pact===undefined) c.has_pact = false; });
+  parsed.classes.forEach(c => { if(c.stats) delete c.stats.mastery; if(c.max_feats==null) c.max_feats = 2; if(!Array.isArray(c.keywords)) c.keywords = []; if(c.has_pact===undefined) c.has_pact = false; });
   const zeroMods = { haste:0, move:0, body:0, mind:0, spirit:0 };
   parsed.weapons.forEach(w => { if(!w.rarity) w.rarity = 'common'; if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroMods); if(w.restriction_type===undefined){ w.restriction_type = 'none'; w.restriction_id = ''; } });
-  parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(h.weapon_proficiency===undefined) h.weapon_proficiency = 'none'; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false; if(h.guild_id===undefined) h.guild_id = ''; if(h.veteran_of===undefined) h.veteran_of = '';
+  parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false; if(h.guild_id===undefined) h.guild_id = ''; if(h.veteran_of===undefined) h.veteran_of = ''; if(h.replaces===undefined) h.replaces = '';
     if(!Array.isArray(h.customAbilities)){
       const old = h.abilities || '';
       const title = abilityTitle(old);
