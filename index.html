@@ -84,6 +84,20 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 
 .step{ background:var(--panel); background-image:var(--noise-texture); background-blend-mode:overlay; border:1px solid var(--rule); border-radius:5px; padding:20px 24px; margin-bottom:18px; }
 .form-step{ border-color:var(--pink); border-width:2px; }
+/* A related entity's inline edit form, nested inside a Faction/Guild's own panel (see
+   renderRelatedEntitiesSection) — same pink "actively editing" treatment as any other form-step,
+   just tighter, since it's already indented inside a parent panel. */
+.form-step-nested{ padding:14px 16px; margin:8px 0 0; }
+.related-wrap{ margin-top:6px; padding-top:14px; border-top:1px solid var(--rule); }
+.related-wrap-title{ font-family:var(--font-display); font-weight:700; font-size:14px; color:var(--ink-dim); margin-bottom:10px; }
+.related-section{ margin-bottom:16px; }
+.related-section-title{ font-family:var(--font-display); font-weight:700; font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--gold); margin-bottom:6px; }
+.related-section-count{ font-family:var(--font-data); color:var(--muted); font-weight:600; }
+.related-entity-row{ border:1px solid var(--rule); border-radius:4px; margin-bottom:6px; background:var(--panel-raised); }
+.related-entity-line{ display:flex; align-items:center; gap:10px; padding:7px 10px; flex-wrap:wrap; }
+.related-entity-name{ font-weight:700; color:var(--ink); }
+.related-entity-meta{ font-family:var(--font-data); font-size:12px; color:var(--ink-dim); }
+.related-entity-actions{ margin-left:auto; display:flex; gap:6px; }
 /* Faction and Guild are the two foundational, sequential choices everything else in the builder
    depends on (Guild options, Faction-Wide Feats, and — soon — unit availability all key off these)
    — a gold accent border+glow sets them apart from ordinary steps without colliding with pink
@@ -612,6 +626,10 @@ let adminTab = 'factions';
 let adminSortCol = null;   // index into the current tab's cols array, or null for insertion order
 let adminSortDir = 1;      // 1 = ascending, -1 = descending
 let editingId = null;
+// Which related entity (if any) is currently expanded for inline editing inside a Faction/Guild's
+// own panel — e.g. { tab:'feats', id:'...' } — separate from editingId above so opening one never
+// closes the other.
+let inlineEditTarget = null;
 let battleExpandedIds = [];
 // File System Access API lets Admin write ruleset changes directly back to a linked HTML/JSON
 // file on disk, instead of the download-then-re-upload Save/Load Ruleset workflow. Chrome/Edge
@@ -3345,7 +3363,7 @@ function setAdminSort(tab, colIndex){
 }
 function clearAdminSort(){ adminSortCol = null; adminSortDir = 1; renderAdmin(); }
 
-function renderAdminForm(tab, id){
+function renderAdminForm(tab, id, inline){
   if(!id) return '';
   const isNew = id === '__new__';
   const existing = isNew ? null : byId(gameData[tab], id);
@@ -3364,12 +3382,83 @@ function renderAdminForm(tab, id){
   if(tab==='hirelings') fields = hirelingFields(existing);
   if(tab==='keywords') fields = keywordFields(existing);
 
-  return '<div class="step form-step">'
+  // Inline mode (nested inside a Faction/Guild panel) saves via saveInlineEntry/closeInlineEdit
+  // instead of the top-level saveEntry/cancelForm, and uses a slightly tighter wrapper — otherwise
+  // identical, since it's the exact same *Fields() functions either way.
+  const saveFn = inline ? 'saveInlineEntry' : 'saveEntry';
+  const cancelFn = inline ? 'closeInlineEdit()' : 'cancelForm()';
+  const wrapClass = inline ? 'step form-step form-step-nested' : 'step form-step';
+  return '<div class="'+wrapClass+'">'
     + '<div class="step-head"><span class="step-title">'+(isNew?'Add':'Edit')+' '+SINGULAR[tab]+'</span></div>'
-    + '<form onsubmit="return saveEntry(event,\''+tab+'\',\''+id+'\')">'
+    + '<form onsubmit="return '+saveFn+'(event,\''+tab+'\',\''+id+'\')">'
     + fields
-    + '<div class="form-actions"><button type="submit" class="btn primary">Save</button><button type="button" class="btn ghost" onclick="cancelForm()">Cancel</button></div>'
+    + '<div class="form-actions"><button type="submit" class="btn primary">Save</button><button type="button" class="btn ghost" onclick="'+cancelFn+'">Cancel</button></div>'
     + '</form></div>';
+}
+
+function openInlineEdit(tab, id){ inlineEditTarget = { tab, id }; renderAdmin(); }
+function closeInlineEdit(){ inlineEditTarget = null; renderAdmin(); }
+// Sensible, complete blank defaults for each linkable tab — mirrors exactly what an untouched
+// Add form would produce via commitEntryFromForm, so a quick-added draft is never missing a field
+// another part of the app (a table column, a stat calculation) expects to find.
+function blankEntityFor(tab){
+  const zero = { haste:0, move:0, body:0, mind:0, spirit:0 };
+  if(tab==='feats') return { name:'New Feat', ability_description:'', gold_cost:0, veil_cost:0, valor_cost:0, restriction_type:'none', restriction_id:'', allowed_classes:[], stat_modifiers:Object.assign({},zero), equip_override:[] };
+  if(tab==='weapons') return { name:'New Weapon', category:'Simple', type:'Melee', range:null, damage:'', gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
+  if(tab==='armor') return { name:'New Armor', category:'Light', armor_value:0, gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
+  if(tab==='items') return { name:'New Item', slots:1, gold_cost:0, rarity:'common', party_limit:0, requires_hand:false, abilities:'', stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
+  if(tab==='hirelings') return { name:'New Hireling', faction_id:'', guild_id:'', veteran_of:'', is_warlock_minion:false, weapon_id:'', custom_weapon_name:'', custom_weapon_damage:'', weapon_proficiency:'none', gold_cost:0, armor_value:0, stats:Object.assign({},zero), customAbilities:[], customFeats:[], description:'', spell_ids:[], keywords:[], keyword_values:{} };
+  return { name:'New '+SINGULAR[tab] };
+}
+// Creates a new entity of `tab`, pre-linked to a Faction/Guild via `presetFields` (e.g.
+// {restriction_type:'guild', restriction_id:guildId}), and immediately opens it for inline editing
+// — so quick-adding something from a Guild panel starts it already correctly attached, rather than
+// needing a second step to go link it afterward.
+function addRelatedEntity(tab, presetFields){
+  const draft = Object.assign({ id: genId(tab) }, blankEntityFor(tab), presetFields);
+  gameData[tab].push(draft);
+  inlineEditTarget = { tab, id: draft.id };
+  renderAdmin();
+}
+// Severs a related entity's link back to its Faction/Guild without deleting it — e.g. a
+// Faction-Wide Feat goes back to unrestricted, a Guild Hireling goes back to unassigned. Full
+// deletion is still available from that entity's own Admin tab, unchanged.
+function unlinkRelatedEntity(tab, id, linkType){
+  const entity = byId(gameData[tab], id);
+  if(!entity) return;
+  if(linkType==='restriction'){ entity.restriction_type = 'none'; entity.restriction_id = ''; }
+  else if(linkType==='guild'){ entity.guild_id = ''; }
+  if(inlineEditTarget && inlineEditTarget.tab===tab && inlineEditTarget.id===id) inlineEditTarget = null;
+  renderAdmin();
+}
+// One row inside a Faction/Guild's "related entities" list — name, a short stat summary, and
+// Edit/Unlink actions. Edit expands the exact same *Fields() form used on that entity's own Admin
+// tab, right in place, so nothing about how it's edited differs by context.
+function renderRelatedEntityRow(tab, entity, summary, linkType){
+  const isEditing = inlineEditTarget && inlineEditTarget.tab===tab && inlineEditTarget.id===entity.id;
+  return '<div class="related-entity-row">'
+    + '<div class="related-entity-line">'
+      + '<span class="related-entity-name">'+escapeHtml(entity.name)+'</span>'
+      + (summary? '<span class="related-entity-meta">'+summary+'</span>' : '')
+      + '<span class="related-entity-actions">'
+        + '<button type="button" class="btn ghost small" onclick="'+(isEditing?'closeInlineEdit()':"openInlineEdit('"+tab+"','"+entity.id+"')")+'">'+(isEditing?'Close':'Edit')+'</button>'
+        + '<button type="button" class="btn ghost small" onclick="unlinkRelatedEntity(\''+tab+'\',\''+entity.id+'\',\''+linkType+'\')">Unlink</button>'
+      + '</span>'
+    + '</div>'
+    + (isEditing? renderAdminForm(tab, entity.id, true) : '')
+    + '</div>';
+}
+// A titled sub-section inside a Faction/Guild panel listing everything of one tab currently linked
+// to it. `addPreset` pre-fills a quick-added entity's link back to this parent; `linkType` tells
+// unlinkRelatedEntity how to sever that link again ('restriction' for the shared Faction/Guild
+// restriction_type+id pair Weapons/Armor/Items/Feats use, 'guild' for a Hireling's own guild_id).
+function renderRelatedEntitiesSection(tab, label, entities, linkType, addPreset, summaryFn){
+  const rows = entities.map(e => renderRelatedEntityRow(tab, e, summaryFn?summaryFn(e):'', linkType)).join('');
+  return '<div class="related-section">'
+    + '<div class="related-section-title">'+escapeHtml(label)+' <span class="related-section-count">'+entities.length+'</span></div>'
+    + (rows || '<p class="empty-note" style="margin:4px 0 8px;">None yet.</p>')
+    + '<button type="button" class="btn ghost small" onclick=\'addRelatedEntity("'+tab+'", '+JSON.stringify(addPreset)+')\'>+ New '+SINGULAR[tab]+'</button>'
+    + '</div>';
 }
 
 function keywordFields(e){
@@ -3386,12 +3475,11 @@ function keywordFields(e){
     + '<p class="empty-note" style="margin:4px 0 0;">When checked, anywhere this Keyword is selected (on a Weapon, Armor, etc.) will show a number field next to it, so each one can carry its own value — e.g. one weapon can have Critical 1 while another has Critical 3.</p>';
 }
 function factionFields(e){
-  const assignedFeats = e ? gameData.feats.filter(f => f.restriction_type==='faction' && f.restriction_id === e.id) : [];
   return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'"></label>'
     + '<label class="field wide"><span>Description</span><textarea name="description" rows="2">'+escapeHtml(e&&e.description)+'</textarea></label>'
     + (e
-        ? '<p class="empty-note" style="margin:0 0 12px;">Faction-Wide Feats pool: '+(assignedFeats.length? escapeHtml(assignedFeats.map(f=>f.name).join(', ')) : 'none yet')+' \u2014 assign a Feat to this Faction from its own entry in Admin \u2192 Feats.</p>'
-        : '');
+        ? renderRelatedEntitiesSection('feats', 'Faction-Wide Feats', gameData.feats.filter(f => f.restriction_type==='faction' && f.restriction_id===e.id), 'restriction', {restriction_type:'faction', restriction_id:e.id}, f => featCostText(f))
+        : '<p class="empty-note" style="margin:0 0 12px;">Save the Faction first to start adding Faction-Wide Feats to it.</p>');
 }
 const WEAPON_SKILL_OPTS = ['Simple Melee','Simple Ranged','Martial Melee','Martial Ranged','Heavy Melee','Heavy Ranged','Magi Melee','Magi Ranged'];
 const ARMOR_SKILL_OPTS = ['Light Armor','Medium Armor','Heavy Armor'];
@@ -3503,7 +3591,21 @@ function guildFields(e){
       + (gameData.classes.map(c=>'<label class="chk"><input type="checkbox" name="allowed_classes" value="'+c.id+'" '+(e&&e.allowed_classes&&e.allowed_classes.includes(c.id)?'checked':'')+'> '+escapeHtml(c.name)+'</label>').join('') || '<p class="empty-note">No classes yet.</p>')
     + '</fieldset>'
     + statModifierFieldset(e)
-    + equipOverrideFieldset(e);
+    + equipOverrideFieldset(e)
+    + (e ? renderGuildRelatedEntitiesHTML(e) : '<p class="empty-note" style="margin:0 0 12px;">Save the Guild first to start linking Weapons, Armor, Items, Units, and Feats to it.</p>');
+}
+// Everything currently tied to this Guild via its own restriction/guild_id field, grouped by tab
+// and editable right here — so as the ruleset grows, "what belongs to this Guild" is answered in
+// one place instead of hunting across five separate Admin tabs.
+function renderGuildRelatedEntitiesHTML(guild){
+  return '<div class="related-wrap">'
+    + '<div class="related-wrap-title">Linked to this Guild</div>'
+    + renderRelatedEntitiesSection('weapons', 'Weapons', gameData.weapons.filter(w => w.restriction_type==='guild' && w.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, w => w.gold_cost+'g \u00b7 '+(w.damage?formatDamage(w.damage):'\u2014'))
+    + renderRelatedEntitiesSection('armor', 'Armor', gameData.armor.filter(a => a.restriction_type==='guild' && a.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, a => a.gold_cost+'g \u00b7 Armor '+a.armor_value)
+    + renderRelatedEntitiesSection('items', 'Items', gameData.items.filter(it => it.restriction_type==='guild' && it.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, it => it.gold_cost+'g')
+    + renderRelatedEntitiesSection('hirelings', 'Units', gameData.hirelings.filter(h => h.guild_id===guild.id), 'guild', {guild_id:guild.id}, h => h.gold_cost+'g')
+    + renderRelatedEntitiesSection('feats', 'Feats', gameData.feats.filter(f => f.restriction_type==='guild' && f.restriction_id===guild.id), 'restriction', {restriction_type:'guild', restriction_id:guild.id}, f => featCostText(f))
+    + '</div>';
 }
 function weaponFields(e){
   return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'"></label>'
@@ -3652,7 +3754,27 @@ function hirelingFields(e){
 
 function saveEntry(event, tab, id){
   event.preventDefault();
-  const form = event.target;
+  commitEntryFromForm(event.target, tab, id);
+  editingId = null;
+  renderAdmin();
+  return false;
+}
+// Same commit, but for a related-entity form nested inside a Faction/Guild's own edit panel
+// (see renderRelatedEntitiesSection) — closes just the nested inline editor afterward, leaving
+// the PARENT Faction/Guild's own top-level editingId untouched, so saving e.g. a Feat from inside
+// the Faction panel doesn't also close the Faction's own form out from under the admin.
+function saveInlineEntry(event, tab, id){
+  event.preventDefault();
+  commitEntryFromForm(event.target, tab, id);
+  inlineEditTarget = null;
+  renderAdmin();
+  return false;
+}
+// The actual per-tab field-parsing and gameData commit logic, shared by both save paths above —
+// pulled out so there's exactly one place that knows how to turn a submitted form into a saved
+// Weapon/Feat/Hireling/etc., regardless of which UI context (a tab's own form, or a related-entity
+// row nested inside a different tab's panel) triggered the save.
+function commitEntryFromForm(form, tab, id){
   const fd = new FormData(form);
   const isNew = id === '__new__';
   const obj = isNew ? { id: genId(tab) } : Object.assign({}, byId(gameData[tab], id));
@@ -3795,9 +3917,7 @@ function saveEntry(event, tab, id){
   if(isNew) gameData[tab].push(obj);
   else { const idx = gameData[tab].findIndex(x => x.id===id); gameData[tab][idx] = obj; }
 
-  editingId = null;
-  renderAdmin();
-  return false;
+  return obj;
 }
 
 function exportRuleset(){ downloadJSON(gameData, 'ruleset.json'); alert('Saved — ruleset.json downloaded. Commit/push this file to replace ruleset.json in your repo, or use "Load Ruleset" to bring it back in locally.'); }
