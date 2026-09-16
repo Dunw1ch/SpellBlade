@@ -67,14 +67,33 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 }
 .brand-logo{ height:76px; width:auto; display:block; border-radius:3px; box-shadow:0 4px 20px rgba(0,0,0,.55); }
 @media (max-width:480px){ .brand-logo{ height:56px; } }
-.mode-tabs{ display:flex; gap:6px; }
+@media (max-width:360px){ .brand-logo{ height:44px; } }
+/* The tab bar has grown from 3 tabs to 5 over time, with more labels a real possibility later — a
+   horizontally-scrollable strip is the robust fix (holds up no matter how many tabs there end up
+   being), and mobile media queries below squeeze padding/font down first so a phone-sized screen
+   fits as many tabs edge-to-edge as it reasonably can before any scrolling is ever needed at all. */
+.mode-tabs{ display:flex; flex-wrap:nowrap; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.mode-tabs::-webkit-scrollbar{ display:none; }
 .mode-tabs button{
   font-family:var(--font-display); font-weight:600; letter-spacing:.04em; font-size:13px;
   padding:9px 20px; background:transparent; border:1px solid var(--rule); color:var(--ink-dim);
-  cursor:pointer; border-radius:4px 4px 0 0; text-transform:uppercase;
+  cursor:pointer; border-radius:4px 4px 0 0; text-transform:uppercase; flex-shrink:0; white-space:nowrap;
 }
 .mode-tabs button.active{ position:relative; overflow:hidden; color:var(--on-accent); background:linear-gradient(135deg, var(--btn-silver-dim) 0%, var(--btn-silver) 35%, var(--btn-silver-bright) 50%, var(--btn-silver) 65%, var(--btn-silver-dim) 100%); border-color:var(--btn-silver); box-shadow:0 0 14px var(--btn-silver-glow), 0 2px 6px rgba(0,0,0,.5); text-shadow:0 1px 0 rgba(255,255,255,.4); }
 .mode-tabs button:not(.active):hover{ border-color:var(--cyan); color:var(--ink); }
+/* Two-stage squish: tablet/small-laptop widths tighten padding and font a little; phone widths
+   tighten further still. overflow-x:auto on .mode-tabs above is the safety net either way — even
+   at the smallest size here, five full-word tabs plus a sixth added later can still be reached by
+   a swipe rather than ever clipping or forcing the whole page to scroll sideways. */
+@media (max-width:700px){
+  .topbar{ padding:10px 16px; gap:8px; }
+  .mode-tabs{ gap:4px; }
+  .mode-tabs button{ font-size:11.5px; padding:7px 12px; }
+}
+@media (max-width:460px){
+  .topbar{ padding:8px 10px; }
+  .mode-tabs button{ font-size:10px; padding:6px 8px; letter-spacing:.02em; }
+}
 
 .wrap{ max-width:1180px; margin:0 auto; padding:26px 32px 60px; }
 .lede{ color:var(--muted); font-size:15px; max-width:74ch; margin:0 0 22px; }
