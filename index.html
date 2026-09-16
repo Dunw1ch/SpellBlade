@@ -410,25 +410,27 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .stat-block-label{ font-family:var(--font-data); font-size:10px; text-transform:uppercase; letter-spacing:.03em; color:var(--cyan-bright); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 .stat-block-value{ font-family:var(--font-data); font-size:15px; font-weight:700; color:var(--pink-bright); margin-top:3px; }
 
-.battle-stat-table, .battle-weapon-table{ width:auto; max-width:100%; align-self:flex-start; border-collapse:collapse; margin:2px 0 4px; }
-.battle-stat-table th, .battle-weapon-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:1px 4px 3px; white-space:nowrap; }
-.battle-stat-table th{ color:var(--cyan-bright); }
-.battle-weapon-table th{ color:var(--pink-bright); }
+/* Warscroll-style stat row (matches the print sheet redesign) — a bordered box per stat with a
+   small label and a large bold value, instead of a plain table, so the numbers checked constantly
+   mid-game read at a glance instead of needing to trace across a header row first. */
+.battle-statline{ display:flex; gap:5px; margin:2px 0 6px; width:100%; }
+.battle-stat-box{ flex:1; border:1px solid var(--rule); border-radius:3px; background:var(--panel-raised); text-align:center; padding:3px 2px 5px; }
+.battle-stat-label{ font-family:var(--font-display); font-weight:700; font-size:9px; text-transform:uppercase; letter-spacing:.03em; color:var(--cyan-bright); }
+.battle-stat-value{ font-family:var(--font-data); font-weight:800; font-size:15px; color:var(--pink-bright); text-shadow:0 0 8px var(--pink-glow); line-height:1.15; }
+
+.battle-weapon-table{ width:auto; max-width:100%; align-self:flex-start; border-collapse:collapse; margin:2px 0 4px; }
+.battle-weapon-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:3px 5px; white-space:nowrap; color:var(--pink-bright); background:var(--panel-raised); border-bottom:1.5px solid var(--pink); }
 .battle-weapon-table th:first-child, .battle-weapon-table td:first-child,
 .battle-weapon-table th:last-child, .battle-weapon-table td:last-child{ text-align:left; }
-.battle-stat-table .divider-row td{ padding:0; height:2px; border:none; background:linear-gradient(90deg, var(--cyan), var(--cyan-bright), var(--cyan)); box-shadow:0 0 8px var(--cyan-glow); }
-.battle-weapon-table .divider-row td{ padding:0; height:2px; border:none; background:linear-gradient(90deg, var(--pink), var(--pink-bright), var(--pink)); box-shadow:0 0 8px var(--pink-glow); }
-.battle-stat-table td{ text-align:center; font-family:var(--font-data); font-weight:700; font-size:13px; color:var(--pink-bright); padding:2px 4px; text-shadow:0 0 8px var(--pink-glow); }
 .battle-weapon-table td{ text-align:center; font-family:var(--font-data); font-weight:600; font-size:12px; color:var(--ink); padding:4px 5px; border-bottom:1px solid var(--rule); vertical-align:top; }
 .battle-weapon-table tr:last-child td{ border-bottom:none; }
 .battle-weapon-table .wt-name{ font-weight:700; color:var(--ink); font-family:var(--font-display); }
 .battle-weapon-table .wt-dmg{ color:var(--pink-bright); font-weight:800; }
 
 .battle-spell-table{ width:auto; max-width:100%; align-self:flex-start; border-collapse:collapse; margin:2px 0 4px; }
-.battle-spell-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:1px 4px 3px; white-space:nowrap; color:var(--gold); }
+.battle-spell-table th{ font-family:var(--font-display); font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.04em; text-align:center; padding:3px 5px; white-space:nowrap; color:var(--gold); background:var(--panel-raised); border-bottom:1.5px solid var(--gold); }
 .battle-spell-table th:first-child, .battle-spell-table td:first-child,
 .battle-spell-table th:last-child, .battle-spell-table td:last-child{ text-align:left; }
-.battle-spell-table .divider-row td{ padding:0; height:2px; border:none; background:linear-gradient(90deg, var(--gold), #e6c88a, var(--gold)); box-shadow:0 0 8px var(--gold-glow); }
 .battle-spell-table td{ text-align:center; font-family:var(--font-data); font-weight:600; font-size:12px; color:var(--ink); padding:4px 5px; border-bottom:1px solid var(--rule); vertical-align:top; }
 .battle-spell-table tr:last-child td{ border-bottom:none; }
 .battle-spell-table .st-name{ font-weight:700; color:var(--ink); font-family:var(--font-display); }
@@ -439,7 +441,10 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .unit-card.expanded .unit-card-body{ display:block; padding-top:16px; }
 .unit-block{ margin-bottom:16px; }
 .unit-block:last-child{ margin-bottom:0; }
-.unit-block-title{ font-family:var(--font-data); font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); margin-bottom:8px; }
+/* Full-bleed shaded bar (matches the print sheet's section titles) — the "-18px" side margins
+   cancel .unit-card-body's own side padding so it spans the full card width, giving each block
+   (Feats, Weapons, Items, Spells...) a clear boundary instead of a thin, easy-to-miss underline. */
+.unit-block-title{ font-family:var(--font-data); font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-dim); background:var(--panel-raised); padding:3px 18px; margin:0 -18px 10px; }
 .unit-item{ padding:10px 12px; border:1px solid var(--rule); border-radius:4px; background:var(--panel-raised); background-image:var(--noise-texture); background-blend-mode:overlay; margin-bottom:8px; }
 .unit-item:last-child{ margin-bottom:0; }
 .unit-item .opt-name{ margin-right:0; }
@@ -2756,18 +2761,20 @@ function renderBattle(){
 // colored-divider layout, but themed to the app's actual dark palette (cyan/pink) instead of forced
 // print black-and-white, and keywords stay as hoverable chips since a mouse (unlike paper) can
 // actually hover them.
+// Warscroll-style stat row (matching the print sheet redesign) — a bordered box per stat with a
+// small label and a large bold value, instead of a plain table, so the numbers checked constantly
+// mid-game (Haste to be hit, Armor to be wounded) read at a glance.
 function battleStatTableHTML(stats){
-  return '<table class="battle-stat-table">'
-    + '<tr><th>Haste</th><th>Move</th><th>Armor</th><th>Body</th><th>Mind</th><th>Spirit</th></tr>'
-    + '<tr class="divider-row"><td colspan="6"></td></tr>'
-    + '<tr><td>'+stats.haste+'</td><td>'+stats.move+'&quot;</td><td>'+stats.armor+'</td><td>'+stats.body+'</td><td>'+stats.mind+'</td><td>'+stats.spirit+'</td></tr>'
-    + '</table>';
+  const box = (label, value) => '<div class="battle-stat-box"><div class="battle-stat-label">'+label+'</div><div class="battle-stat-value">'+value+'</div></div>';
+  return '<div class="battle-statline">'
+    + box('Haste', stats.haste) + box('Move', stats.move+'&quot;') + box('Armor', stats.armor)
+    + box('Body', stats.body) + box('Mind', stats.mind) + box('Spirit', stats.spirit)
+    + '</div>';
 }
 function battleWeaponTableHTML(rows){
   if(!rows.length) return '';
   const table = '<table class="battle-weapon-table">'
     + '<tr><th>Weapon</th><th>Range</th><th>Dmg</th><th>Acc</th><th>Keywords</th></tr>'
-    + '<tr class="divider-row"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td class="wt-name">'+r.name+'</td><td>'+r.range+'</td><td class="wt-dmg">'+r.damage+'</td><td>'+(r.accuracy>0?'+':'')+r.accuracy+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
   const descs = rows.filter(r => r.abilities).map(r => '<div class="unit-card-ability">'+r.name+': '+highlightCurrency(escapeHtml(r.abilities))+'</div>').join('');
@@ -2789,7 +2796,6 @@ function battleSpellTableHTML(rows){
   if(!rows.length) return '';
   return '<table class="battle-spell-table">'
     + '<tr><th>Spell</th><th>Lvl</th><th>Range</th><th>Dmg</th><th>Keywords</th></tr>'
-    + '<tr class="divider-row"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td class="st-name">'+r.name+'</td><td>'+r.level+'</td><td>'+r.range+'</td><td class="st-dmg">'+r.damage+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
 }
@@ -2874,7 +2880,7 @@ function renderBattleHeroCard(hero){
   // name/Haste/Armor/expand-collapse trigger; this function is now only ever called once expanded,
   // to render everything else in one go.
   return '<div class="unit-card expanded">'
-    + '<div class="unit-card-stats-wrap">'+weaponTableHTML+statBlockHTML+spellTableHTML+abilityLine+classKeywordsLine+featsLine+armorAbilityLine+itemsLine+focusLine+'</div>'
+    + '<div class="unit-card-stats-wrap">'+statBlockHTML+weaponTableHTML+spellTableHTML+abilityLine+classKeywordsLine+featsLine+armorAbilityLine+itemsLine+focusLine+'</div>'
     + '<div class="unit-card-body">'+body+'</div>'
     + '</div>';
 }
@@ -2947,7 +2953,7 @@ function renderBattleHirelingCard(pick, pactOwnerName, hasteOverride){
   // No clickable head/name here anymore — the Activation Order row above already owns the
   // name/Haste/Armor/expand-collapse trigger; this function is now only ever called once expanded.
   return '<div class="unit-card expanded">'
-    + '<div class="unit-card-stats-wrap">'+subLine+weaponTableHTML+statBlockHTML+spellTableHTML+abilityLine+keywordsLine+'</div>'
+    + '<div class="unit-card-stats-wrap">'+subLine+statBlockHTML+weaponTableHTML+spellTableHTML+abilityLine+keywordsLine+'</div>'
     + '<div class="unit-card-body">'+body+'</div>'
     + '</div>';
 }
