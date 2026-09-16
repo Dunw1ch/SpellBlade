@@ -497,7 +497,11 @@ footer.foot{ text-align:center; color:var(--muted); font-size:12.5px; padding:26
 /* Everything below is scoped to #printSheet only — the rest of the app keeps its dark theme
    untouched. Forces plain black-on-white regardless of the live app's theme, since dark
    backgrounds + glow effects are unreadable (and wasteful) on paper. Sizing throughout is tuned
-   to be as space-efficient as possible for a physical reference sheet used at the table. */
+   to be as space-efficient as possible for a physical reference sheet used at the table.
+   The unit-block layout below (name banner, boxed stat row, shaded table headers, full-bleed
+   section bars) is deliberately modeled on tabletop-wargame "warscroll" style stat blocks — the
+   goal is the same one they solve: glance at a card mid-game and find any number in under a
+   second, not read it like a paragraph. */
 #printSheet, #printSheet *{ color:#111 !important; background:#fff !important; box-shadow:none !important; text-shadow:none !important; }
 #printSheet{ font-family:Georgia,'Times New Roman',serif; font-size:9.5px; line-height:1.25; }
 .print-header{ display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid #111; padding-bottom:3px; margin-bottom:7px; }
@@ -505,28 +509,37 @@ footer.foot{ text-align:center; color:var(--muted); font-size:12.5px; padding:26
 .print-header h1{ font-family:'Cinzel',Georgia,serif; font-size:15px; margin:0; letter-spacing:.03em; }
 .print-header-meta{ font-size:8.5px; text-align:right; line-height:1.25; }
 .print-units-grid{ column-count:2; column-gap:12px; }
-.print-unit{ border:1px solid #999; border-radius:3px; padding:4px 7px; margin-bottom:4px; page-break-inside:avoid; break-inside:avoid; }
-.print-section{ margin-top:4px; }
-.print-section-title{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:8.5px; text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid #ccc; margin-bottom:2px; padding-bottom:1px; }
+.print-unit{ border:1.25px solid #111; border-radius:2px; padding:0 7px 5px; margin-bottom:6px; page-break-inside:avoid; break-inside:avoid; overflow:hidden; }
+.print-section{ margin-top:5px; }
+#printSheet .print-section-title{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:8px; text-transform:uppercase; letter-spacing:.05em; background:#e9e9e9 !important; padding:1.5px 7px; margin:0 -7px 3px; }
 .print-weapon, .print-spell, .print-ability{ margin-bottom:3px; }
 .print-item-name{ font-weight:700; }
 .print-dmg{ font-weight:700; }
 .print-item-row{ display:flex; align-items:flex-start; gap:5px; margin-bottom:3px; }
 .print-checkbox{ flex:none; width:9px; height:9px; border:1.25px solid #111; margin-top:1px; }
 .print-empty{ color:#666 !important; font-size:9px; }
-.print-card-title{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:15px; border-bottom:1.5px solid #111; padding-bottom:2px; margin-bottom:1px; letter-spacing:.01em; }
-.print-card-sub{ font-size:8.5px; color:#444 !important; margin-bottom:3px; }
-table.print-stat-table, table.print-weapon-table, table.print-spell-table{ width:auto; border-collapse:collapse; margin-bottom:2px; }
-table.print-stat-table th, table.print-weapon-table th, table.print-spell-table th{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:7.5px; text-transform:uppercase; letter-spacing:.03em; text-align:center; padding:1px 5px 1px; }
+/* Name banner — full-bleed inverted bar (the "-7px" side margins cancel .print-unit's own side
+   padding so it spans the card's full width edge to edge), the single strongest visual anchor on
+   the card so a new unit is unmistakable when scanning down a page. */
+#printSheet .print-card-title{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:13px; letter-spacing:.02em; background:#111 !important; color:#fff !important; padding:3px 7px; margin:0 -7px 2px; }
+.print-card-sub{ font-size:8.5px; color:#444 !important; margin-bottom:4px; }
+/* Stat row — a row of individually bordered boxes (label small on top, value large and bold below)
+   rather than a table, so the numbers a player checks constantly (Haste to be hit, Armor to be
+   wounded) read instantly instead of needing to trace across a header row first. */
+.print-statline{ display:flex; gap:2px; margin:0 0 5px; }
+#printSheet .print-stat-box{ flex:1; border:1.25px solid #111; background:#f2f2f2 !important; text-align:center; padding:2px 1px 3px; }
+.print-stat-label{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:6.5px; text-transform:uppercase; letter-spacing:.03em; color:#333 !important; }
+.print-stat-value{ font-family:'JetBrains Mono','Consolas',monospace; font-weight:800; font-size:13px; line-height:1.15; }
+table.print-weapon-table, table.print-spell-table{ width:100%; border-collapse:collapse; margin-bottom:2px; }
+#printSheet table.print-weapon-table th, #printSheet table.print-spell-table th{ font-family:'Cinzel',Georgia,serif; font-weight:700; font-size:7.5px; text-transform:uppercase; letter-spacing:.03em; text-align:center; padding:2px 5px; background:#e9e9e9 !important; border-bottom:1.5px solid #111; }
 table.print-weapon-table th:first-child, table.print-weapon-table td:first-child,
 table.print-weapon-table th:last-child, table.print-weapon-table td:last-child,
 table.print-spell-table th:first-child, table.print-spell-table td:first-child,
 table.print-spell-table th:last-child, table.print-spell-table td:last-child{ text-align:left; }
-#printSheet .print-divider-teal td{ background:#5b93b8 !important; padding:0; height:2px; border:none; }
-#printSheet .print-divider-pink td{ background:#d9789e !important; padding:0; height:2px; border:none; }
-#printSheet .print-divider-gold td{ background:#c9a227 !important; padding:0; height:2px; border:none; }
-table.print-stat-table td, table.print-weapon-table td, table.print-spell-table td{ text-align:center; font-family:'JetBrains Mono','Consolas',monospace; font-weight:700; font-size:9px; padding:1px 5px 2px; }
-table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-child){ border-right:1px solid #ccc; }
+table.print-weapon-table td, table.print-spell-table td{ text-align:center; font-family:'JetBrains Mono','Consolas',monospace; font-weight:700; font-size:9px; padding:2px 5px; border-bottom:1px solid #ddd; }
+table.print-weapon-table th:not(:last-child), table.print-weapon-table td:not(:last-child),
+table.print-spell-table th:not(:last-child), table.print-spell-table td:not(:last-child){ border-right:1px solid #ccc; }
+table.print-weapon-table tr:last-child td, table.print-spell-table tr:last-child td{ border-bottom:none; }
 .print-spell-desc{ font-size:8.5px; color:#333 !important; margin:1px 0 4px; }
 .print-flavor-text{ font-size:8.5px; font-style:italic; color:#333 !important; margin:1px 0 4px; }
 #printSheet .print-ability-name{ text-decoration:underline; font-weight:700; color:#2f6f7d !important; }
@@ -2937,19 +2950,20 @@ function printKeywordNamesInline(ids, glossarySet, values){
   }).join(', ');
 }
 
+// Warscroll-style stat row — a bordered box per stat (small label, large bold value) instead of a
+// plain table, so the numbers a player checks constantly mid-game read at a glance.
 function buildPrintStatTableHTML(stats){
-  return '<table class="print-stat-table">'
-    + '<tr><th>Haste</th><th>Move</th><th>Armor</th><th>Body</th><th>Mind</th><th>Spirit</th></tr>'
-    + '<tr class="print-divider-teal"><td colspan="6"></td></tr>'
-    + '<tr><td>'+stats.haste+'</td><td>'+stats.move+'&quot;</td><td>'+stats.armor+'</td><td>'+stats.body+'</td><td>'+stats.mind+'</td><td>'+stats.spirit+'</td></tr>'
-    + '</table>';
+  const box = (label, value) => '<div class="print-stat-box"><div class="print-stat-label">'+label+'</div><div class="print-stat-value">'+value+'</div></div>';
+  return '<div class="print-statline">'
+    + box('Haste', stats.haste) + box('Move', stats.move+'&quot;') + box('Armor', stats.armor)
+    + box('Body', stats.body) + box('Mind', stats.mind) + box('Spirit', stats.spirit)
+    + '</div>';
 }
 
 function buildPrintWeaponTableHTML(rows){
   if(!rows.length) return '';
   const table = '<table class="print-weapon-table">'
     + '<tr><th>Weapon</th><th>Range</th><th>Dmg</th><th>Acc</th><th>Keywords</th></tr>'
-    + '<tr class="print-divider-pink"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td>'+r.name+'</td><td>'+r.range+'</td><td>'+r.damage+'</td><td>'+(r.accuracy>0?'+':'')+r.accuracy+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
   const descs = rows.filter(r => r.abilities).map(r => '<div class="print-spell-desc"><strong>'+r.name+':</strong> '+r.abilities+'</div>').join('');
@@ -2963,7 +2977,6 @@ function buildPrintSpellTableHTML(rows){
   if(!rows.length) return '';
   const table = '<table class="print-spell-table">'
     + '<tr><th>Spell</th><th>Lvl</th><th>Range</th><th>Dmg</th><th>Keywords</th></tr>'
-    + '<tr class="print-divider-gold"><td colspan="5"></td></tr>'
     + rows.map(r => '<tr><td>'+r.name+'</td><td>'+r.level+'</td><td>'+r.range+'</td><td>'+r.damage+'</td><td>'+r.keywords+'</td></tr>').join('')
     + '</table>';
   const descs = rows.map(r => {
