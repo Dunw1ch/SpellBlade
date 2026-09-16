@@ -241,29 +241,30 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 
 .form-actions{ display:flex; gap:10px; margin-top:8px; }
 
-button.btn{
+button.btn, a.btn, label.btn{
   font-family:var(--font-display); font-size:13px; font-weight:600; padding:9px 18px;
   border-radius:4px; border:1px solid var(--rule); background:transparent; color:var(--ink-dim);
   cursor:pointer; transition:background .15s, color .15s, border-color .15s, box-shadow .15s;
+  display:inline-block; text-decoration:none; text-align:center;
 }
-button.btn:hover{ border-color:var(--btn-silver); color:var(--btn-silver-bright); box-shadow:0 0 10px var(--btn-silver-glow); }
-button.btn.primary{
+button.btn:hover, a.btn:hover, label.btn:hover{ border-color:var(--btn-silver); color:var(--btn-silver-bright); box-shadow:0 0 10px var(--btn-silver-glow); }
+button.btn.primary, a.btn.primary, label.btn.primary{
   position:relative; overflow:hidden;
   background:linear-gradient(135deg, var(--btn-silver-dim) 0%, var(--btn-silver) 35%, var(--btn-silver-bright) 50%, var(--btn-silver) 65%, var(--btn-silver-dim) 100%);
   color:var(--on-accent); border-color:var(--btn-silver); font-weight:700; text-shadow:0 1px 0 rgba(255,255,255,.4);
 }
-button.btn.primary:hover{ box-shadow:0 0 14px var(--btn-silver-glow), 0 3px 8px rgba(0,0,0,.5); }
-button.btn.primary::before, .mode-tabs button.active::before, .play-tabs button.active::before, .admin-tabs button.active::before{
+button.btn.primary:hover, a.btn.primary:hover, label.btn.primary:hover{ box-shadow:0 0 14px var(--btn-silver-glow), 0 3px 8px rgba(0,0,0,.5); }
+button.btn.primary::before, a.btn.primary::before, label.btn.primary::before, .mode-tabs button.active::before, .play-tabs button.active::before, .admin-tabs button.active::before{
   content:''; position:absolute; top:0; left:-75%; width:40%; height:100%;
   background:linear-gradient(115deg, transparent 0%, rgba(255,255,255,.75) 50%, transparent 100%);
   transform:skewX(-20deg); transition:left .55s ease; pointer-events:none;
 }
-button.btn.primary:hover::before, .mode-tabs button.active:hover::before, .play-tabs button.active:hover::before, .admin-tabs button.active:hover::before{ left:130%; }
-button.btn.ghost{ border-color:var(--rule); color:var(--muted); }
-button.btn.ghost:hover{ border-color:var(--muted); color:var(--ink-dim); box-shadow:none; }
-button.btn.danger{ border-color:var(--danger); color:var(--danger); }
-button.btn.danger:hover{ background:var(--danger); color:var(--on-accent); box-shadow:0 0 10px var(--danger-glow); }
-button.btn.small{ padding:5px 10px; font-size:11.5px; }
+button.btn.primary:hover::before, a.btn.primary:hover::before, label.btn.primary:hover::before, .mode-tabs button.active:hover::before, .play-tabs button.active:hover::before, .admin-tabs button.active:hover::before{ left:130%; }
+button.btn.ghost, a.btn.ghost, label.btn.ghost{ border-color:var(--rule); color:var(--muted); }
+button.btn.ghost:hover, a.btn.ghost:hover, label.btn.ghost:hover{ border-color:var(--muted); color:var(--ink-dim); box-shadow:none; }
+button.btn.danger, a.btn.danger, label.btn.danger{ border-color:var(--danger); color:var(--danger); }
+button.btn.danger:hover, a.btn.danger:hover, label.btn.danger:hover{ background:var(--danger); color:var(--on-accent); box-shadow:0 0 10px var(--danger-glow); }
+button.btn.small, a.btn.small, label.btn.small{ padding:5px 10px; font-size:11.5px; }
 button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset:2px; }
 .file-btn{ display:inline-block; }
 
