@@ -570,6 +570,7 @@ table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-
     <button data-mode="play" class="active" onclick="switchMode('play')">List Builder</button>
     <button data-mode="battle" onclick="switchMode('battle')">Battle Mode</button>
     <button data-mode="campaign" onclick="switchMode('campaign')">Campaign</button>
+    <button data-mode="rules" onclick="switchMode('rules')">Rules</button>
     <button data-mode="admin" onclick="switchMode('admin')">Admin Mode</button>
   </nav>
 </header>
@@ -594,6 +595,10 @@ table.print-stat-table th:not(:last-child), table.print-stat-table td:not(:last-
 
   <section id="campaignPanel" class="mode-panel" style="display:none">
     <div id="campaignContent"></div>
+  </section>
+
+  <section id="rulesPanel" class="mode-panel" style="display:none">
+    <div id="rulesContent"></div>
   </section>
 
   <section id="adminPanel" class="mode-panel" style="display:none">
@@ -2484,11 +2489,13 @@ function switchMode(m){
   document.getElementById('playPanel').style.display = m==='play' ? 'block' : 'none';
   document.getElementById('battlePanel').style.display = m==='battle' ? 'block' : 'none';
   document.getElementById('campaignPanel').style.display = m==='campaign' ? 'block' : 'none';
+  document.getElementById('rulesPanel').style.display = m==='rules' ? 'block' : 'none';
   document.getElementById('adminPanel').style.display = m==='admin' ? 'block' : 'none';
   document.querySelectorAll('.mode-tabs button').forEach(b => b.classList.toggle('active', b.dataset.mode===m));
   if(m==='play') renderPlay();
   else if(m==='battle') renderBattle();
   else if(m==='campaign') renderCampaign();
+  else if(m==='rules') renderRules();
   else renderAdmin();
 }
 // Refreshes whichever mode panel is actually on screen right now. A few actions (moving Party
@@ -2498,6 +2505,7 @@ function switchMode(m){
 function renderCurrentMode(){
   if(mode==='battle') renderBattle();
   else if(mode==='campaign') renderCampaign();
+  else if(mode==='rules') renderRules();
   else if(mode==='admin') renderAdmin();
   else renderPlay();
 }
@@ -4271,5 +4279,6 @@ if('serviceWorker' in navigator){
 }
 </script>
 <script src="./campaign.js"></script>
+<script src="./rules.js"></script>
 </body>
 </html>
