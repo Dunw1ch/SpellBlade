@@ -3,7 +3,7 @@
 // Bump CACHE_VERSION any time you push a real update to index.html/manifest.json/icons — this is
 // what actually invalidates the old cached copies on players' devices. Forgetting to bump it means
 // they keep the old app shell until they happen to clear it themselves.
-const CACHE_VERSION = 'spellblade-v1';
+const CACHE_VERSION = 'spellblade-v2';
 
 const APP_SHELL = [
   './',
