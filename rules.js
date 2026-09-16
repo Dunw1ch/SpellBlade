@@ -1,66 +1,63 @@
 /* ============================= RULES TAB ============================= */
-// The rules PDF is just one fixed file, rules.pdf, sitting next to index.html on GitHub Pages —
-// overwrite it with the latest version any time the rules change. No separate version file to
-// remember to update; the cache-busting query param below is what guarantees a fresh copy instead.
+// The rules PDF is one fixed file, rules.pdf, sitting next to index.html on GitHub Pages —
+// overwrite it with the latest version any time the rules change; the cache-busting query param on
+// every fetch below is what guarantees a fresh copy instead of a stale CDN-cached one.
+//
+// Nothing here runs automatically. Opening this tab does no network activity at all — the PDF is
+// only ever fetched when the player actually clicks the Download button.
 
 const RULES_PDF_URL = './rules.pdf';
 
-let rulesLoadError = null;
-let rulesReady = false;
-let rulesAutoDownloadedThisSession = false; // in-memory only — resets on reload, so a fresh visit always re-checks/re-downloads once, but re-opening the tab repeatedly in one sitting doesn't spam it
+let rulesDownloadStatus = 'idle'; // 'idle' | 'downloading' | 'error'
+let rulesDownloadError = null;
 
 function renderRules(){
-  const el = document.getElementById('rulesContent');
-  if(!el) return;
-  checkRulesAvailable().then(() => renderRulesContent());
-  renderRulesContent(); // show a loading state immediately, filled in once the check above resolves
+  rulesDownloadStatus = 'idle';
+  rulesDownloadError = null;
+  renderRulesContent();
 }
 
-// A HEAD request just confirms rules.pdf actually exists and is reachable before doing anything
-// else — cheap (no body downloaded), and means a missing/not-yet-uploaded file shows a clear
-// in-app message instead of a download that silently fails with no explanation.
-async function checkRulesAvailable(){
-  rulesLoadError = null;
+// Fetches the actual PDF bytes and forces a real save via a blob URL, rather than just pointing an
+// <a download> at the file directly — a direct link can end up opening in the browser's own PDF
+// viewer instead of downloading in some cases, since the `download` attribute isn't always honored
+// for a resource the browser recognizes it can preview. Going through fetch()+blob sidesteps that:
+// the browser only ever sees an anonymous binary blob, with no PDF-preview behavior to kick in.
+async function downloadRulesPdf(){
+  rulesDownloadStatus = 'downloading';
+  rulesDownloadError = null;
+  renderRulesContent();
   try{
-    const resp = await fetch(RULES_PDF_URL+'?t='+Date.now(), { method:'HEAD', cache:'reload' });
+    const resp = await fetch(RULES_PDF_URL+'?t='+Date.now(), { cache:'reload' });
     if(!resp.ok) throw new Error('HTTP '+resp.status);
-    rulesReady = true;
-    if(!rulesAutoDownloadedThisSession){
-      downloadRulesPdf();
-      rulesAutoDownloadedThisSession = true;
-    }
+    const blob = await resp.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = 'rules.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(blobUrl);
+    rulesDownloadStatus = 'idle';
   }catch(err){
-    rulesReady = false;
-    rulesLoadError = 'Could not find rules.pdf ('+err.message+').';
+    rulesDownloadStatus = 'error';
+    rulesDownloadError = 'Could not download rules.pdf ('+err.message+').';
   }
-}
-
-// The actual download trigger — a plain <a download> click, same mechanism browsers use for any
-// normal file-download link. Also used by the manual "Download Rules PDF" button, so there's only
-// one place that actually knows how to fetch/save the file. The cache-busting query param matters
-// here too — without it, a browser that already cached an older rules.pdf could hand back stale
-// content instead of re-fetching what's actually live now.
-function downloadRulesPdf(){
-  const a = document.createElement('a');
-  a.href = RULES_PDF_URL+'?t='+Date.now();
-  a.download = 'rules.pdf';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  renderRulesContent();
 }
 
 function renderRulesContent(){
   const el = document.getElementById('rulesContent');
   if(!el) return;
-  let html = '<div class="step step-emphasis"><div class="step-head"><span class="step-title">Rules</span></div>';
-  if(!rulesReady && !rulesLoadError){
-    html += '<p class="empty-note">Checking for the rules PDF&hellip;</p>';
-  } else if(rulesLoadError){
-    html += '<p class="empty-note">'+escapeHtml(rulesLoadError)+' Make sure rules.pdf has been uploaded to the repo, next to index.html.</p>'
-      + '<button class="btn ghost small" onclick="renderRules()">Try Again</button>';
-  } else if(rulesReady){
-    html += '<div class="step-sub">The rules PDF downloads automatically the first time you open this tab each visit. Use the button below any time to grab it again.</div>'
-      + '<button class="btn primary" onclick="downloadRulesPdf()">&#128190; Download Rules PDF</button>';
+  const downloading = rulesDownloadStatus === 'downloading';
+  let html = '<div class="step step-emphasis"><div class="step-head"><span class="step-title">Rules</span></div>'
+    + '<div class="step-sub">Click below to download the current rules PDF.</div>'
+    + '<button class="btn primary" onclick="downloadRulesPdf()" '+(downloading?'disabled':'')+'>'
+      + (downloading ? 'Downloading\u2026' : '&#128190; Download Rules PDF')
+    + '</button>';
+  if(rulesDownloadStatus==='error'){
+    html += '<p class="empty-note" style="margin-top:10px;">'+escapeHtml(rulesDownloadError)+' Make sure rules.pdf has been uploaded to the repo, next to index.html.</p>'
+      + '<button class="btn ghost small" onclick="downloadRulesPdf()">Try Again</button>';
   }
   html += '</div>';
   el.innerHTML = html;
