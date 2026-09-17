@@ -482,7 +482,7 @@
       "id": "gmt2d27ly0mf",
       "name": "Church of the Lost King",
       "faction_id": "fmt1ygkuhwdn",
-      "gold_cost": 5,
+      "gold_cost": 50,
       "ability_description": "Parties of this guild cannot have Rogues or Warlocks. Guild members gain access to the Smite feat. This Guild may hire the Clergy Zealot, and upgrade the Man-At-Arms unit to a Paladin. This Guild has access to the Armor of the first paladin, as well as many other arms and items.",
       "allowed_classes": [
         "cmt1ykznv7cm",
@@ -504,16 +504,18 @@
     },
     {
       "id": "gmt2dkbaff4f",
-      "name": "College of Constellation",
+      "name": "Wyrm Hunters Guild",
       "faction_id": "fmt1zprswgf7",
-      "gold_cost": 10,
-      "ability_description": "Parties of this guild cannot take Warriors or Clerics. College members gain access to the hidden stars feat.",
+      "gold_cost": 50,
+      "ability_description": "The Willows Famed wyrm hunters are adept monster hunters. ",
       "allowed_classes": [
+        "cmt1ykznv7cm",
         "cmt1yo3sij8m",
         "cmt1ypdwalh2",
         "cmt1yrzdvdwh",
         "cmt1yu3wj5sl",
         "cmt2a5vwinpr",
+        "cmt2a7xiucb2",
         "cmt2ahfasbmg"
       ],
       "stat_modifiers": {
@@ -523,14 +525,16 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": [],
+      "equip_override": [
+        "Heavy Ranged"
+      ],
       "feat_id": ""
     },
     {
       "id": "gmt3487n6owa",
       "name": "Pact of the Wild Roots",
       "faction_id": "fmt1zprswgf7",
-      "gold_cost": 5,
+      "gold_cost": 50,
       "ability_description": "parties of the wild roots guild cannot contain Berzerkers or warlocks.",
       "allowed_classes": [
         "cmt1ykznv7cm",
@@ -554,7 +558,7 @@
       "id": "gmt89aimxl4r",
       "name": "Marauders Guild",
       "faction_id": "fmt1zviucpcj",
-      "gold_cost": 5,
+      "gold_cost": 50,
       "ability_description": "The Marauders Guild specializes in the pack tactics of the red banners army. Mauraders",
       "allowed_classes": [
         "cmt1ykznv7cm",
@@ -580,7 +584,7 @@
       "id": "gmthncg4ljqh",
       "name": "Way of the forbidden past",
       "faction_id": "fmt1zviucpcj",
-      "gold_cost": 10,
+      "gold_cost": 50,
       "ability_description": "Parties of this guild cannot take Bards or Clerics. Members of this guild gain access to the \"Dark Ritual\" party feat.",
       "allowed_classes": [
         "cmt1ykznv7cm",
@@ -604,7 +608,7 @@
       "id": "gmthnvht5rb7",
       "name": "BattleMages Guild",
       "faction_id": "fmt1ygkuhwdn",
-      "gold_cost": 10,
+      "gold_cost": 50,
       "ability_description": "Parties of this guild may not recruit Rogues or Berzerkers. Battlemages may equip Heavy armor and gain access to The battlecasting feat. The BattleMage Guild allows your armorer to be upgraded to a BattleMage, and for your crossbowmen to be upgraded to BattleMage Apprentice.",
       "allowed_classes": [
         "cmt1ykznv7cm",
@@ -1204,6 +1208,31 @@
       },
       "restriction_type": "guild",
       "restriction_id": "gmt89aimxl4r"
+    },
+    {
+      "id": "wmu5t280tl94",
+      "name": "Beast Tether",
+      "category": "Simple",
+      "type": "Ranged",
+      "range": 12,
+      "damage": "d6",
+      "gold_cost": 20,
+      "rarity": "common",
+      "party_limit": 2,
+      "abilities": "When this attack hits, you may move the target up to 6\" directly towards the unit that attacked with this weapon.",
+      "keywords": [
+        "kmthp637nf2k"
+      ],
+      "keyword_values": {},
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt2dkbaff4f"
     }
   ],
   "armor": [
@@ -2464,10 +2493,10 @@
     },
     {
       "id": "fmtsvyemyvzt",
-      "name": "Hidden Stars",
-      "ability_description": "As a bonus action, choose a point on the battlefield  within 6\"  of this unit that it can see. Remove this unit from the battlefield and re-deploy them at the selected point. ",
-      "veil_cost": 1,
-      "valor_cost": 0,
+      "name": "Hunters Ambush",
+      "ability_description": "After an attack hits, you may use this ability to immediately deal x wounds to the target where x is your Veil reserve rounded up.",
+      "veil_cost": 0,
+      "valor_cost": 4,
       "gold_cost": 0,
       "allowed_classes": [],
       "restriction_type": "guild",
@@ -4571,6 +4600,67 @@
         "smt3hp7zw36s",
         "smt3il3oq67h"
       ],
+      "keywords": [],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmu5t02sb383",
+      "name": "Monster Hunter",
+      "faction_id": "fmt1zprswgf7",
+      "guild_id": "gmt2dkbaff4f",
+      "veteran_of": "",
+      "replaces": "hmt516geko9y",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt222uut9oa",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu4p6lb2xxf",
+      "gold_cost": 50,
+      "armor_value": 8,
+      "stats": {
+        "haste": 12,
+        "move": 6,
+        "body": 3,
+        "mind": 2,
+        "spirit": 3
+      },
+      "customAbilities": [
+        {
+          "name": "Focus",
+          "description": "This unit gains +2 to hit if they have not moved this turn."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [],
+      "keywords": [],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmu5t8xbs26n",
+      "name": "Halfling Ambusher",
+      "faction_id": "",
+      "guild_id": "gmt2dkbaff4f",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "",
+      "gold_cost": 0,
+      "armor_value": 0,
+      "stats": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "customAbilities": [],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [],
       "keywords": [],
       "keyword_values": {}
     }
