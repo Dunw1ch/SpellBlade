@@ -1176,6 +1176,34 @@
       },
       "restriction_type": "guild",
       "restriction_id": "gmthnvht5rb7"
+    },
+    {
+      "id": "wmu5lpxk3j3q",
+      "name": "Iron Cleaver",
+      "category": "Simple",
+      "type": "Melee",
+      "range": null,
+      "damage": "d6",
+      "gold_cost": 20,
+      "rarity": "common",
+      "party_limit": 2,
+      "abilities": "",
+      "keywords": [
+        "kmt1yxnqybek",
+        "kmtczhtlagix"
+      ],
+      "keyword_values": {
+        "kmtczhtlagix": 1
+      },
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt89aimxl4r"
     }
   ],
   "armor": [
@@ -1440,6 +1468,27 @@
       },
       "restriction_type": "guild",
       "restriction_id": "gmt2d27ly0mf"
+    },
+    {
+      "id": "amu5lm87sl05",
+      "name": "Captains Vest",
+      "category": "Light",
+      "armor_value": 7,
+      "gold_cost": 20,
+      "rarity": "common",
+      "party_limit": 1,
+      "abilities": "Equipped unit and all units within 3\" cannot be frightened.",
+      "keywords": [],
+      "keyword_values": {},
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt89aimxl4r"
     }
   ],
   "items": [
@@ -1793,6 +1842,25 @@
       },
       "restriction_type": "guild",
       "restriction_id": "gmthnvht5rb7"
+    },
+    {
+      "id": "imu5lp1xnic7",
+      "name": "War Horn",
+      "slots": 1,
+      "gold_cost": 10,
+      "rarity": "common",
+      "party_limit": 1,
+      "requires_hand": false,
+      "abilities": "Move all friendly units 4\"",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "guild",
+      "restriction_id": "gmt89aimxl4r"
     }
   ],
   "feats": [
@@ -2282,7 +2350,7 @@
     },
     {
       "id": "fmtkr2t9hr20",
-      "name": "For the lost king!",
+      "name": "Determined Charge",
       "ability_description": "When a barrow moor kingdom unit ends a charge move, they may use this ability to add advantage to their hit roll and Brutal to their wound roll.",
       "gold_cost": 0,
       "veil_cost": 0,
@@ -2361,7 +2429,7 @@
       "name": "Veil Aegis",
       "ability_description": "Target a veil rift. Friendly barrow moor Kingdoms units gain Aegis 15+ until end of turn while standing in the selected veil rift.",
       "gold_cost": 0,
-      "veil_cost": 2,
+      "veil_cost": 4,
       "valor_cost": 0,
       "allowed_classes": [],
       "stat_modifiers": {
@@ -2532,7 +2600,7 @@
     {
       "id": "fmtx1dva3ve6",
       "name": "Veil Thorns",
-      "ability_description": "When a wounded Red Banner unit finishes a charge action in the combat zone of an enemy unit, you may use this ability to inflict  damage to the target equal to half the wounds on the charging unit rounded down.",
+      "ability_description": "When a wounded Red Banner unit finishes a charge action in the combat zone of an enemy unit, you may use this ability to inflict  damage to the target equal to half the wounds on the charging unit rounded up.",
       "gold_cost": 0,
       "veil_cost": 3,
       "valor_cost": 0,
@@ -2551,7 +2619,7 @@
     {
       "id": "fmtx1h3i6v2x",
       "name": "Brothers of the sea",
-      "ability_description": "If a Red banner unit becomes the target of a charge, you may select a friendly Red banner unit within 8\" of the charged unit and move them into the combat zone of the charging unit.",
+      "ability_description": "If a Red banner unit becomes the target of a charge, you may select 2 friendly Red banner units within 8\" of the charged unit and move them into the combat zone of the charging unit, this may happen before or after the charge is resolved.",
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 2,
@@ -2595,6 +2663,101 @@
       "valor_cost": 0,
       "restriction_type": "guild",
       "restriction_id": "gmt2d27ly0mf",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmu5lispqx5j",
+      "name": "Rallying Cry",
+      "ability_description": "All  friendly units within 3\" of this unit may make 1 free action",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "restriction_type": "guild",
+      "restriction_id": "gmt89aimxl4r",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmu5m2q45nro",
+      "name": "Coastal Fog",
+      "ability_description": "The Red Banner creates an eerie fog in a section of the battlefield. Choose a point on the battlefield, for the rest of the turn Shoot and cast actions targeting units wholly within the area have disadvantage.",
+      "gold_cost": 0,
+      "veil_cost": 5,
+      "valor_cost": 0,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmu5m7e2o1kd",
+      "name": "Skedaddle",
+      "ability_description": "When a Red Banner unit becomes the target of a ranged attack, You may use this feat to grant disadvantage on the hit roll.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 3,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zviucpcj",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmu5nybu45wk",
+      "name": "For the Lost King!",
+      "ability_description": "All Barrowmoor units regain 1 wound, enemy units within 6\" of any Barrowmoor units are stunned.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 6,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn",
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmu5o1e989uf",
+      "name": "Heat of battle",
+      "ability_description": "Choose a point on the battlefield. All friendly barrowmoor units within 6\" of target location remove fatigue",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 3,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -4025,45 +4188,6 @@
       "replaces": ""
     },
     {
-      "id": "hmtkcp81plfd",
-      "name": "Artificer Riflemen",
-      "faction_id": "",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt20bivm8lw",
-      "custom_weapon_name": "Arcane LongGun",
-      "custom_weapon_damage": "d10",
-      "weapon_proficiency": "pmu4p6lb2xxf",
-      "gold_cost": 50,
-      "armor_value": 6,
-      "stats": {
-        "haste": 11,
-        "move": 6,
-        "body": 2,
-        "mind": 3,
-        "spirit": 6
-      },
-      "customAbilities": [],
-      "customFeats": [
-        {
-          "name": "Overcharge",
-          "description": "Before making a shoot action this unit may overcharge their weapon to add the Arcane keyword.",
-          "veil_cost": 1,
-          "valor_cost": 0
-        }
-      ],
-      "description": "",
-      "spell_ids": [],
-      "keywords": [
-        "kmthzf1225ee"
-      ],
-      "keyword_values": {
-        "kmthzf1225ee": 12
-      },
-      "guild_id": "",
-      "veteran_of": "",
-      "replaces": ""
-    },
-    {
       "id": "hmtlsufdudyk",
       "name": "Willow Bear",
       "faction_id": "fmt1zprswgf7",
@@ -4380,6 +4504,75 @@
       ],
       "keywords": [],
       "keyword_values": {}
+    },
+    {
+      "id": "hmu5l080o585",
+      "name": "Gnoll Berzerker",
+      "faction_id": "fmt1zviucpcj",
+      "guild_id": "gmt89aimxl4r",
+      "veteran_of": "",
+      "replaces": "hmt89dqlb9u7",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt33qeguvqf",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu4p6lb2xxf",
+      "gold_cost": 50,
+      "armor_value": 6,
+      "stats": {
+        "haste": 14,
+        "move": 6,
+        "body": 4,
+        "mind": 1,
+        "spirit": 4
+      },
+      "customAbilities": [
+        {
+          "name": "Frenzy",
+          "description": "When a gnoll berzerker is wounded you may make a free move action or make a free attack action."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [],
+      "keywords": [],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmu5mf7dn8ha",
+      "name": "Goblin Priest",
+      "faction_id": "fmt1zviucpcj",
+      "guild_id": "",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt1z35fsbp8",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu4p69e5g9y",
+      "gold_cost": 30,
+      "armor_value": 6,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 2,
+        "mind": 3,
+        "spirit": 4
+      },
+      "customAbilities": [
+        {
+          "name": "Rebuke The Past",
+          "description": "Goblin Priests do not generate veil when killed."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [
+        "smt3hp7zw36s",
+        "smt3il3oq67h"
+      ],
+      "keywords": [],
+      "keyword_values": {}
     }
   ],
   "theme": {
@@ -4409,7 +4602,20 @@
     "bodyGradMid": "#f3e7cf",
     "bodyGradEnd": "#ecdcb0"
   },
-  "wounds": [],
+  "wounds": [
+    {
+      "id": "wmu5kxrglmzg",
+      "name": "Broken arm",
+      "description": "ouch",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      }
+    }
+  ],
   "proficiencyTiers": [
     {
       "id": "pmu4p69e5g9y",
