@@ -1501,7 +1501,65 @@ function resetList(){
   list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
   editingHeroId = null;
   battleExpandedIds = [];
+  clearListStorage();
   renderPlay();
+}
+// Shared by importList() (a JSON file the person picked) and loadListFromStorage() (the browser's
+// own autosave, see below) — both hand this the same raw, list-shaped object and get back a fully
+// normalized list ready to use, so a saved list gets exactly the same defaults and backward-compat
+// handling an imported one always has, rather than two separate code paths drifting apart over time.
+function normalizeListObject(raw){
+  if(!raw || !Array.isArray(raw.heroes) || !Array.isArray(raw.hirelings)){
+    throw new Error("This doesn't look like a Spellblade list.");
+  }
+  // Guild moved from a per-Hero field to a List-wide one (list.guildId, alongside factionId) —
+  // an older export/save may still have individual heroes.guildId values from before that change.
+  // There's no reliable way to pick "the" party Guild from potentially differing per-Hero picks,
+  // so those are just dropped; guildId only comes from the List's own (new) field, if present.
+  const importedHeroes = raw.heroes.map(h => { const merged = Object.assign({ schoolFocus:null, pactHirelingId:null }, h); delete merged.masteryWeaponIds; delete merged.guildId; return merged; });
+  return {
+    goldCap: typeof raw.goldCap === 'number' ? raw.goldCap : 500,
+    factionId: raw.factionId || null,
+    guildId: raw.guildId || null,
+    heroes: importedHeroes,
+    hirelings: raw.hirelings,
+    partyInventory: Array.isArray(raw.partyInventory) ? raw.partyInventory : [],
+    veil: typeof raw.veil === 'number' ? raw.veil : 0,
+    valor: typeof raw.valor === 'number' ? raw.valor : 0,
+    partyLeaderId: (raw.partyLeaderId && importedHeroes.some(h => h.instanceId===raw.partyLeaderId)) ? raw.partyLeaderId : null,
+    factionFeatIds: Array.isArray(raw.factionFeatIds) ? raw.factionFeatIds : [],
+    guildFeatIds: Array.isArray(raw.guildFeatIds) ? raw.guildFeatIds : [],
+  };
+}
+const LIST_STORAGE_KEY = 'spellblade_current_list';
+// Auto-save so a browser refresh (or an accidental tab close) doesn't wipe out a party someone's
+// spent real time building — called on every render of List Builder or Battle Mode, i.e. after
+// every single change, without the person ever needing to think about saving. Scoped to just this
+// one browser via localStorage, never synced anywhere. Wrapped defensively: private-browsing modes
+// and a full storage quota can make localStorage throw, and a failed autosave should never be
+// allowed to break the app itself.
+function saveListToStorage(){
+  try{
+    localStorage.setItem(LIST_STORAGE_KEY, JSON.stringify(list));
+  }catch(err){
+    console.warn('SpellBlade: could not autosave the list', err);
+  }
+}
+// Returns a normalized list from localStorage, or null if there's nothing usable saved — a
+// missing key, a JSON parse failure, and a saved value that no longer looks list-shaped (say,
+// from a much older version) are all treated the same way: start fresh rather than crash boot.
+function loadListFromStorage(){
+  try{
+    const raw = localStorage.getItem(LIST_STORAGE_KEY);
+    if(!raw) return null;
+    return normalizeListObject(JSON.parse(raw));
+  }catch(err){
+    console.warn('SpellBlade: could not load the autosaved list', err);
+    return null;
+  }
+}
+function clearListStorage(){
+  try{ localStorage.removeItem(LIST_STORAGE_KEY); }catch(err){ /* nothing to clean up if this fails */ }
 }
 function exportList(){
   const fac = getFaction();
@@ -1547,27 +1605,7 @@ function importList(file){
     try{
       const parsed = JSON.parse(reader.result);
       const raw = parsed._raw || parsed;
-      if(!raw || !Array.isArray(raw.heroes) || !Array.isArray(raw.hirelings)){
-        throw new Error("This doesn't look like a Spellblade list export.");
-      }
-      // Guild moved from a per-Hero field to a List-wide one (list.guildId, alongside factionId) —
-      // an older export may still have individual heroes.guildId values from before that change.
-      // There's no reliable way to pick "the" party Guild from potentially differing per-Hero picks,
-      // so those are just dropped; guildId only comes from the List's own (new) field, if present.
-      const importedHeroes = raw.heroes.map(h => { const merged = Object.assign({ schoolFocus:null, pactHirelingId:null }, h); delete merged.masteryWeaponIds; delete merged.guildId; return merged; });
-      list = {
-        goldCap: typeof raw.goldCap === 'number' ? raw.goldCap : 500,
-        factionId: raw.factionId || null,
-        guildId: raw.guildId || null,
-        heroes: importedHeroes,
-        hirelings: raw.hirelings,
-        partyInventory: Array.isArray(raw.partyInventory) ? raw.partyInventory : [],
-        veil: typeof raw.veil === 'number' ? raw.veil : 0,
-        valor: typeof raw.valor === 'number' ? raw.valor : 0,
-        partyLeaderId: (raw.partyLeaderId && importedHeroes.some(h => h.instanceId===raw.partyLeaderId)) ? raw.partyLeaderId : null,
-        factionFeatIds: Array.isArray(raw.factionFeatIds) ? raw.factionFeatIds : [],
-        guildFeatIds: Array.isArray(raw.guildFeatIds) ? raw.guildFeatIds : [],
-      };
+      list = normalizeListObject(raw);
       editingHeroId = null;
       battleExpandedIds = [];
       switchMode('battle');
@@ -1849,6 +1887,7 @@ function cardAttrs(fn){
 }
 
 function renderPlay(){
+  saveListToStorage();
   let html = renderFactionStep() + renderGuildStep() + renderTopControls() + renderFactionFeatPicker() + renderGuildFeatPicker() + renderPlayTabs();
   if(playTab === 'characters'){
     const hero = editingHeroId ? list.heroes.find(h => h.instanceId === editingHeroId) : null;
@@ -2576,7 +2615,8 @@ function renderSidebar(){
       + (list.partyInventory.length? '<div class="summary-line" style="margin-top:8px;"><span>Party Inventory ('+list.partyInventory.length+')</span></div>'+partyLines : '')
     + '</div>'
     + '<hr>'
-    + '<div class="sidebar-actions"><button class="btn primary" onclick="exportList()">Export List</button><label class="btn ghost file-btn">Import List<input type="file" accept="application/json" onchange="importList(this.files[0])" style="display:none"></label><button class="btn ghost" onclick="resetList()">Reset List</button></div>';
+    + '<div class="sidebar-actions"><button class="btn primary" onclick="exportList()">Export List</button><label class="btn ghost file-btn">Import List<input type="file" accept="application/json" onchange="importList(this.files[0])" style="display:none"></label><button class="btn ghost" onclick="resetList()">Reset List</button></div>'
+    + '<p class="empty-note" style="margin:8px 0 0;text-align:center;">Saved automatically in this browser \u2014 refreshing won\u2019t lose it. Export a copy to move it to another device.</p>';
 }
 
 /* ============================= MODE SWITCH ============================= */
@@ -2803,6 +2843,7 @@ function renderGuildAbilityPanel(guild){
     + '</div>';
 }
 function renderBattle(){
+  saveListToStorage();
   const fac = getFaction();
   const guild = getGuild();
   const gUsed = listGoldUsed(), gCap = list.goldCap;
@@ -4402,6 +4443,11 @@ function finishBoot(){
   applyTheme(gameData.theme);
   const overlay = document.getElementById('bootOverlay');
   if(overlay) overlay.remove();
+  // Restore whatever the person was last building in this browser, if anything — see
+  // saveListToStorage()/loadListFromStorage() above. A missing or unreadable save just means the
+  // default fresh list (already set at declaration) is what renders, same as any first visit.
+  const savedList = loadListFromStorage();
+  if(savedList) list = savedList;
   renderPlay();
 }
 async function initApp(){
