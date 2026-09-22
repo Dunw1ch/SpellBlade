@@ -61,14 +61,28 @@ html,body{margin:0;padding:0;}
 body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-grad-mid) 50%, var(--body-grad-end) 100%); background-attachment:fixed; color:var(--ink); font-family:var(--font-body); font-size:16px; line-height:1.5; min-height:100vh; }
 
 .topbar{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 32px; background:var(--bg-alt);
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  padding:22px 32px; min-height:150px;
+  /* Commissioned artwork as a full-bleed banner, with a theme-tinted overlay layered on top (see
+     --bg-alt-overlay in THEME_VARS) so it reads correctly under ANY theme, not just the one it was
+     picked against — the overlay is the same color the topbar's flat background used to be, just
+     translucent, so switching themes re-tints the art instead of leaving it looking mismatched. */
+  background-image: linear-gradient(var(--bg-alt-overlay), var(--bg-alt-overlay)), url('./header-art.jpg');
+  background-size: cover, cover;
+  background-position: center, center 45%;
+  background-repeat: no-repeat, no-repeat;
   border-bottom:2px solid; border-image:linear-gradient(90deg, var(--cyan), var(--pink)) 1;
-  position:sticky; top:0; z-index:10; flex-wrap:wrap; gap:12px;
 }
-.brand-logo{ height:76px; width:auto; display:block; border-radius:3px; box-shadow:0 4px 20px rgba(0,0,0,.55); }
-@media (max-width:480px){ .brand-logo{ height:56px; } }
-@media (max-width:360px){ .brand-logo{ height:44px; } }
+/* Replaces the old embedded-image logo — the new banner art is the header's visual identity now,
+   so a second competing image would be clutter; this is just the app's name set large over it. */
+.brand-title{
+  font-family:var(--font-brand); font-size:42px; line-height:1; letter-spacing:.03em;
+  color:var(--ink); text-shadow:0 2px 10px rgba(0,0,0,.8), 0 0 22px var(--pink-glow);
+  white-space:nowrap;
+}
+@media (max-width:480px){ .brand-title{ font-size:32px; } }
+@media (max-width:360px){ .brand-title{ font-size:26px; } }
 /* The tab bar has grown from 3 tabs to 5 over time, with more labels a real possibility later — a
    horizontally-scrollable strip is the robust fix (holds up no matter how many tabs there end up
    being), and mobile media queries below squeeze padding/font down first so a phone-sized screen
@@ -77,7 +91,7 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
 .mode-tabs::-webkit-scrollbar{ display:none; }
 .mode-tabs button{
   font-family:var(--font-display); font-weight:600; letter-spacing:.04em; font-size:13px;
-  padding:9px 20px; background:transparent; border:1px solid var(--rule); color:var(--ink-dim);
+  padding:9px 20px; background:var(--bg-alt-overlay); border:1px solid var(--rule); color:var(--ink-dim);
   cursor:pointer; border-radius:4px 4px 0 0; text-transform:uppercase; flex-shrink:0; white-space:nowrap;
 }
 .mode-tabs button.active{ position:relative; overflow:hidden; color:var(--on-accent); background:linear-gradient(135deg, var(--btn-silver-dim) 0%, var(--btn-silver) 35%, var(--btn-silver-bright) 50%, var(--btn-silver) 65%, var(--btn-silver-dim) 100%); border-color:var(--btn-silver); box-shadow:0 0 14px var(--btn-silver-glow), 0 2px 6px rgba(0,0,0,.5); text-shadow:0 1px 0 rgba(255,255,255,.4); }
@@ -87,12 +101,12 @@ body{ background:linear-gradient(135deg, var(--body-grad-start) 0%, var(--body-g
    at the smallest size here, five full-word tabs plus a sixth added later can still be reached by
    a swipe rather than ever clipping or forcing the whole page to scroll sideways. */
 @media (max-width:700px){
-  .topbar{ padding:10px 16px; gap:8px; }
+  .topbar{ padding:10px 16px; gap:8px; min-height:110px; }
   .mode-tabs{ gap:4px; }
   .mode-tabs button{ font-size:11.5px; padding:7px 12px; }
 }
 @media (max-width:460px){
-  .topbar{ padding:8px 10px; }
+  .topbar{ padding:8px 10px; min-height:90px; }
   .mode-tabs button{ font-size:10px; padding:6px 8px; letter-spacing:.02em; }
 }
 
