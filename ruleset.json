@@ -420,7 +420,7 @@
       "id": "cmt2a7xiucb2",
       "name": "Cleric",
       "description": "\"Keep screaming the wound is almost shut!\"",
-      "signature_ability": "At the beginning of the game, choose a point on the battlefield, everything within 4\" of this area is your sanctuary. Units inside your sanctuary gain Aegis 15+. ",
+      "signature_ability": "At the beginning of the game, choose a point on the battlefield, everything within 4\" of this area is your sanctuary. Friendly units within your sanctuary gain arcane and elemental resistance. ",
       "gold_cost": 30,
       "max_feats": 1,
       "can_use_magic": true,
@@ -3986,8 +3986,8 @@
       "is_warlock_minion": false,
       "customAbilities": [
         {
-          "name": "Patience",
-          "description": "When making sentry reactions, you may add this units mastery to the hit roll"
+          "name": "Battle Meditation",
+          "description": "If a sentry action hits, remove a fatigue from this unit."
         }
       ],
       "customFeats": [],
@@ -4021,7 +4021,7 @@
       "customAbilities": [
         {
           "name": "Swift Footed",
-          "description": "This unit may shoot in a turn it also made a run action."
+          "description": "This unit may make a Shoot and Run action in the same activation."
         }
       ],
       "customFeats": [],
@@ -4145,13 +4145,13 @@
       "customFeats": [
         {
           "name": "Healing Roots",
-          "description": "When this unit activates, all friendly units within 6\" heals 1 wound.",
+          "description": "When this unit activates you may use this feat to heal 1 wound from all other friendly units within 6\".",
           "veil_cost": 1,
           "valor_cost": 0
         }
       ],
       "keyword_values": {
-        "kmthzf1225ee": 10
+        "kmthzf1225ee": 15
       },
       "guild_id": "",
       "veteran_of": "",
@@ -4814,29 +4814,43 @@
     {
       "id": "hmu5t8xbs26n",
       "name": "Halfling Ambusher",
-      "faction_id": "",
+      "faction_id": "fmt1zprswgf7",
       "guild_id": "gmt2dkbaff4f",
       "veteran_of": "",
-      "replaces": "",
+      "replaces": "hmt55yxmz7w7",
       "is_warlock_minion": false,
-      "weapon_id": "",
+      "weapon_id": "wmt55u30py6d",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
       "weapon_proficiency": "",
       "gold_cost": 0,
-      "armor_value": 0,
+      "armor_value": 6,
       "stats": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
+        "haste": 12,
+        "move": 6,
+        "body": 2,
+        "mind": 3,
+        "spirit": 3
       },
-      "customAbilities": [],
-      "customFeats": [],
+      "customAbilities": [
+        {
+          "name": "Ambusher",
+          "description": "As a reaction, this unit may make a charge action when an enemy unit finishes a move action within 6\" of this unit."
+        }
+      ],
+      "customFeats": [
+        {
+          "name": "Ambush Strike",
+          "description": "After finishing a charge from the ambusher ability, this unit may make a free melee attack action",
+          "veil_cost": 0,
+          "valor_cost": 1
+        }
+      ],
       "description": "",
       "spell_ids": [],
-      "keywords": [],
+      "keywords": [
+        "kmt7z51ibt3v"
+      ],
       "keyword_values": {}
     }
   ],
