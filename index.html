@@ -1372,17 +1372,34 @@ function armorEligible(hero, a){ const cls = getHeroClass(hero); if(!cls) return
 // this Hero can equip it, that grants the lowest tier's bonus instead of nothing. Hirelings have no
 // Class to derive this from, so it's set explicitly per-Hireling in Admin via `weapon_proficiency`
 // (a direct Proficiency Tier reference).
+// Applies a Weapon's own accuracy_mod_type/accuracy_mod_value (Admin -> Weapons — e.g. a "+1 Bow")
+// on top of whatever the wielder's own Proficiency Tier bonus already works out to. 'add' stacks
+// on top of the tier bonus; 'override' replaces it entirely, ignoring the wielder's own training
+// (a masterwork weapon that's simply always +N to hit for anyone who picks it up). Shared by both
+// heroWeaponToHitBonus and hirelingWeaponToHitBonus so the two can never drift apart on this.
+function applyWeaponAccuracyMod(w, tierBonus){
+  if(!w) return tierBonus;
+  if(w.accuracy_mod_type === 'override') return w.accuracy_mod_value || 0;
+  if(w.accuracy_mod_type === 'add') return tierBonus + (w.accuracy_mod_value || 0);
+  return tierBonus;
+}
 function heroWeaponToHitBonus(hero, w){
   const cls = getHeroClass(hero);
   const categoryType = w.category+' '+w.type;
   const classTier = classTierFor(cls, categoryType);
-  if(classTier) return classTier.bonus;
-  if(weaponEligible(hero, w)){ const t = lowestProficiencyTier(); return t ? t.bonus : 0; }
-  return 0;
+  let tierBonus;
+  if(classTier) tierBonus = classTier.bonus;
+  else if(weaponEligible(hero, w)){ const t = lowestProficiencyTier(); tierBonus = t ? t.bonus : 0; }
+  else tierBonus = 0;
+  return applyWeaponAccuracyMod(w, tierBonus);
 }
 function hirelingWeaponToHitBonus(h){
   const tier = h.weapon_proficiency ? byId(gameData.proficiencyTiers, h.weapon_proficiency) : null;
-  return tier ? tier.bonus : 0;
+  const tierBonus = tier ? tier.bonus : 0;
+  const w = hirelingWeaponInfo(h);
+  // A custom (typed-in) Hireling weapon isn't a real catalog Weapon, so it has no accuracy_mod of
+  // its own to apply — only a real gameData.weapons entry (via weapon_id) can carry one.
+  return (w && !w.isCustom) ? applyWeaponAccuracyMod(w, tierBonus) : tierBonus;
 }
 // Small reusable label for a to-hit bonus value — used on Weapon displays in List Builder and
 // Battle Mode. Looks the value back up against the Proficiency Tier catalog so it shows whatever
@@ -1398,12 +1415,30 @@ function weaponMastered(hero, w){
   const maxBonus = Math.max(...gameData.proficiencyTiers.map(t => t.bonus));
   return tier.bonus === maxBonus;
 }
-function toHitBonusLabel(bonus){
-  if(!bonus) return '';
-  const tier = gameData.proficiencyTiers.find(t => t.bonus === bonus);
-  if(!tier) return '+'+bonus+' to hit';
-  const maxBonus = Math.max(...gameData.proficiencyTiers.map(t => t.bonus));
-  return (tier.bonus === maxBonus ? '&#9733; ' : '')+escapeHtml(tier.name)+' (+'+tier.bonus+' to hit)';
+// Small reusable label for a to-hit bonus value — used on Weapon displays in List Builder and
+// Battle Mode. Looks the value back up against the Proficiency Tier catalog so it shows whatever
+// that tier is actually named (not a hardcoded "Skilled"/"Mastery"); the star marks the single
+// highest-bonus tier currently defined, whatever it's called. Pass the weapon as the second
+// argument when it's known so its own accuracy_mod_type (Admin -> Weapons, e.g. a "+1 Bow") is
+// called out explicitly instead of silently folding into a total that may no longer match any
+// named tier at all — a player should be able to see at a glance how much of the number in front
+// of them came from their own training versus the weapon itself.
+function toHitBonusLabel(bonus, weapon){
+  const signed = n => (n>=0?'+':'')+n; // avoids "+-1" for negative values — a weapon's own accuracy_mod_value can be negative (a cursed/unwieldy weapon), unlike a Proficiency Tier bonus which never is
+  const maxBonus = gameData.proficiencyTiers.length ? Math.max(...gameData.proficiencyTiers.map(t => t.bonus)) : null;
+  if(weapon && weapon.accuracy_mod_type === 'override'){
+    return bonus ? signed(bonus)+' to hit (weapon)' : '';
+  }
+  const weaponDelta = (weapon && weapon.accuracy_mod_type === 'add') ? (weapon.accuracy_mod_value || 0) : 0;
+  if(!bonus && !weaponDelta) return '';
+  if(!weaponDelta){
+    const tier = gameData.proficiencyTiers.find(t => t.bonus === bonus);
+    return tier ? (tier.bonus === maxBonus ? '&#9733; ' : '')+escapeHtml(tier.name)+' (+'+tier.bonus+' to hit)' : signed(bonus)+' to hit';
+  }
+  const tierBonus = bonus - weaponDelta;
+  const tier = gameData.proficiencyTiers.find(t => t.bonus === tierBonus);
+  const tierText = tier ? (tier.bonus === maxBonus ? '&#9733; ' : '')+escapeHtml(tier.name)+' (+'+tier.bonus+')' : (tierBonus ? signed(tierBonus) : '');
+  return (tierText ? tierText+', ' : '')+signed(weaponDelta)+' weapon = '+signed(bonus)+' to hit';
 }
 const HANDS_MAX = 2; // hidden — every Hero/Hireling has 2 hands; not shown as a stat, just gates equip choices
 function weaponHasKeyword(w, keywordName){ return w.keywords.some(id => { const k = byId(gameData.keywords,id); return k && k.name===keywordName; }); }
@@ -2229,7 +2264,7 @@ function renderHeroWeaponStep(hero){
       + '<div class="opt-tags"><span class="tag">'+w.category+' '+w.type+'</span><span class="tag">'+weaponRangeText(w)+'</span>'+(w.party_limit?'<span class="tag" title="Party-wide limit">Party: '+partyWeaponCount(w.id)+'/'+w.party_limit+'</span>':'')+'</div>'
       + keywordChipsHTML(w.keywords, w.keyword_values)
       + (w.abilities? '<div class="opt-desc">'+highlightCurrency(escapeHtml(w.abilities))+'</div>':'')
-      + (toHitBonus>0? '<div class="opt-lock-note" style="color:var(--cyan-bright);">'+toHitBonusLabel(toHitBonus)+'</div>':'')
+      + (toHitBonus!==0? '<div class="opt-lock-note" style="color:var(--cyan-bright);">'+toHitBonusLabel(toHitBonus, w)+'</div>':'')
       + (isDual && countOfThis===1 && heroHandsFree(hero)>=weaponHandCost(w) ? '<div class="opt-lock-note" style="color:var(--cyan-bright);">Click again to dual-wield a second '+escapeHtml(w.name)+'</div>':'')
       + (lockNote? '<div class="opt-lock-note">'+lockNote+'</div>':'')
       + '</div>';
@@ -2971,7 +3006,7 @@ function renderBattleHeroCard(hero){
       const w = g.w;
       const toHitBonus = heroWeaponToHitBonus(hero, w);
       const dualTag = g.count>1 ? ' <span style="color:var(--cyan-bright);font-size:12px;">(Dual-Wielded)</span>' : '';
-      return '<div class="unit-item"><div class="opt-name">'+rarityStyledName(w)+dualTag+(w.damage?' <span class="weapon-dmg">'+formatDamage(w.damage).toUpperCase()+'</span>':'')+' <span class="tag-range">'+weaponRangeText(w)+'</span>'+(toHitBonus>0?' <span style="color:var(--cyan-bright);font-size:12px;">'+toHitBonusLabel(toHitBonus)+'</span>':'')+'</div>'
+      return '<div class="unit-item"><div class="opt-name">'+rarityStyledName(w)+dualTag+(w.damage?' <span class="weapon-dmg">'+formatDamage(w.damage).toUpperCase()+'</span>':'')+' <span class="tag-range">'+weaponRangeText(w)+'</span>'+(toHitBonus!==0?' <span style="color:var(--cyan-bright);font-size:12px;">'+toHitBonusLabel(toHitBonus, w)+'</span>':'')+'</div>'
         + '<div class="opt-tags"><span class="tag">'+w.category+' '+w.type+'</span></div>'
         + keywordChipsHTML(w.keywords, w.keyword_values)
         + (w.abilities? '<div class="opt-desc" style="font-style:normal;color:var(--ink);">'+highlightCurrency(escapeHtml(w.abilities))+'</div>':'')
@@ -3043,9 +3078,9 @@ function renderBattleHirelingCard(pick, pactOwnerName, hasteOverride){
 
   let body = '';
   if(weapon && weapon.isCustom){
-    body += '<div class="unit-block"><div class="unit-block-title">Weapon</div><div class="unit-item"><div class="opt-name">'+rarityStyledName(weapon)+(weapon.damage?' <span class="weapon-dmg">'+formatDamage(weapon.damage).toUpperCase()+'</span>':'')+(toHitBonus>0?' <span style="color:var(--cyan-bright);font-size:12px;">'+toHitBonusLabel(toHitBonus)+'</span>':'')+'</div><div class="opt-tags"><span class="tag">Natural Weapon</span></div></div></div>';
+    body += '<div class="unit-block"><div class="unit-block-title">Weapon</div><div class="unit-item"><div class="opt-name">'+rarityStyledName(weapon)+(weapon.damage?' <span class="weapon-dmg">'+formatDamage(weapon.damage).toUpperCase()+'</span>':'')+(toHitBonus!==0?' <span style="color:var(--cyan-bright);font-size:12px;">'+toHitBonusLabel(toHitBonus)+'</span>':'')+'</div><div class="opt-tags"><span class="tag">Natural Weapon</span></div></div></div>';
   } else if(weapon){
-    body += '<div class="unit-block"><div class="unit-block-title">Weapon</div><div class="unit-item"><div class="opt-name">'+rarityStyledName(weapon)+(weapon.damage?' <span class="weapon-dmg">'+formatDamage(weapon.damage).toUpperCase()+'</span>':'')+' <span class="tag-range">'+weaponRangeText(weapon)+'</span>'+(toHitBonus>0?' <span style="color:var(--cyan-bright);font-size:12px;">'+toHitBonusLabel(toHitBonus)+'</span>':'')+'</div><div class="opt-tags"><span class="tag">'+weapon.category+' '+weapon.type+'</span></div>'+keywordChipsHTML(weapon.keywords, weapon.keyword_values)+(weapon.abilities? '<div class="opt-desc" style="font-style:normal;color:var(--ink);">'+highlightCurrency(escapeHtml(weapon.abilities))+'</div>':'')+'</div></div>';
+    body += '<div class="unit-block"><div class="unit-block-title">Weapon</div><div class="unit-item"><div class="opt-name">'+rarityStyledName(weapon)+(weapon.damage?' <span class="weapon-dmg">'+formatDamage(weapon.damage).toUpperCase()+'</span>':'')+' <span class="tag-range">'+weaponRangeText(weapon)+'</span>'+(toHitBonus!==0?' <span style="color:var(--cyan-bright);font-size:12px;">'+toHitBonusLabel(toHitBonus, weapon)+'</span>':'')+'</div><div class="opt-tags"><span class="tag">'+weapon.category+' '+weapon.type+'</span></div>'+keywordChipsHTML(weapon.keywords, weapon.keyword_values)+(weapon.abilities? '<div class="opt-desc" style="font-style:normal;color:var(--ink);">'+highlightCurrency(escapeHtml(weapon.abilities))+'</div>':'')+'</div></div>';
   }
   if(h.customAbilities && h.customAbilities.length){
     body += '<div class="unit-block"><div class="unit-block-title">Abilities</div>'
@@ -3489,6 +3524,7 @@ function renderAdminTable(tab){
         { label:'Rarity', get:w=>rarityLabel(w.rarity), sort:w=>RARITY_OPTIONS.findIndex(r=>r.key===w.rarity) },
         { label:'Category', get:w=>w.category+' '+w.type, sort:w=>w.category+' '+w.type },
         { label:'Rng / Dmg', get:w=>weaponRangeText(w)+' / '+(w.damage?formatDamage(w.damage):'—') },
+        { label:'Accuracy Mod', get:w=>{ if(!w.accuracy_mod_type || w.accuracy_mod_type==='none') return '—'; const v=w.accuracy_mod_value||0; return (v>=0?'+':'')+v+' ('+(w.accuracy_mod_type==='add'?'Add':'Override')+')'; }, sort:w=>w.accuracy_mod_type==='none'||!w.accuracy_mod_type?0:1 },
         { label:'Gold', get:w=>w.gold_cost+'g', sort:w=>w.gold_cost||0 },
         { label:'Party Limit', get:w=>w.party_limit? (partyWeaponCount(w.id)+' / '+w.party_limit+' in use') : 'Unlimited', sort:w=>w.party_limit||9999 },
         { label:'Stat Mods', get:w=>escapeHtml(statModSummary(w.stat_modifiers)) },
@@ -3556,7 +3592,7 @@ function renderAdminTable(tab){
         { label:'Veteran Of', get:h=>h.veteran_of? escapeHtml((byId(gameData.hirelings,h.veteran_of)||{}).name||'—') : '—', sort:h=>h.veteran_of? (byId(gameData.hirelings,h.veteran_of)||{}).name||'' : '' },
         { label:'Replaces', get:h=>h.replaces? escapeHtml((byId(gameData.hirelings,h.replaces)||{}).name||'—') : '—', sort:h=>h.replaces? (byId(gameData.hirelings,h.replaces)||{}).name||'' : '' },
         { label:'Weapon', get:h=>{ const w = hirelingWeaponInfo(h); return w ? (w.isCustom? escapeHtml(w.name)+' (custom)' : escapeHtml(w.name)) : '—'; } },
-        { label:'Proficiency', get:h=>{ const b = hirelingWeaponToHitBonus(h); return b>0 ? toHitBonusLabel(b).replace('&#9733; ','') : 'None'; }, sort:h=>hirelingWeaponToHitBonus(h) },
+        { label:'Proficiency', get:h=>{ const b = hirelingWeaponToHitBonus(h); const w = hirelingWeaponInfo(h); return b!==0 ? toHitBonusLabel(b, (w&&!w.isCustom)?w:null).replace('&#9733; ','') : 'None'; }, sort:h=>hirelingWeaponToHitBonus(h) },
         { label:'Gold', get:h=>h.gold_cost+'g', sort:h=>h.gold_cost||0 },
         { label:'Stats', get:h=>'Haste '+h.stats.haste+' / Move '+h.stats.move+' / Body '+h.stats.body+' / Mind '+h.stats.mind+' / Spirit '+h.stats.spirit+' / Armor '+h.armor_value, sort:h=>h.stats.haste },
         { label:'Abilities', get:h=>h.customAbilities&&h.customAbilities.length? namedEntriesList(h.customAbilities,true).join('<br>') : '—' },
@@ -3661,7 +3697,7 @@ function closeInlineEdit(){ inlineEditTarget = null; renderAdmin(); }
 function blankEntityFor(tab){
   const zero = { haste:0, move:0, body:0, mind:0, spirit:0 };
   if(tab==='feats') return { name:'New Feat', ability_description:'', gold_cost:0, veil_cost:0, valor_cost:0, restriction_type:'none', restriction_id:'', party_wide:false, allowed_classes:[], stat_modifiers:Object.assign({},zero), equip_override:[] };
-  if(tab==='weapons') return { name:'New Weapon', category:'Simple', type:'Melee', range:null, damage:'', gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
+  if(tab==='weapons') return { name:'New Weapon', category:'Simple', type:'Melee', range:null, damage:'', gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'', accuracy_mod_type:'none', accuracy_mod_value:0 };
   if(tab==='armor') return { name:'New Armor', category:'Light', armor_value:0, gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
   if(tab==='items') return { name:'New Item', slots:1, gold_cost:0, rarity:'common', party_limit:0, requires_hand:false, abilities:'', stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
   if(tab==='hirelings') return { name:'New Hireling', faction_id:'', guild_id:'', veteran_of:'', replaces:'', is_warlock_minion:false, weapon_id:'', custom_weapon_name:'', custom_weapon_damage:'', weapon_proficiency:'', gold_cost:0, armor_value:0, stats:Object.assign({},zero), customAbilities:[], customFeats:[], description:'', spell_ids:[], keywords:[], keyword_values:{} };
@@ -3747,7 +3783,14 @@ function factionFields(e){
         ? renderRelatedEntitiesSection('feats', 'Faction Feats', gameData.feats.filter(f => f.restriction_type==='faction' && f.restriction_id===e.id), 'restriction', {restriction_type:'faction', restriction_id:e.id}, f => featCostText(f))
         : '<p class="empty-note" style="margin:0 0 12px;">Save the Faction first to start adding Faction Feats to it.</p>');
 }
-const WEAPON_SKILL_OPTS = ['Simple Melee','Simple Ranged','Martial Melee','Martial Ranged','Heavy Melee','Heavy Ranged','Magi Melee','Magi Ranged'];
+// The category × type combinations Weapons come in — used to build the Proficiency Tier checkbox
+// grid on Classes (below) AND the Equip Override checkbox list on Feats/Guilds, so a change here
+// automatically reaches both without touching either of those forms directly. Magic sits alongside
+// Melee and Ranged as a third way a weapon reaches its target — for an implement meant for
+// spellcasting (a wand, staff, etc.) rather than an ordinary physical attack; it still has its own
+// Range field like any other weapon (null for a touch-range implement, a number for a ranged one),
+// Type here is purely which category of combat training governs using it.
+const WEAPON_SKILL_OPTS = ['Simple Melee','Simple Ranged','Simple Magic','Martial Melee','Martial Ranged','Martial Magic','Heavy Melee','Heavy Ranged','Heavy Magic','Magi Melee','Magi Ranged','Magi Magic'];
 const ARMOR_SKILL_OPTS = ['Light Armor','Medium Armor','Heavy Armor'];
 const STAT_MOD_LABELS = { haste:'Haste', move:'Move', body:'Body', mind:'Mind', spirit:'Spirit' };
 // Shared by Guilds and Feats: lets either one nudge a Hero's stats up or down (negative allowed)
@@ -3879,12 +3922,19 @@ function renderGuildRelatedEntitiesHTML(guild){
 function weaponFields(e){
   return '<label class="field wide"><span>Name</span><input name="name" required value="'+escapeAttr(e&&e.name)+'"></label>'
     + '<label class="field"><span>Category</span><select name="category">'+['Simple','Martial','Heavy','Magi'].map(o=>'<option '+(e&&e.category===o?'selected':'')+'>'+o+'</option>').join('')+'</select></label>'
-    + '<label class="field"><span>Type</span><select name="type">'+['Melee','Ranged'].map(o=>'<option '+(e&&e.type===o?'selected':'')+'>'+o+'</option>').join('')+'</select></label>'
+    + '<label class="field"><span>Type</span><select name="type">'+['Melee','Ranged','Magic'].map(o=>'<option '+(e&&e.type===o?'selected':'')+'>'+o+'</option>').join('')+'</select></label>'
     + '<label class="field"><span>Range</span>'
       + '<label class="chk" style="margin-bottom:4px;"><input type="checkbox" name="range_melee" onchange="document.getElementById(\'rangeNumberField\').style.display=this.checked?\'none\':\'block\';" '+((!e || e.range==null)?'checked':'')+'> Melee (no ranged distance)</label>'
       + '<input type="number" id="rangeNumberField" name="range" min="0" max="99" value="'+(e && e.range!=null ? e.range : '')+'" placeholder="Inches" style="display:'+((!e || e.range==null)?'none':'block')+';">'
     + '</label>'
     + '<label class="field"><span>Damage die</span>'+damageSelectHTML(e?e.damage:'d6')+'</label>'
+    + '<label class="field"><span>Accuracy Modifier</span>'
+      + '<select name="accuracy_mod_type" onchange="document.getElementById(\'accuracyModValueField\').style.display=this.value===\'none\'?\'none\':\'block\';">'
+        + ['none','add','override'].map(o=>'<option value="'+o+'" '+(e&&e.accuracy_mod_type===o?'selected':(!e&&o==='none')?'selected':'')+'>'+(o==='none'?'None':o==='add'?'Add to Proficiency':'Override Proficiency')+'</option>').join('')
+      + '</select>'
+      + '<input type="number" id="accuracyModValueField" name="accuracy_mod_value" value="'+(e&&e.accuracy_mod_value?e.accuracy_mod_value:'')+'" placeholder="e.g. 1 or -1" style="margin-top:6px;display:'+((e&&e.accuracy_mod_type&&e.accuracy_mod_type!=='none')?'block':'none')+';">'
+    + '</label>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">Add stacks this weapon\u2019s own bonus on top of whatever the wielder\u2019s Proficiency Tier already grants \u2014 a "+1 Bow" would be Add, value 1. Override replaces the tier bonus entirely with a fixed value, ignoring the wielder\u2019s own training \u2014 a masterwork weapon that\u2019s simply always +2 to hit for anyone who picks it up. The value can be negative (a cursed or unwieldy weapon). Leave at None for an ordinary weapon.</p>'
     + '<label class="field"><span>Gold cost</span><input type="number" name="gold_cost" min="0" value="'+(e?e.gold_cost:0)+'"></label>'
     + '<label class="field"><span>Rarity</span>'+raritySelectHTML(e&&e.rarity)+'</label>'
     + '<label class="field"><span>Party Limit</span><input type="number" name="party_limit" min="0" value="'+(e&&e.party_limit?e.party_limit:'')+'" placeholder="Unlimited"></label>'
@@ -4147,6 +4197,8 @@ function commitEntryFromForm(form, tab, id){
     obj.keyword_values = parseKeywordValues(fd, obj.keywords);
     obj.stat_modifiers = { haste:num(fd,'mod_haste'), move:num(fd,'mod_move'), body:num(fd,'mod_body'), mind:num(fd,'mod_mind'), spirit:num(fd,'mod_spirit') };
     Object.assign(obj, parseRestrictionField(fd));
+    obj.accuracy_mod_type = fd.get('accuracy_mod_type') || 'none';
+    obj.accuracy_mod_value = obj.accuracy_mod_type==='none' ? 0 : num(fd,'accuracy_mod_value');
   }
   if(tab==='armor'){
     obj.name = fd.get('name'); obj.category = fd.get('category');
@@ -4331,7 +4383,11 @@ function normalizeRuleset(parsed){
   parsed.spells.forEach(s => { if(!Array.isArray(s.allowed_classes)) s.allowed_classes = []; if(s.range===undefined) s.range = null; if(s.restriction_type===undefined){ s.restriction_type = 'none'; s.restriction_id = ''; } if(!Array.isArray(s.action_types)) s.action_types = []; });
   parsed.classes.forEach(c => { if(c.stats) delete c.stats.mastery; if(c.max_feats==null) c.max_feats = 2; if(!Array.isArray(c.keywords)) c.keywords = []; if(c.has_pact===undefined) c.has_pact = false; });
   const zeroMods = { haste:0, move:0, body:0, mind:0, spirit:0 };
-  parsed.weapons.forEach(w => { if(!w.rarity) w.rarity = 'common'; if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroMods); if(w.restriction_type===undefined){ w.restriction_type = 'none'; w.restriction_id = ''; } });
+  // accuracy_mod_type/accuracy_mod_value: lets a specific Weapon add to or override the wielder's
+  // own Proficiency Tier to-hit bonus (e.g. a "+1 Bow" adds +1 on top; a masterwork weapon could
+  // override entirely to a fixed value). Defaults to 'none'/0 so every pre-existing Weapon keeps
+  // behaving exactly as before — nothing silently gains a bonus on load.
+  parsed.weapons.forEach(w => { if(!w.rarity) w.rarity = 'common'; if(!w.stat_modifiers) w.stat_modifiers = Object.assign({}, zeroMods); if(w.restriction_type===undefined){ w.restriction_type = 'none'; w.restriction_id = ''; } if(w.accuracy_mod_type===undefined){ w.accuracy_mod_type = 'none'; w.accuracy_mod_value = 0; } });
   parsed.hirelings.forEach(h => { if(h.custom_weapon_name===undefined) h.custom_weapon_name = ''; if(h.custom_weapon_damage===undefined) h.custom_weapon_damage = ''; if(!Array.isArray(h.spell_ids)) h.spell_ids = []; if(!Array.isArray(h.keywords)) h.keywords = []; if(h.is_warlock_minion===undefined) h.is_warlock_minion = false; if(h.guild_id===undefined) h.guild_id = ''; if(h.veteran_of===undefined) h.veteran_of = ''; if(h.replaces===undefined) h.replaces = '';
     if(!Array.isArray(h.customAbilities)){
       const old = h.abilities || '';
