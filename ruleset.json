@@ -27,11 +27,6 @@
       "description": "A unit may carry two of this weapon and make an attack roll with each one using one attack action. Modifiers from Mastery and Body may not be applied to the second attack."
     },
     {
-      "id": "kmt20o7o8653",
-      "name": "Reload",
-      "description": "This weapon requires a LOAD bonus action before it can be used. Weapons with this keyword cannot be used to make reactions."
-    },
-    {
       "id": "kmt21f4nw1hu",
       "name": "Stunned",
       "description": "Unit is fatigued, and has disadvantage on skill checks. Attacks against stunned units have advantage."
@@ -175,6 +170,24 @@
       "value_max": 20,
       "value_default": 10,
       "value_suffix": "+"
+    },
+    {
+      "id": "kmuefd0mmacc",
+      "name": "Focus",
+      "description": "This spell requires constant focus, it will disappear when the casters activates or if the caster is killed or fatigued.",
+      "parameterized": false
+    },
+    {
+      "id": "kmuefdo78dyo",
+      "name": "Instant",
+      "description": "This spell resolves immediately.",
+      "parameterized": false
+    },
+    {
+      "id": "kmuefek86w4k",
+      "name": "Enchantment",
+      "description": "Enchantments are perpetual and remain on the battlefield even if the caster perishes. A caster may only have 1 enchantment of the same name active at a time.",
+      "parameterized": false
     }
   ],
   "factions": [
@@ -711,7 +724,6 @@
       "damage": "d8",
       "gold_cost": 15,
       "keywords": [
-        "kmt20o7o8653",
         "kmt2248t93dp"
       ],
       "rarity": "common",
@@ -857,7 +869,6 @@
       "gold_cost": 25,
       "keywords": [
         "kmt1yxnqybek",
-        "kmt20o7o8653",
         "kmt2248t93dp",
         "kmt9exwc6xbm"
       ],
@@ -1012,7 +1023,8 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 1,
-      "abilities": "Add 6\" to range of destruction spells."
+      "abilities": "Add 6\" to range of destruction spells.",
+      "keyword_values": {}
     },
     {
       "id": "wmt55u30py6d",
@@ -1912,7 +1924,8 @@
       "veil_cost": 0,
       "valor_cost": 1,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt1z8ish7gm",
@@ -1935,7 +1948,8 @@
       "veil_cost": 1,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt218egkaek",
@@ -1959,7 +1973,8 @@
       "veil_cost": 0,
       "valor_cost": 1,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt21e7rr9ip",
@@ -1982,7 +1997,8 @@
       "veil_cost": 0,
       "valor_cost": 2,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt349jbmv7y",
@@ -2005,7 +2021,8 @@
       "veil_cost": 0,
       "valor_cost": 1,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt3i31jsztg",
@@ -2027,7 +2044,8 @@
       "veil_cost": 2,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt55iszoupc",
@@ -2051,7 +2069,8 @@
       "veil_cost": 2,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt59uk5osbj",
@@ -2075,7 +2094,8 @@
       "veil_cost": 0,
       "valor_cost": 1,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt59v8uecj3",
@@ -2098,7 +2118,8 @@
       "veil_cost": 0,
       "valor_cost": 1,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt5f6w73pgu",
@@ -2120,7 +2141,8 @@
       "veil_cost": 1,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt884jsd39d",
@@ -2144,7 +2166,8 @@
       "veil_cost": 0,
       "valor_cost": 2,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt889c9yndl",
@@ -2168,7 +2191,8 @@
       "veil_cost": 2,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt88vsuvlwx",
@@ -2192,7 +2216,8 @@
       "veil_cost": 1,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmt88y5ciy5k",
@@ -2216,7 +2241,8 @@
       "veil_cost": 2,
       "valor_cost": 0,
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmtkcb8hb3o2",
@@ -2235,7 +2261,8 @@
       },
       "equip_override": [],
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmtkcd40oh7p",
@@ -2261,7 +2288,8 @@
       },
       "equip_override": [],
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "party_wide": false
     },
     {
       "id": "fmtkpuaswuc5",
@@ -2269,7 +2297,7 @@
       "ability_description": "Select 3 willow enclave units. Each selected unit may make a shoot action.",
       "gold_cost": 0,
       "veil_cost": 0,
-      "valor_cost": 4,
+      "valor_cost": 6,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2280,14 +2308,15 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false
     },
     {
       "id": "fmtkq404929u",
       "name": "Hidden in plain site",
       "ability_description": "When a  willow enclave unit would be the target of a ranged spell or shoot action, you may use this ability if the targeted unit has the benefit of obscuring terrain and is within 1\" of a piece of terrain. The targeted unit cannot be made the target of the attack.",
       "gold_cost": 0,
-      "veil_cost": 1,
+      "veil_cost": 2,
       "valor_cost": 0,
       "allowed_classes": [],
       "stat_modifiers": {
@@ -2299,14 +2328,15 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false
     },
     {
       "id": "fmtkq51jkt90",
       "name": "Healing sprouts",
       "ability_description": "Choose a point on the battlefield. Every unit within 3\" of that point regains 1 wound.",
       "gold_cost": 0,
-      "veil_cost": 1,
+      "veil_cost": 3,
       "valor_cost": 0,
       "allowed_classes": [],
       "stat_modifiers": {
@@ -2318,7 +2348,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false
     },
     {
       "id": "fmtkq7w40eub",
@@ -2337,7 +2368,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false
     },
     {
       "id": "fmtkqaiit2im",
@@ -2356,7 +2388,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false
     },
     {
       "id": "fmtkqk2cpqpo",
@@ -2375,7 +2408,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false
     },
     {
       "id": "fmtkr2t9hr20",
@@ -2394,7 +2428,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false
     },
     {
       "id": "fmtkr6v1ibro",
@@ -2413,7 +2448,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false
     },
     {
       "id": "fmtkrab2l5k2",
@@ -2432,15 +2468,16 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false
     },
     {
       "id": "fmtliqc2k3nf",
       "name": "Veils Bite",
       "ability_description": "When a friendly Barrowmoor Kingdoms unit is incapacitated, you may use this ability to make an attack action with them before removing them from the battlefield",
       "gold_cost": 0,
-      "veil_cost": 1,
-      "valor_cost": 1,
+      "veil_cost": 2,
+      "valor_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2451,14 +2488,15 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false
     },
     {
       "id": "fmtljfvtnqe0",
       "name": "Veil Aegis",
       "ability_description": "Target a veil rift. Friendly barrow moor Kingdoms units gain Aegis 15+ until end of turn while standing in the selected veil rift.",
       "gold_cost": 0,
-      "veil_cost": 4,
+      "veil_cost": 5,
       "valor_cost": 0,
       "allowed_classes": [],
       "stat_modifiers": {
@@ -2470,15 +2508,16 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false
     },
     {
       "id": "fmtljkoscq7y",
       "name": "Counter Assault",
-      "ability_description": "When a friendly Barrowmoor Kingdoms unit is made the target of a charge, you may use this ability to declare a charge  with the target unit against the charging unit.",
+      "ability_description": "When a friendly Barrowmoor Kingdoms unit is made the target of a charge, you may use this ability to declare a charge  with the target unit against the charging unit. This charge stuns the target.",
       "gold_cost": 0,
       "veil_cost": 0,
-      "valor_cost": 1,
+      "valor_cost": 3,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2489,7 +2528,8 @@
       },
       "equip_override": [],
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false
     },
     {
       "id": "fmtsvyemyvzt",
@@ -2508,7 +2548,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtsw6grxm2m",
@@ -2527,7 +2568,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtsymi9v55m",
@@ -2548,7 +2590,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtsz4hr4eh2",
@@ -2567,7 +2610,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtx0nxbmaem",
@@ -2586,7 +2630,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtx0r0kusn9",
@@ -2605,7 +2650,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtx11i45q99",
@@ -2624,7 +2670,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtx1dva3ve6",
@@ -2643,7 +2690,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtx1h3i6v2x",
@@ -2662,7 +2710,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmtx2h47c46z",
@@ -2681,7 +2730,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmu1oyo6erbt",
@@ -2700,7 +2750,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmu5lispqx5j",
@@ -2719,7 +2770,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmu5m2q45nro",
@@ -2738,7 +2790,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmu5m7e2o1kd",
@@ -2757,7 +2810,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmu5nybu45wk",
@@ -2776,7 +2830,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     },
     {
       "id": "fmu5o1e989uf",
@@ -2795,7 +2850,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "equip_override": []
+      "equip_override": [],
+      "party_wide": false
     }
   ],
   "spellSchools": [
@@ -2828,13 +2884,15 @@
       "allowed_classes": [],
       "description": "",
       "keywords": [
-        "kmt1yx2bzu9n"
+        "kmt1yx2bzu9n",
+        "kmuefdo78dyo"
       ],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32oa9flfu",
@@ -2846,33 +2904,38 @@
       "damage": "d4",
       "description": "This attack automatically hits the target",
       "keywords": [
-        "kmt1ywt3xv6u"
+        "kmt1ywt3xv6u",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32pvnagza",
       "name": "FrostBall",
-      "level": 1,
+      "level": 2,
       "school": "Destruction",
       "range": 18,
       "type": "Ranged Attack",
       "damage": "d6",
       "description": "",
       "keywords": [
-        "kmt1yx2bzu9n"
+        "kmt1yx2bzu9n",
+        "kmthp637nf2k",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32rf32diy",
@@ -2884,14 +2947,16 @@
       "damage": "d10",
       "description": "Target must pass a DC14+Body skillcheck or become fatigued.",
       "keywords": [
-        "kmt1ywxyw8lh"
+        "kmt1ywxyw8lh",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32u7m3d6u",
@@ -2903,14 +2968,16 @@
       "damage": "d8",
       "description": "If this attack hits, make another wound roll with 1D10+1D6 basic damage for any unit within 3\" of target. (this does not create Valor or Veil) ",
       "keywords": [
-        "kmt1yx2bzu9n"
+        "kmt1yx2bzu9n",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32v8kvjgh",
@@ -2922,14 +2989,16 @@
       "damage": "d10",
       "description": "",
       "keywords": [
-        "kmt1yxnqybek"
+        "kmt1yxnqybek",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32wnb3uwy",
@@ -2941,14 +3010,16 @@
       "damage": "d10",
       "description": "Target must take a DC15+Body check or be stunned.",
       "keywords": [
-        "kmt1yx2bzu9n"
+        "kmt1yx2bzu9n",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt32zxz9m8g",
@@ -2960,14 +3031,16 @@
       "damage": "d8",
       "description": "Choose a point on the battlefield, any unit within 6\" and visible to that point take a wound roll. When you cast fireball, roll a D20, on a 10+, replace the damage die of this attack with a D10. On a 15+ replace the damage die of this attack with a D12.",
       "keywords": [
-        "kmt1yx2bzu9n"
+        "kmt1yx2bzu9n",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt333q99ynw",
@@ -2979,14 +3052,16 @@
       "damage": "d10",
       "description": "If this attack hits, after the wound roll, you may choose another target within 3\" of the current target and roll to wound. repeat this process as many times as elligible.",
       "keywords": [
-        "kmt1yx2bzu9n"
+        "kmt1yx2bzu9n",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt335ves864",
@@ -2998,14 +3073,16 @@
       "damage": "d12",
       "description": "This spell automatically hits any creature within a straight line emanating from the caster. This weapons damage is reduced by 2 for every unit beyond the first it hits, and for every piece of intervening terrain. (ex: A piece of terrain is in between the caster and two units. the first unit suffers 1D10 damage, the other 1D8.)",
       "keywords": [
-        "kmt1ywt3xv6u"
+        "kmt1ywt3xv6u",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt338igqw32",
@@ -3016,13 +3093,16 @@
       "type": "Cast",
       "damage": "d6",
       "description": "Roll a D6, target unit takes wounds equal to the result rolled.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt34c4wdbms",
@@ -3034,14 +3114,16 @@
       "damage": "",
       "description": "Target unit in your zone of control regains 1 wound",
       "keywords": [
-        "kmt34cz6qk9m"
+        "kmt34cz6qk9m",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3hlxmrbog",
@@ -3052,13 +3134,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "If the caster or a unit within 6\" of the caster is the target of an attack or ability you may use a reaction to cast Ward and give the attack disdvantage.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3hp7zw36s",
@@ -3069,13 +3154,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "As a reaction to an attack that hit, may raise the armor value of the castor or a friendly unit within 6\" by 1d4.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3hqdl1tu3",
@@ -3087,14 +3175,16 @@
       "damage": "",
       "description": "Target unit within 12\" regains 1 wound",
       "keywords": [
-        "kmt34cz6qk9m"
+        "kmt34cz6qk9m",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Bonus Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3hrc5hrw8",
@@ -3106,14 +3196,16 @@
       "damage": "",
       "description": "Target unit within 2\" of caster, that unit regains 2 wounds.",
       "keywords": [
-        "kmt34cz6qk9m"
+        "kmt34cz6qk9m",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3i63qshfj",
@@ -3123,14 +3215,17 @@
       "range": 12,
       "type": "Bonus Cast",
       "damage": "",
-      "description": "Target unit within 12\" is no longer stunned",
-      "keywords": [],
+      "description": "Remove any negative condition from target unit.",
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Bonus Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3i7f0tli0",
@@ -3142,14 +3237,16 @@
       "damage": "",
       "description": "Target unit within 12\" regains 2 wounds.",
       "keywords": [
-        "kmt34cz6qk9m"
+        "kmt34cz6qk9m",
+        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Bonus Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3i8vcxfgh",
@@ -3160,14 +3257,17 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "If an allied unit within 12\" would become frightened, you may react with calm and negate the affect.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action",
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3iaxf6vfm",
@@ -3178,13 +3278,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "If an allied unit would be the target of an action, negate the affect.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3iclxw167",
@@ -3195,13 +3298,16 @@
       "type": "Cast",
       "damage": "",
       "description": "Choose an allied unit that was removed from the battlefield this game. Return them to the battlefield within 3\" of the caster with 1D4 wounds remaining.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3ifmk57h3",
@@ -3212,13 +3318,16 @@
       "type": "Cast",
       "damage": "",
       "description": "Summon a magical hand to hold or move units up to 3\" with. units held in place count as being stunned. Enemy units must make a DC12+Body check to ignore the hands affects. Allies may be moved willingly.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3ii4sy2go",
@@ -3229,13 +3338,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "If the caster is within 6\" or is the target of a cast action, bonus action, or reaction,  They may make a DC13+Mind check and negate the spell.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3ijheonus",
@@ -3246,13 +3358,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "If the caster is the target of a shoot action. they may make a DC12+Mind Check and negate the attack.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3il3oq67h",
@@ -3263,13 +3378,16 @@
       "type": "Cast",
       "damage": "",
       "description": "Choose a point on the board, the area within 6\" of that point is consumed by fog. Shoot and cast actions targeting units  wholly within the area have disadvantage.",
-      "keywords": [],
+      "keywords": [
+        "kmuefd0mmacc"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3imtubdhh",
@@ -3279,14 +3397,17 @@
       "range": 3,
       "type": "Cast Action",
       "damage": "",
-      "description": "The caster summons a ghostly familiar within 3\" of them. The familiar has 10 Haste, 6\" Move, D6 Armor and attack, and 2 Body, Mind, And Spirit.",
-      "keywords": [],
+      "description": "The caster summons a ghostly familiar within 3\" of them. The familiar has 10 Haste, 6\" Move, 6 Armor, and 2 Body, Mind, And Spirit.",
+      "keywords": [
+        "kmuefek86w4k"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3ionjjmul",
@@ -3297,13 +3418,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Summon a 1x3 wall 3\" tall that cannot be traversed or seen through, even by other magical affects.",
-      "keywords": [],
+      "keywords": [
+        "kmuefd0mmacc"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3irga3nyb",
@@ -3314,13 +3438,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Choose a point on the battlefield. A cloud of Poison gas emanates 6\" from that point on the battlefield. Units in the cloud are fatigued, and units who begin their activation in the poison cloud must make a DC12+Body save or recieve 1 wound and be fatigued.",
-      "keywords": [],
+      "keywords": [
+        "kmuefd0mmacc"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3iv1pdcze",
@@ -3331,13 +3458,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Choose a point on the battlefield. A guiding light erupts from the center of that point out 6\". All attacks against units wholly within this area have advantage. Units inside the area  cannot target units outside of it.",
-      "keywords": [],
+      "keywords": [
+        "kmuefd0mmacc"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3iwvfzf1i",
@@ -3347,14 +3477,17 @@
       "range": 12,
       "type": "Bonus Cast",
       "damage": "",
-      "description": "Summon a terrifying visage in front of  a creature you can see within 12\". They must immediately make a morale check.",
-      "keywords": [],
+      "description": "Summon a terrifying visage in front of  a creature you can see within 12\". They must immediately make a morale check with disadvantage.",
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Bonus Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3j2rx6ey6",
@@ -3364,14 +3497,17 @@
       "range": 18,
       "type": "Bonust Cast",
       "damage": "d10",
-      "description": "Target creature with a display of lights sounds and senses. Roll 1D10, if the result is higher than the targets Mind stat, they take 1 wound.",
-      "keywords": [],
+      "description": "Target creature with a display of lights sounds and senses. Roll 1D10, if the result is higher than the targets Mind stat, they take 1 wound and are stunned.",
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Bonus Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3j5tif360",
@@ -3382,13 +3518,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Choose a point on the battlefield. The area within 6\" of this point is consumed by darkness. Eldritch tentacles lash out for 1D10+1D6 damage and stun creatures who begin or end their movement in the area.",
-      "keywords": [],
+      "keywords": [
+        "kmuefek86w4k"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3j8fmwwj2",
@@ -3399,30 +3538,36 @@
       "type": "Cast",
       "damage": "",
       "description": "Caster chooses a point visible to them up to 6\" away. Remove them from the battlefield and re-deploy them at the chosen point.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jao2lrts",
       "name": "Acidic Armor",
-      "level": 1,
+      "level": 2,
       "school": "Transmutation",
       "range": 12,
       "type": "Cast Action",
-      "damage": "d10",
-      "description": "Choose a target creature and slowly turn their armor to acid. Roll a D10 and add +1 for every armor point above 6. If this beats their armor save they take a wound.",
-      "keywords": [],
+      "damage": "",
+      "description": "Target units armor is reduce by D4 until this spell ends.",
+      "keywords": [
+        "kmuefek86w4k"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jdl4us8i",
@@ -3433,13 +3578,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "When the caster becomes the target of a charge, they may fuse the ground with water in front of them.  Charging unit must treat the entirety of the charge as if it were over difficult terrain.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jmz2vdie",
@@ -3450,13 +3598,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Caster may choose a point within 12\". Target unit within 2\" of caster may be removed from the battlefield, and re-deployed at that point.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jozuy64l",
@@ -3467,13 +3618,16 @@
       "type": "Cast Reaction",
       "damage": "",
       "description": "When made the target of an attack. Caster may attempt to disguise themselves as an ally of the attacker. Attacker must pass a DC15 mind check or they remain tricked and must choose a new target.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jrcrr148",
@@ -3483,14 +3637,17 @@
       "range": 18,
       "type": "Cast Action / Reaction",
       "damage": "",
-      "description": "Target becomes a gaseous cloud and may move freely through terrain until the finish a move action.",
-      "keywords": [],
+      "description": "Target becomes a gaseous cloud. While in this form attacks against them have disadvantage. The effect ends when the target finishes an a move or any action or when the caster activates.",
+      "keywords": [
+        "kmuefd0mmacc"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3ju4elqu7",
@@ -3501,13 +3658,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Target a piece of terrain that is no larger than 6\"x6\" the piece of terrain catches fire with arcane flames. Any unit within 1\" of the terrain must immediately take environmental+1d6 damage.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jvbsf0ur",
@@ -3518,13 +3678,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Target a piece of terrain no larger than 3\"x3\". Grant it sentience. it gains the stat block of a familiar.",
-      "keywords": [],
+      "keywords": [
+        "kmuefek86w4k"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3jz8eh4xi",
@@ -3535,13 +3698,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Target a piece of terrain no bigger than 6\"x6\". It splashes out in all directions as its form is transfused into liquid. all units within 6\" of the terrain piece are swept away to an area wholly outside of 6\" of the terrain piece.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3k0pzsf28",
@@ -3552,13 +3718,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "The caster and any creature within 3\" of them are removed from the battlefield and re-deployed anywhere on the battlefield wholly within 24\" of their last location.",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3k1lo2rbe",
@@ -3569,13 +3738,16 @@
       "type": "Cast Action",
       "damage": "",
       "description": "Target a creature visible to the caster. They become a goat. Bahhh.",
-      "keywords": [],
+      "keywords": [
+        "kmuefd0mmacc"
+      ],
       "allowed_classes": [],
       "restriction_type": "none",
       "restriction_id": "",
       "action_types": [
         "Action"
-      ]
+      ],
+      "keyword_values": {}
     },
     {
       "id": "smt3k34jl8py",
@@ -3586,7 +3758,9 @@
       "type": "Ranged Attack / Reaction",
       "damage": "d10",
       "description": "The warlocks signature spell, if a wound from this spell rolls a critical hit, target is moved back 3\"",
-      "keywords": [],
+      "keywords": [
+        "kmuefdo78dyo"
+      ],
       "allowed_classes": [
         "cmt2ahfasbmg"
       ],
@@ -3595,7 +3769,8 @@
       "action_types": [
         "Action",
         "Reaction"
-      ]
+      ],
+      "keyword_values": {}
     }
   ],
   "hirelings": [
