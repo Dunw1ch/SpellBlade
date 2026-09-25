@@ -174,7 +174,7 @@
     {
       "id": "kmuefd0mmacc",
       "name": "Focus",
-      "description": "This spell requires constant focus, it will disappear when the casters activates or if the caster is killed or fatigued.",
+      "description": "This spell requires constant focus, it will disappear when the caster next activates or if the caster is killed or fatigued.",
       "parameterized": false
     },
     {
@@ -669,7 +669,9 @@
       "restriction_id": "",
       "keyword_values": {
         "kmtczhtlagix": 2
-      }
+      },
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt20bivm8lw",
@@ -691,7 +693,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt20jq62wlh",
@@ -713,7 +717,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt20oqnznc2",
@@ -735,7 +741,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt21xj74ru5",
@@ -757,7 +765,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt21y1cmxqg",
@@ -787,7 +797,9 @@
       "abilities": "",
       "keyword_values": {
         "kmtczhtlagix": 1
-      }
+      },
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt220ka1a4u",
@@ -809,7 +821,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt221142461",
@@ -832,7 +846,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt221m7l57l",
@@ -857,7 +873,9 @@
       "restriction_id": "",
       "party_limit": 0,
       "abilities": "",
-      "keyword_values": {}
+      "keyword_values": {},
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt222uut9oa",
@@ -883,7 +901,9 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 0,
-      "abilities": ""
+      "abilities": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt223ixgkyv",
@@ -907,7 +927,9 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 0,
-      "abilities": ""
+      "abilities": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt2cqjwnr0k",
@@ -932,7 +954,9 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 0,
-      "abilities": ""
+      "abilities": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt2mgstaff1",
@@ -952,7 +976,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt33diwnsi8",
@@ -974,7 +1000,9 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 0,
-      "abilities": ""
+      "abilities": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt33qeguvqf",
@@ -1001,7 +1029,9 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 0,
-      "abilities": ""
+      "abilities": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt4p14bgi9o",
@@ -1024,7 +1054,9 @@
       "restriction_id": "",
       "party_limit": 1,
       "abilities": "Add 6\" to range of destruction spells.",
-      "keyword_values": {}
+      "keyword_values": {},
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt55u30py6d",
@@ -1053,7 +1085,9 @@
       "abilities": "",
       "keyword_values": {
         "kmtczhtlagix": 2
-      }
+      },
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt55wx3sjsf",
@@ -1075,7 +1109,9 @@
         "spirit": 0
       },
       "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn"
+      "restriction_id": "fmt1ygkuhwdn",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt55xnbehkt",
@@ -1097,7 +1133,9 @@
         "spirit": 0
       },
       "restriction_type": "faction",
-      "restriction_id": "fmt1zprswgf7"
+      "restriction_id": "fmt1zprswgf7",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmt7z66gn2bj",
@@ -1121,7 +1159,10 @@
       "restriction_type": "none",
       "restriction_id": "",
       "party_limit": 0,
-      "abilities": "This item opens the mind of its user. Add +1 to their mind stat."
+      "abilities": "This item opens the mind of its user. Add +1 to their mind stat.",
+      "accuracy_mod_type": "override",
+      "accuracy_mod_value": 0,
+      "keyword_values": {}
     },
     {
       "id": "wmtggui6mxcv",
@@ -1143,7 +1184,9 @@
         "spirit": 0
       },
       "restriction_type": "none",
-      "restriction_id": ""
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmu1p8h7sivh",
@@ -1166,7 +1209,9 @@
         "spirit": 0
       },
       "restriction_type": "guild",
-      "restriction_id": "gmt2d27ly0mf"
+      "restriction_id": "gmt2d27ly0mf",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmu1pt04vuw6",
@@ -1191,7 +1236,9 @@
         "spirit": 0
       },
       "restriction_type": "guild",
-      "restriction_id": "gmthnvht5rb7"
+      "restriction_id": "gmthnvht5rb7",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmu5lpxk3j3q",
@@ -1219,7 +1266,9 @@
         "spirit": 0
       },
       "restriction_type": "guild",
-      "restriction_id": "gmt89aimxl4r"
+      "restriction_id": "gmt89aimxl4r",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     },
     {
       "id": "wmu5t280tl94",
@@ -1244,7 +1293,34 @@
         "spirit": 0
       },
       "restriction_type": "guild",
-      "restriction_id": "gmt2dkbaff4f"
+      "restriction_id": "gmt2dkbaff4f",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
+    },
+    {
+      "id": "wmugz2v6v4tj",
+      "name": "Wand",
+      "category": "Magi",
+      "type": "Melee",
+      "range": null,
+      "damage": "",
+      "gold_cost": 10,
+      "rarity": "common",
+      "party_limit": 0,
+      "abilities": "",
+      "keywords": [],
+      "keyword_values": {},
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "accuracy_mod_type": "override",
+      "accuracy_mod_value": 7
     }
   ],
   "armor": [
@@ -2356,7 +2432,7 @@
       "name": "Stalking from the veil",
       "ability_description": "You may select a willow enclave unit who is within 1\" of a piece of terrain. Remove that unit from the battlefield and re-deploy them anywhere on the battlefield within 1\" of a piece of terrain.",
       "gold_cost": 0,
-      "veil_cost": 4,
+      "veil_cost": 5,
       "valor_cost": 0,
       "allowed_classes": [],
       "stat_modifiers": {
@@ -2374,10 +2450,10 @@
     {
       "id": "fmtkqaiit2im",
       "name": "Quickfire bow",
-      "ability_description": "After a willow enclave unit has made a shoot action, if this attack hits, may immediately make a free shoot action against a unit within 3\" of the original target.",
+      "ability_description": "After a willow enclave unit has made a shoot action, if this attack hits, you may immediately make a free shoot action against a unit within 6\" of the original target.",
       "gold_cost": 0,
       "veil_cost": 0,
-      "valor_cost": 1,
+      "valor_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2457,7 +2533,7 @@
       "ability_description": "Choose a veil rift on the battlefield. All friendly units within that rift regain 1 wound and may make a free attack action.",
       "gold_cost": 0,
       "veil_cost": 4,
-      "valor_cost": 0,
+      "valor_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2835,11 +2911,11 @@
     },
     {
       "id": "fmu5o1e989uf",
-      "name": "Heat of battle",
-      "ability_description": "Choose a point on the battlefield. All friendly barrowmoor units within 6\" of target location remove fatigue",
+      "name": "Call of the Veil",
+      "ability_description": "Choose a veil rift on the battlefield. Target veil rift erupts in violent screaming. All enemy units within 3\" of it must make a morale check.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 3,
+      "veil_cost": 4,
+      "valor_cost": 0,
       "restriction_type": "faction",
       "restriction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
