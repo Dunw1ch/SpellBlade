@@ -4928,34 +4928,73 @@
         "kmt7z51ibt3v"
       ],
       "keyword_values": {}
+    },
+    {
+      "id": "hmux0ozznqzn",
+      "name": "Goblin FireMage",
+      "faction_id": "fmt1zviucpcj",
+      "guild_id": "",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt2mgstaff1",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu4p6lb2xxf",
+      "gold_cost": 30,
+      "armor_value": 6,
+      "stats": {
+        "haste": 14,
+        "move": 6,
+        "body": 2,
+        "mind": 4,
+        "spirit": 2
+      },
+      "customAbilities": [
+        {
+          "name": "Empowered",
+          "description": "While this unit is standing within a veil rift, you may re-roll wound rolls for spell attack actions."
+        }
+      ],
+      "customFeats": [],
+      "description": "With colleges Nestled atop the many volcanoes that dot the archipelagos of Aldemar,  mages of the red banner excel at harnessing the elements.",
+      "spell_ids": [
+        "smt1z671pdru",
+        "smt3ijheonus",
+        "smt3ju4elqu7"
+      ],
+      "keywords": [
+        "kmt3kgiuotcm"
+      ],
+      "keyword_values": {}
     }
   ],
   "theme": {
-    "bg": "#f6eeda",
-    "bgAlt": "#e8d9b8",
-    "panel": "#faf3e3",
-    "panelRaised": "#efe1c2",
-    "rule": "#c2a876",
-    "ink": "#2a1f14",
-    "inkDim": "#4d3c28",
-    "muted": "#8a7658",
-    "neutralFill": "#ddc99e",
-    "pink": "#a83454",
-    "pinkBright": "#7a1638",
-    "btnSilver": "#c2a25c",
-    "btnSilverBright": "#eddca0",
-    "btnSilverDim": "#8a723f",
-    "cyan": "#146b5c",
-    "cyanBright": "#0a4438",
-    "gold": "#9c711f",
-    "danger": "#a52a20",
-    "onAccent": "#2a1f14",
-    "rarityCommon": "#2a1f14",
-    "rarityRare": "#2c5490",
-    "rarityLegendary": "#6b3a72",
-    "bodyGradStart": "#f8f0dd",
-    "bodyGradMid": "#f3e7cf",
-    "bodyGradEnd": "#ecdcb0"
+    "bg": "#14100c",
+    "bgAlt": "#1b1612",
+    "panel": "#1f1913",
+    "panelRaised": "#2a231b",
+    "rule": "#463d31",
+    "ink": "#f1e8d6",
+    "inkDim": "#d8ccb3",
+    "muted": "#b9ad94",
+    "neutralFill": "#2e261d",
+    "pink": "#e8849d",
+    "pinkBright": "#f6aabd",
+    "btnSilver": "#3b342a",
+    "btnSilverBright": "#554c3e",
+    "btnSilverDim": "#6e6454",
+    "cyan": "#63c9b0",
+    "cyanBright": "#93e3cf",
+    "gold": "#e0bb62",
+    "danger": "#ea6a58",
+    "onAccent": "#f6eedd",
+    "rarityCommon": "#f1e8d6",
+    "rarityRare": "#86aae6",
+    "rarityLegendary": "#cca0d6",
+    "bodyGradStart": "#17120e",
+    "bodyGradMid": "#1a1511",
+    "bodyGradEnd": "#110d0a"
   },
   "wounds": [
     {
