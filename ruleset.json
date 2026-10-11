@@ -1566,7 +1566,7 @@
       "category": "Heavy",
       "armor_value": 10,
       "gold_cost": 40,
-      "rarity": "common",
+      "rarity": "legendary",
       "party_limit": 1,
       "abilities": "Veil of the lost king: This armor has aegis +10 while standing on a veil rift. ",
       "keywords": [
@@ -2009,9 +2009,7 @@
       "ability_description": "Add the ARCANE keyword to this wound roll.",
       "gold_cost": 5,
       "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yrzdvdwh",
-        "cmt2a5vwinpr"
+        "cmt1ykznv7cm"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2033,10 +2031,7 @@
       "ability_description": "If this unit wins a clash, attacker is Stunned and takes 1 wound.",
       "gold_cost": 5,
       "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yu3wj5sl",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2"
+        "cmt1ykznv7cm"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2056,11 +2051,9 @@
       "id": "fmt21e7rr9ip",
       "name": "Violent Charge",
       "ability_description": "Unit makes a charge movement action. For your charge bonus, On a 1-2, target unit is fatigued. On a 3-5, target unit is stunned. On a 6, target unit is stunned and takes 1 wound.",
-      "gold_cost": 10,
+      "gold_cost": 0,
       "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2"
+        "cmt2a5vwinpr"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2082,9 +2075,7 @@
       "ability_description": "Remove negative modifiers for intervening terrain.",
       "gold_cost": 10,
       "allowed_classes": [
-        "cmt1yo3sij8m",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl"
+        "cmt1yrzdvdwh"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2106,8 +2097,7 @@
       "ability_description": "Before making a cast attack action, you may choose to overcharge. until the end of this activation you may roll to hit with advantage, and re-roll your wound roll.",
       "gold_cost": 10,
       "allowed_classes": [
-        "cmt1ypdwalh2",
-        "cmt2ahfasbmg"
+        "cmt1ypdwalh2"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2129,9 +2119,6 @@
       "ability_description": "Caster may make a Spell attack action as a reaction",
       "gold_cost": 15,
       "allowed_classes": [
-        "cmt1ypdwalh2",
-        "cmt1yu3wj5sl",
-        "cmt2a7xiucb2",
         "cmt2ahfasbmg"
       ],
       "stat_modifiers": {
@@ -2154,10 +2141,7 @@
       "ability_description": "May use melee attack modifiers when making a clash reaction.",
       "gold_cost": 10,
       "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt2a5vwinpr",
-        "cmt2ahfasbmg"
+        "cmt1ykznv7cm"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2179,9 +2163,7 @@
       "ability_description": "May add shoot attack modifiers when making a sentry reaction.",
       "gold_cost": 10,
       "allowed_classes": [
-        "cmt1yo3sij8m",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl"
+        "cmt1yrzdvdwh"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2203,7 +2185,6 @@
       "ability_description": "When this unit would cast a restoration spell. Add +1 to the healing value of the spell.",
       "gold_cost": 5,
       "allowed_classes": [
-        "cmt1yu3wj5sl",
         "cmt2a7xiucb2"
       ],
       "stat_modifiers": {
@@ -2226,10 +2207,7 @@
       "ability_description": "This unit may make a free attack action",
       "gold_cost": 20,
       "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2"
+        "cmt1ykznv7cm"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2276,10 +2254,7 @@
       "ability_description": "When declaring a charge, automatically gain a charge bonus of 6.",
       "gold_cost": 10,
       "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2"
+        "cmt1ykznv7cm"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2302,8 +2277,6 @@
       "gold_cost": 15,
       "allowed_classes": [
         "cmt1ypdwalh2",
-        "cmt1yu3wj5sl",
-        "cmt2a7xiucb2",
         "cmt2ahfasbmg"
       ],
       "stat_modifiers": {
@@ -2327,7 +2300,10 @@
       "gold_cost": 0,
       "veil_cost": 0,
       "valor_cost": 1,
-      "allowed_classes": [],
+      "allowed_classes": [
+        "cmt1yo3sij8m",
+        "cmt1yrzdvdwh"
+      ],
       "stat_modifiers": {
         "haste": 0,
         "move": 0,
@@ -2348,12 +2324,7 @@
       "veil_cost": 1,
       "valor_cost": 0,
       "allowed_classes": [
-        "cmt1yo3sij8m",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2a5vwinpr",
-        "cmt2ahfasbmg"
+        "cmt1yo3sij8m"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2928,6 +2899,244 @@
       },
       "equip_override": [],
       "party_wide": false
+    },
+    {
+      "id": "fmv479grlyw5",
+      "name": "Assassin Rift",
+      "ability_description": "You may re-deploy this rogue to a target unit they can see within 12\" setting them up within their combat zone. The next hit result for the rogue may automatically become a 20.",
+      "gold_cost": 0,
+      "veil_cost": 3,
+      "valor_cost": 3,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yo3sij8m"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv496f1ouea",
+      "name": "Summon the swamp",
+      "ability_description": "At the beginning of the round, you may use this feat. For the rest of the round enemy units move as if they were in difficult terrain.",
+      "gold_cost": 0,
+      "veil_cost": 6,
+      "valor_cost": 0,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49ah4tsfw",
+      "name": "Rift Jump",
+      "ability_description": "If a unit begins their activation within a veil rift. they may make a free run action.",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "valor_cost": 0,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1zprswgf7",
+      "party_wide": false,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49essubvi",
+      "name": "Frenzy",
+      "ability_description": "When the Berzerker incapacitates an enemy unit  you may use this feat to charge as a free action.",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49funoxxe",
+      "name": "Blood Aura",
+      "ability_description": "For the rest of the round, when the berzerker would take a wound, you may place the wound on another friendly unit within 6\".",
+      "gold_cost": 0,
+      "veil_cost": 3,
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49h3chqrk",
+      "name": "Battle Shout",
+      "ability_description": "Remove all negative conditions from friendly units within 8\" of the berzerker. Stun all enemy units within 8\". If this is used while enraged, enemy units who are stunned by this ability must also pass a morale check.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 3,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt2a5vwinpr"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49s94h10i",
+      "name": "Revelry",
+      "ability_description": "At the beginning of a round, you may use this feat to raise the haste of a unity within 6\" of the bard by 1 for the rest of the round.",
+      "gold_cost": 0,
+      "veil_cost": 0,
+      "valor_cost": 2,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49t21qtv5",
+      "name": "Divine Performance",
+      "ability_description": "When the bard performs, you may use this feat to change 1 result of a die to any number.",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49vb69fgw",
+      "name": "Debilitating Comedy",
+      "ability_description": "Target a unit within 12\" visible to the bard. All enemy units within 6\" of that unit must pass a morale check or become frightened and take 1 wound.",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49wezyy9c",
+      "name": "Crescendo",
+      "ability_description": "Remove a veil rift from the game, every unit within 3\" of that rifts location takes 2 wounds and is frightened. This feat may only be used once a game.",
+      "gold_cost": 0,
+      "veil_cost": 6,
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmv49ydv600p",
+      "name": "Healing tune",
+      "ability_description": "When the bard performs, you may heal 1 wound from a target friendly unit within 6\".",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "valor_cost": 0,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yu3wj5sl"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
     }
   ],
   "spellSchools": [
@@ -3894,7 +4103,7 @@
       "gold_cost": 45,
       "armor_value": 6,
       "stats": {
-        "haste": 13,
+        "haste": 14,
         "move": 6,
         "body": 2,
         "mind": 2,
@@ -4967,34 +5176,71 @@
         "kmt3kgiuotcm"
       ],
       "keyword_values": {}
+    },
+    {
+      "id": "hmv4aaof0n9e",
+      "name": "Wetland Mage",
+      "faction_id": "fmt1ygkuhwdn",
+      "guild_id": "",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmugz2v6v4tj",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu4p6lb2xxf",
+      "gold_cost": 30,
+      "armor_value": 6,
+      "stats": {
+        "haste": 13,
+        "move": 6,
+        "body": 2,
+        "mind": 4,
+        "spirit": 2
+      },
+      "customAbilities": [
+        {
+          "name": "MurkDweller",
+          "description": "The WetlandMage may target a unit with the mudify spell even if they are not the target of a charge if that unit is charging a friendly unit within 3\"."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [
+        "smt32oa9flfu",
+        "smt3jdl4us8i",
+        "smt3il3oq67h"
+      ],
+      "keywords": [],
+      "keyword_values": {}
     }
   ],
   "theme": {
-    "bg": "#14100c",
-    "bgAlt": "#1b1612",
-    "panel": "#1f1913",
-    "panelRaised": "#2a231b",
-    "rule": "#463d31",
-    "ink": "#f1e8d6",
-    "inkDim": "#d8ccb3",
-    "muted": "#b9ad94",
-    "neutralFill": "#2e261d",
-    "pink": "#e8849d",
-    "pinkBright": "#f6aabd",
-    "btnSilver": "#3b342a",
-    "btnSilverBright": "#554c3e",
-    "btnSilverDim": "#6e6454",
-    "cyan": "#63c9b0",
-    "cyanBright": "#93e3cf",
-    "gold": "#e0bb62",
-    "danger": "#ea6a58",
-    "onAccent": "#f6eedd",
-    "rarityCommon": "#f1e8d6",
-    "rarityRare": "#86aae6",
-    "rarityLegendary": "#cca0d6",
-    "bodyGradStart": "#17120e",
-    "bodyGradMid": "#1a1511",
-    "bodyGradEnd": "#110d0a"
+    "bg": "#f8f3e8",
+    "bgAlt": "#eee8da",
+    "panel": "#fcf9f2",
+    "panelRaised": "#f2ede1",
+    "rule": "#d8d3c8",
+    "ink": "#1c1610",
+    "inkDim": "#33291d",
+    "muted": "#4f4638",
+    "neutralFill": "#ebe5d8",
+    "pink": "#8f2444",
+    "pinkBright": "#7a1638",
+    "btnSilver": "#dcd7cd",
+    "btnSilverBright": "#efece5",
+    "btnSilverDim": "#a39d90",
+    "cyan": "#0f5a4d",
+    "cyanBright": "#0a4438",
+    "gold": "#7a560f",
+    "danger": "#a52a20",
+    "onAccent": "#2a1f14",
+    "rarityCommon": "#2a1f14",
+    "rarityRare": "#2c5490",
+    "rarityLegendary": "#6b3a72",
+    "bodyGradStart": "#fbf8f0",
+    "bodyGradMid": "#f8f2e6",
+    "bodyGradEnd": "#f3ebdb"
   },
   "wounds": [
     {
