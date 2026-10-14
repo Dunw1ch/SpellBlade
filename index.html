@@ -180,7 +180,7 @@ body{ background:var(--paper-vignette), var(--paper-splatter), var(--paper-mottl
 }
 .opt-card.locked:hover{ border-color:var(--rule); box-shadow:none; }
 .opt-card:focus-visible{ outline:2px solid var(--pink-bright); outline-offset:2px; }
-/* Veil/Valor cost highlight for Feat cards — a colored border + soft outer glow, not a background
+/* Veil cost highlight for Feat cards — a colored border + soft outer glow, not a background
    tint. A background tint sits directly behind every piece of text on the card (name, tags,
    description), so even a carefully-tuned low alpha still measurably reduces contrast — worse for
    Light Mode's already-lighter secondary text colors (--ink-dim, --muted) than for the main --ink
@@ -189,8 +189,6 @@ body{ background:var(--paper-vignette), var(--paper-splatter), var(--paper-mottl
    .selected, since that state's own cyan border+glow already means something more important
    ("you've picked this") and should win instead of being overridden by cost color. */
 .opt-card.cost-veil:not(.selected){ border-color:var(--pink); box-shadow:0 0 10px var(--pink-glow); }
-.opt-card.cost-valor:not(.selected){ border-color:var(--cyan); box-shadow:0 0 10px var(--cyan-glow); }
-.opt-card.cost-dual:not(.selected){ border-width:2px; border-image:linear-gradient(135deg, var(--pink), var(--cyan)) 1; box-shadow:0 0 10px var(--pink-glow), 0 0 10px var(--cyan-glow); }
 .opt-name{ font-family:var(--font-display); font-weight:700; font-size:14.5px; color:var(--ink); margin:0 46px 4px 0; }
 .opt-tags{ display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
 .tag{ font-family:var(--font-data); font-size:10px; letter-spacing:.01em; padding:2px 6px; border:1px solid var(--rule); color:var(--muted); border-radius:3px; text-transform:uppercase; white-space:nowrap; }
@@ -224,7 +222,6 @@ body{ background:var(--paper-vignette), var(--paper-splatter), var(--paper-mottl
 .hireling-loadout .unit-card-ability{ margin-top:2px; }
 
 .veil{ color:var(--pink-bright); font-weight:700; font-style:normal; background:rgba(255,111,160,.14); padding:0 4px; border-radius:3px; text-shadow:0 0 6px var(--pink-glow); }
-.valor{ color:var(--cyan-bright); font-weight:700; font-style:normal; background:rgba(69,214,206,.14); padding:0 4px; border-radius:3px; text-shadow:0 0 6px var(--cyan-glow); }
 
 .keyword-row{ font-size:12.5px; color:var(--cyan-bright); font-weight:600; margin-top:6px; line-height:1.5; }
 .weapon-dmg{ color:var(--pink-bright); font-weight:800; font-size:1.4em; vertical-align:-2px; margin-left:2px; }
@@ -371,24 +368,22 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
   display:flex; align-items:center; gap:18px; flex-wrap:wrap;
 }
 .party-tracker-title{ font-family:var(--font-display); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-dim); }
+.party-tracker-note{ font-size:12.5px; color:var(--muted); margin-top:8px; }
 .party-tracker-row{ display:flex; gap:20px; flex-wrap:wrap; }
 .tracker-counter{ display:flex; align-items:center; gap:8px; }
 .tracker-label{ font-family:var(--font-data); font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; font-weight:700; }
 .tracker-veil .tracker-label{ color:var(--pink-bright); }
-.tracker-valor .tracker-label{ color:var(--cyan-bright); }
 .tracker-btn{
   width:26px; height:26px; border-radius:4px; border:1px solid var(--rule); background:var(--panel-raised);
   color:var(--ink); font-family:var(--font-data); font-weight:700; font-size:15px; line-height:1;
   cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0;
 }
 .tracker-veil .tracker-btn:hover:not(:disabled){ border-color:var(--pink); color:var(--pink-bright); box-shadow:0 0 8px var(--pink-glow); }
-.tracker-valor .tracker-btn:hover:not(:disabled){ border-color:var(--cyan); color:var(--cyan-bright); box-shadow:0 0 8px var(--cyan-glow); }
 .tracker-btn:disabled{ opacity:.35; cursor:default; }
 .tracker-btn:focus-visible{ outline:2px solid var(--pink-bright); outline-offset:1px; }
 .tracker-value{ font-family:var(--font-data); font-weight:800; font-size:16px; min-width:20px; text-align:center; padding:3px 8px; border-radius:3px; }
 .tracker-max{ font-weight:600; font-size:12px; opacity:.7; }
 .tracker-veil .tracker-value{ color:var(--pink-bright); background:var(--pink-glow); }
-.tracker-valor .tracker-value{ color:var(--cyan-bright); background:var(--cyan-glow); }
 .activation-panel{ background:var(--panel); background-image:var(--noise-texture); background-blend-mode:normal; border:1px solid var(--rule); border-radius:5px; padding:14px 16px; margin-bottom:20px; }
 .activation-panel-title{ font-family:var(--font-display); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--cyan-bright); margin-bottom:8px; }
 .activation-row{ display:flex; align-items:center; gap:10px; padding:7px 6px; cursor:pointer; border-radius:3px; }
@@ -705,7 +700,7 @@ let gameData = null; // populated asynchronously at startup — see loadRulesetF
 
 /* ============================= STATE ============================= */
 // A "list" is the whole army: one shared gold cap and Faction, any number of Heroes, any number of Hirelings.
-let list = { goldCap:500, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
+let list = { goldCap:500, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
 let editingHeroId = null; // instanceId of the Hero currently open in the builder, or null to show the roster
 let mode = 'play';
 let playTab = 'characters'; // 'characters' | 'hirelings'
@@ -758,17 +753,16 @@ function escapeAttr(str){ return String(str||'').replace(/&/g,'&amp;').replace(/
 // plain DOM manipulation rather than a full re-render, so in-progress edits on other fields in the
 // same form aren't lost while adding a row. On save, saveEntry zips fd.getAll(namePrefix) together
 // with fd.getAll(descPrefix) into an array of {name, description} objects.
-function repeatableRowsHTML(entries, namePrefix, descPrefix, placeholderName, placeholderDesc, veilPrefix, valorPrefix){
+function repeatableRowsHTML(entries, namePrefix, descPrefix, placeholderName, placeholderDesc, veilPrefix){
   const list = (entries && entries.length) ? entries : [{name:'',description:''}];
-  const rows = list.map(entry => repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc, entry, veilPrefix, valorPrefix)).join('');
+  const rows = list.map(entry => repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc, entry, veilPrefix)).join('');
   return '<div class="repeat-rows" id="'+namePrefix+'_rows">'+rows+'</div>'
-    + '<button type="button" class="btn ghost small" onclick="addRepeatRow(\''+namePrefix+'\',\''+descPrefix+'\',\''+escapeAttr(placeholderName)+'\',\''+escapeAttr(placeholderDesc)+'\',\''+(veilPrefix||'')+'\',\''+(valorPrefix||'')+'\')">+ Add</button>';
+    + '<button type="button" class="btn ghost small" onclick="addRepeatRow(\''+namePrefix+'\',\''+descPrefix+'\',\''+escapeAttr(placeholderName)+'\',\''+escapeAttr(placeholderDesc)+'\',\''+(veilPrefix||'')+'\')">+ Add</button>';
 }
-function repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc, entry, veilPrefix, valorPrefix){
+function repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc, entry, veilPrefix){
   const costFields = veilPrefix
     ? '<div class="repeat-row-costs">'
       + '<label>Veil <input type="number" name="'+veilPrefix+'" min="0" value="'+(entry&&entry.veil_cost?entry.veil_cost:0)+'"></label>'
-      + '<label>Valor <input type="number" name="'+valorPrefix+'" min="0" value="'+(entry&&entry.valor_cost?entry.valor_cost:0)+'"></label>'
     + '</div>'
     : '';
   return '<div class="repeat-row">'
@@ -778,25 +772,23 @@ function repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc,
     + '<button type="button" class="btn ghost small" onclick="this.parentElement.remove()">Remove</button>'
     + '</div>';
 }
-function addRepeatRow(namePrefix, descPrefix, placeholderName, placeholderDesc, veilPrefix, valorPrefix){
+function addRepeatRow(namePrefix, descPrefix, placeholderName, placeholderDesc, veilPrefix){
   const container = document.getElementById(namePrefix+'_rows');
   if(!container) return;
-  container.insertAdjacentHTML('beforeend', repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc, null, veilPrefix||null, valorPrefix||null));
+  container.insertAdjacentHTML('beforeend', repeatRowHTML(namePrefix, descPrefix, placeholderName, placeholderDesc, null, veilPrefix||null));
 }
 // Zips FormData.getAll() arrays from a repeatable row section into an array of entry objects,
-// dropping any row left completely blank. veils/valors are optional — only passed for sections
+// dropping any row left completely blank. veils are optional — only passed for sections
 // that render cost fields (like a Hireling's custom Feats), so Abilities rows stay untouched.
-function zipRepeatRows(names, descs, veils, valors){
+function zipRepeatRows(names, descs, veils){
   const out = [];
   for(let i=0; i<names.length; i++){
     const name = (names[i]||'').trim();
     const description = (descs[i]||'').trim();
     const veil_cost = veils ? (parseInt(veils[i],10)||0) : 0;
-    const valor_cost = valors ? (parseInt(valors[i],10)||0) : 0;
-    if(name || description || veil_cost || valor_cost){
+    if(name || description || veil_cost){
       const entry = { name, description };
       if(veils) entry.veil_cost = veil_cost;
-      if(valors) entry.valor_cost = valor_cost;
       out.push(entry);
     }
   }
@@ -807,13 +799,12 @@ function escapeRegex(str){ return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function highlightCurrency(escapedText, depth){
   depth = depth || 0;
   const keywordNames = depth===0 ? gameData.keywords.map(k => k.name).filter(Boolean) : [];
-  const terms = Array.from(new Set(['Veil','Valor'].concat(keywordNames))).sort((a,b) => b.length - a.length);
+  const terms = Array.from(new Set(['Veil'].concat(keywordNames))).sort((a,b) => b.length - a.length);
   if(!terms.length) return escapedText;
   const pattern = new RegExp('\\b(' + terms.map(escapeRegex).join('|') + ')\\b', 'gi');
   return escapedText.replace(pattern, function(m){
     const lower = m.toLowerCase();
     if(lower==='veil') return '<span class="veil">'+m+'</span>';
-    if(lower==='valor') return '<span class="valor">'+m+'</span>';
     const kw = gameData.keywords.find(k => k.name.toLowerCase()===lower);
     if(!kw) return m;
     return '<span class="keyword-chip" tabindex="0">'+m+'<span class="keyword-tooltip">'+highlightCurrency(escapeHtml(kw.description), depth+1)+'</span></span>';
@@ -869,7 +860,7 @@ function hirelingWeaponInfo(h){
   return h && h.weapon_id ? byId(gameData.weapons, h.weapon_id) : null;
 }
 const DICE_OPTIONS = ['d4','d6','d8','d10','d12','d20'];
-const FEAT_COST_TYPES = ['None','Passive','Veil','Valor'];
+const FEAT_COST_TYPES = ['None','Passive','Veil'];
 const RARITY_OPTIONS = [
   { key:'common', label:'Common', css:'--rarity-common' },
   { key:'rare', label:'Rare', css:'--rarity-rare' },
@@ -1112,21 +1103,12 @@ function spellEligible(hero, s){ return spellLockReason(hero, s) === ''; }
 function featCostText(f){
   const parts = [];
   if(f.veil_cost) parts.push(f.veil_cost+' Veil');
-  if(f.valor_cost) parts.push(f.valor_cost+' Valor');
   return parts.length ? parts.join(', ') : 'No Cost';
 }
-// A Feat's option card gets a subtle color wash matching its cost — Veil-only feats read pink,
-// Valor-only feats read cyan (the same colors those words already render as via highlightCurrency),
-// a Feat needing both gets a blended wash, and a free/passive Feat stays neutral. Purely cosmetic —
-// layered as a background tint underneath the existing selected/locked border-and-glow states, so
-// it never competes with those for visual priority.
+// A Feat's option card gets a pink border glow when it costs Veil; a free/passive Feat stays neutral.
+// Purely cosmetic — layered under the existing selected/locked border-and-glow states.
 function featCostCardClass(f){
-  const hasVeil = (f.veil_cost||0) > 0;
-  const hasValor = (f.valor_cost||0) > 0;
-  if(hasVeil && hasValor) return 'cost-dual';
-  if(hasVeil) return 'cost-veil';
-  if(hasValor) return 'cost-valor';
-  return '';
+  return (f.veil_cost||0) > 0 ? 'cost-veil' : '';
 }
 // Shared by the Guilds/Feats admin tables: a compact "+2 Haste, -1 Move" style summary,
 // skipping any stat left at 0 so most rows just read "—".
@@ -1184,7 +1166,6 @@ function namedEntriesList(entries, useCurrency){
     const desc = useCurrency ? highlightCurrency(escapeHtml(e.description)) : escapeHtml(e.description);
     const costParts = [];
     if(e.veil_cost) costParts.push(e.veil_cost+' Veil');
-    if(e.valor_cost) costParts.push(e.valor_cost+' Valor');
     const costLabel = costParts.length ? ' ('+costParts.join(', ')+')' : '';
     return (e.name? '<strong>'+escapeHtml(e.name+costLabel)+':</strong> ':'') + desc;
   });
@@ -1228,7 +1209,7 @@ function keywordChipsInline(ids, values){
     if(!k) return '';
     const valLabel = (k.parameterized && values[id]!=null) ? ' '+values[id]+(k.value_suffix||'') : '';
     // depth=1 caps this exactly like highlightCurrency's own internal recursion does — a keyword's
-    // tooltip can still color Veil/Valor mentions, but never spawns a nested, independently-hoverable
+    // tooltip can still color Veil mentions, but never spawns a nested, independently-hoverable
     // keyword-chip inside itself. Without this cap, a keyword whose description mentions another
     // keyword by name (e.g. "Brutal" mentions "Stunned") would nest a live tooltip inside a tooltip.
     return '<span class="keyword-chip" tabindex="0">'+escapeHtml(k.name)+escapeHtml(valLabel)+'<span class="keyword-tooltip">'+highlightCurrency(escapeHtml(k.description), 1)+'</span></span>';
@@ -1617,7 +1598,7 @@ function selectFaction(id){
 }
 function resetList(){
   if(!confirm('Reset the entire list? This removes every Hero and Hireling.')) return;
-  list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
+  list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
   editingHeroId = null;
   battleExpandedIds = [];
   clearListStorage();
@@ -1644,7 +1625,6 @@ function normalizeListObject(raw){
     hirelings: raw.hirelings,
     partyInventory: Array.isArray(raw.partyInventory) ? raw.partyInventory : [],
     veil: typeof raw.veil === 'number' ? raw.veil : 0,
-    valor: typeof raw.valor === 'number' ? raw.valor : 0,
     partyLeaderId: (raw.partyLeaderId && importedHeroes.some(h => h.instanceId===raw.partyLeaderId)) ? raw.partyLeaderId : null,
     factionFeatIds: Array.isArray(raw.factionFeatIds) ? raw.factionFeatIds : [],
     guildFeatIds: Array.isArray(raw.guildFeatIds) ? raw.guildFeatIds : [],
@@ -1690,7 +1670,6 @@ function exportList(){
     goldCap: list.goldCap,
     goldUsed: listGoldUsed(),
     veil: list.veil || 0,
-    valor: list.valor || 0,
     partyLeader: leaderHero ? (heroDisplayName(leaderHero)) : null,
     heroes: list.heroes.map(hero => {
       const cls = getHeroClass(hero);
@@ -2772,7 +2751,7 @@ function toggleBattleCard(id){
   renderBattle();
 }
 
-// Veil and Valor are party-wide resource pools (not per-unit) that players spend during the game
+// Veil is the party-wide resource pool (not per-unit) that players spend during the game
 // (e.g. to pay a Feat's cost_type). Tracked once on `list` itself so it round-trips through
 // Save/Import List automatically, clamped to the table's 0–6 range.
 const RESOURCE_MAX = 6;
@@ -2791,14 +2770,14 @@ function renderResourceCounter(resource, label, value){
     + '<button class="tracker-btn" '+(atMax?'disabled':'')+' onclick="adjustPartyResource(\''+resource+'\',1)" aria-label="Increase '+label+'">+</button>'
     + '</div>';
 }
-// Rendered once, at the top of Battle Mode (not per-card) — Veil and Valor are a shared party pool.
+// Rendered once, at the top of Battle Mode (not per-card) — Veil is a shared party pool.
 function renderPartyResourceTracker(){
   return '<div class="party-tracker">'
     + '<div class="party-tracker-title">Party Resources</div>'
     + '<div class="party-tracker-row">'
       + renderResourceCounter('veil', 'Veil', list.veil)
-      + renderResourceCounter('valor', 'Valor', list.valor)
     + '</div>'
+    + '<div class="party-tracker-note">Gain 1 Veil for each Veil Rift you control, and whenever a friendly unit dies.</div>'
     + '</div>';
 }
 
@@ -3485,7 +3464,7 @@ function buildPrintSheetHTML(){
     + '<div class="print-header-meta">'
       + (fac? escapeHtml(fac.name)+(guild?' \u00b7 '+escapeHtml(guild.name):'')+'<br>':'')
       + 'Gold: '+listGoldUsed()+' / '+list.goldCap+'<br>'
-      + 'Veil '+(list.veil||0)+' &nbsp; Valor '+(list.valor||0)
+      + 'Veil '+(list.veil||0)
     + '</div></div>' + buildPrintFactionFeatsHTML() + buildPrintGuildAbilityHTML(guild) + buildPrintGuildFeatsHTML();
   if(!units.length){
     return header + '<p class="print-empty">This list is empty — build one in List Builder first.</p>';
@@ -3828,7 +3807,7 @@ function closeInlineEdit(){ inlineEditTarget = null; renderAdmin(); }
 // another part of the app (a table column, a stat calculation) expects to find.
 function blankEntityFor(tab){
   const zero = { haste:0, move:0, body:0, mind:0, spirit:0 };
-  if(tab==='feats') return { name:'New Feat', ability_description:'', gold_cost:0, veil_cost:0, valor_cost:0, restriction_type:'none', restriction_id:'', party_wide:false, allowed_classes:[], stat_modifiers:Object.assign({},zero), equip_override:[] };
+  if(tab==='feats') return { name:'New Feat', ability_description:'', gold_cost:0, veil_cost:0, restriction_type:'none', restriction_id:'', party_wide:false, allowed_classes:[], stat_modifiers:Object.assign({},zero), equip_override:[] };
   if(tab==='weapons') return { name:'New Weapon', category:'Simple', type:'Melee', range:null, damage:'', gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'', accuracy_mod_type:'none', accuracy_mod_value:0 };
   if(tab==='armor') return { name:'New Armor', category:'Light', armor_value:0, gold_cost:0, rarity:'common', party_limit:0, abilities:'', keywords:[], keyword_values:{}, stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
   if(tab==='items') return { name:'New Item', slots:1, gold_cost:0, rarity:'common', party_limit:0, requires_hand:false, abilities:'', stat_modifiers:Object.assign({},zero), restriction_type:'none', restriction_id:'' };
@@ -4020,7 +3999,6 @@ function guildFields(e){
       + '<label class="field wide"><span>Feat Name</span><input name="guild_feat_name" value="'+escapeAttr(feat&&feat.name)+'" placeholder="Leave blank for no unique Feat"></label>'
       + '<label class="field wide"><span>Feat Effect</span><textarea name="guild_feat_description" rows="2">'+escapeHtml(feat&&feat.ability_description)+'</textarea></label>'
       + '<label class="field"><span>Veil Cost</span><input type="number" name="guild_feat_veil_cost" min="0" value="'+(feat&&feat.veil_cost?feat.veil_cost:0)+'"></label>'
-      + '<label class="field"><span>Valor Cost</span><input type="number" name="guild_feat_valor_cost" min="0" value="'+(feat&&feat.valor_cost?feat.valor_cost:0)+'"></label>'
     + '</fieldset>'
     + '<fieldset class="check-group"><legend>Allowed Classes (leave blank for all — restricts which Classes ANY Hero in the party may use once this Guild is picked)</legend>'
       + (gameData.classes.map(c=>'<label class="chk"><input type="checkbox" name="allowed_classes" value="'+c.id+'" '+(e&&e.allowed_classes&&e.allowed_classes.includes(c.id)?'checked':'')+'> '+escapeHtml(c.name)+'</label>').join('') || '<p class="empty-note">No classes yet.</p>')
@@ -4108,10 +4086,9 @@ function featFields(e){
     + '<label class="field wide"><span>Effect</span><textarea name="ability_description" rows="2">'+escapeHtml(e&&e.ability_description)+'</textarea></label>'
     + '<label class="field"><span>Gold cost</span><input type="number" name="gold_cost" min="0" value="'+(e?e.gold_cost:0)+'"></label>'
     + '<label class="field"><span>Veil Cost</span><input type="number" name="veil_cost" min="0" value="'+(e&&e.veil_cost?e.veil_cost:0)+'"></label>'
-    + '<label class="field"><span>Valor Cost</span><input type="number" name="valor_cost" min="0" value="'+(e&&e.valor_cost?e.valor_cost:0)+'"></label>'
-    + '<p class="empty-note" style="margin:-8px 0 12px;">Leave both at 0 for a free/passive Feat. A Feat can require Veil and Valor at the same time — just set both.</p>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">Leave Veil Cost at 0 for a free/passive Feat.</p>'
     + restrictionFieldHTML(e)
-    + '<p class="empty-note" style="margin:-8px 0 12px;">Faction-restricted puts this Feat in that Faction\u2019s pool \u2014 once a player picks this Faction, they may choose up to 4 Feats from that pool for the whole party, and any Hero may take one regardless of Class or Guild. Guild-restricted instead makes it a normal, optional pick (still costs gold/Veil/Valor as set above) available only to Heroes who are members of that Guild \u2014 unless Party-Wide (below) is checked, which turns it into that Guild\u2019s own version of a Faction Feat: chosen once for the whole party from a pool, instead of picked per-Hero.</p>'
+    + '<p class="empty-note" style="margin:-8px 0 12px;">Faction-restricted puts this Feat in that Faction\u2019s pool \u2014 once a player picks this Faction, they may choose up to 4 Feats from that pool for the whole party, and any Hero may take one regardless of Class or Guild. Guild-restricted instead makes it a normal, optional pick (still costs gold/Veil as set above) available only to Heroes who are members of that Guild \u2014 unless Party-Wide (below) is checked, which turns it into that Guild\u2019s own version of a Faction Feat: chosen once for the whole party from a pool, instead of picked per-Hero.</p>'
     + '<label class="chk"><input type="checkbox" name="party_wide" '+(e&&e.party_wide?'checked':'')+'> Party-Wide (Guild Feat)</label>'
     + '<p class="empty-note" style="margin:4px 0 12px;">Only meaningful on a Guild-restricted Feat. When checked, this Feat joins that Guild\u2019s Feat pool (picked party-wide in List Builder, up to 4, like a Faction Feat) instead of being an individual Hero pick.</p>'
     + '<fieldset class="check-group"><legend>Available to (leave blank for all classes)</legend>'
@@ -4202,8 +4179,8 @@ function hirelingFields(e){
     + '<fieldset class="check-group check-group-scroll"><legend>Spells</legend>'
       + (gameData.spells.slice().sort((a,b)=>(a.level-b.level)||a.name.localeCompare(b.name)).map(s=>'<label class="chk"><input type="checkbox" name="spell_ids" value="'+s.id+'" '+(e&&e.spell_ids&&e.spell_ids.includes(s.id)?'checked':'')+'> '+escapeHtml(s.name)+' <span style="color:var(--muted);">(Lvl '+s.level+(s.school?' · '+escapeHtml(s.school):'')+')</span></label>').join('') || '<p class="empty-note">No spells yet.</p>')
     + '</fieldset>'
-    + '<label class="field wide"><span>Abilities</span>'+repeatableRowsHTML(e&&e.customAbilities, 'ability_name', 'ability_desc', 'Ability name (e.g. MordHau Grip)', 'Effect (e.g. 1 Valor: add +2 to hit)')+'</label>'
-    + '<label class="field wide"><span>Feats</span>'+repeatableRowsHTML(e&&e.customFeats, 'feat_name', 'feat_desc', 'Feat name', 'Effect', 'feat_veil', 'feat_valor')+'</label>'
+    + '<label class="field wide"><span>Abilities</span>'+repeatableRowsHTML(e&&e.customAbilities, 'ability_name', 'ability_desc', 'Ability name (e.g. MordHau Grip)', 'Effect (e.g. 1 Veil: add +2 to hit)')+'</label>'
+    + '<label class="field wide"><span>Feats</span>'+repeatableRowsHTML(e&&e.customFeats, 'feat_name', 'feat_desc', 'Feat name', 'Effect', 'feat_veil')+'</label>'
     + '<label class="field wide"><span>Description</span><textarea name="description" rows="2">'+escapeHtml(e&&e.description)+'</textarea></label>'
     + '<fieldset class="check-group"><legend>Keywords</legend>'
       + keywordCheckboxesHTML(e&&e.keywords, e&&e.keyword_values)
@@ -4313,7 +4290,7 @@ function commitEntryFromForm(form, tab, id){
       feat.name = guildFeatName;
       feat.ability_description = fd.get('guild_feat_description') || '';
       feat.veil_cost = num(fd,'guild_feat_veil_cost');
-      feat.valor_cost = num(fd,'guild_feat_valor_cost');
+      delete feat.valor_cost;
       feat.gold_cost = 0;
       feat.allowed_classes = [];
     } else {
@@ -4358,7 +4335,7 @@ function commitEntryFromForm(form, tab, id){
     obj.name = fd.get('name'); obj.ability_description = fd.get('ability_description') || '';
     obj.gold_cost = num(fd,'gold_cost');
     obj.veil_cost = num(fd,'veil_cost');
-    obj.valor_cost = num(fd,'valor_cost');
+    delete obj.valor_cost;
     Object.assign(obj, parseRestrictionField(fd));
     obj.party_wide = fd.has('party_wide');
     obj.allowed_classes = fd.getAll('allowed_classes');
@@ -4397,7 +4374,7 @@ function commitEntryFromForm(form, tab, id){
     obj.gold_cost = num(fd,'gold_cost'); obj.armor_value = num(fd,'armor_value');
     obj.stats = { haste:num(fd,'haste'), move:num(fd,'move'), body:num(fd,'body'), mind:num(fd,'mind'), spirit:num(fd,'spirit') };
     obj.customAbilities = zipRepeatRows(fd.getAll('ability_name'), fd.getAll('ability_desc'));
-    obj.customFeats = zipRepeatRows(fd.getAll('feat_name'), fd.getAll('feat_desc'), fd.getAll('feat_veil'), fd.getAll('feat_valor'));
+    obj.customFeats = zipRepeatRows(fd.getAll('feat_name'), fd.getAll('feat_desc'), fd.getAll('feat_veil'));
     obj.description = fd.get('description') || '';
     obj.spell_ids = fd.getAll('spell_ids');
     obj.keywords = fd.getAll('keywords');
@@ -4468,6 +4445,12 @@ function normalizeRuleset(parsed){
   const required = ['keywords','factions','classes','guilds','weapons','armor','items','feats','spells','hirelings'];
   required.forEach(k => { if(!Array.isArray(parsed[k])) throw new Error('Missing "'+k+'" list'); });
   if(!Array.isArray(parsed.spellSchools)) parsed.spellSchools = [];
+  // Valor was retired — Veil is the only resource now. Older rulesets that still carry a valor_cost
+  // on a Feat (or a Hireling's custom Feat) have it folded into veil_cost so no Feat silently becomes
+  // free, and the old field is dropped.
+  const foldValor = e => { if(e && e.valor_cost!==undefined){ e.veil_cost = (e.veil_cost||0) + (e.valor_cost||0); delete e.valor_cost; } };
+  parsed.feats.forEach(foldValor);
+  parsed.hirelings.forEach(h => { (h.customFeats||[]).forEach(foldValor); (h.customAbilities||[]).forEach(foldValor); });
   // Wounds is a newer catalog — older uploaded rulesets won't have it at all, so it's backfilled
   // as an empty list here rather than being in the `required` set above (which would reject any
   // pre-Wounds ruleset outright).
@@ -4564,7 +4547,7 @@ function importRuleset(file){
       normalizeRuleset(parsed);
       gameData = parsed;
       applyTheme(gameData.theme);
-      list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, valor:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
+      list = { goldCap:list.goldCap, factionId:null, guildId:null, heroes:[], hirelings:[], partyInventory:[], veil:0, partyLeaderId:null, factionFeatIds:[], guildFeatIds:[] };
       editingHeroId = null;
       editingId = null;
       renderAdmin();

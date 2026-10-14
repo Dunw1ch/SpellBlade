@@ -318,7 +318,7 @@
       "id": "cmt1yrzdvdwh",
       "name": "Ranger",
       "description": "Scouts and scavengers, once a ranger has marked their prey, the only thing left is time.",
-      "signature_ability": "Predator: At the beginning of a turn, name a unit on the battlefield. This is the rangers prey. All attacks against the chosen unit have advantage while the Ranger has visibility of the chosen unit. If a unit marked as prey is taken out, they grant Valor and Veil.",
+      "signature_ability": "Predator: At the beginning of a turn, name a unit on the battlefield. This is the rangers prey. All attacks against the chosen unit have advantage while the Ranger has visibility of the chosen unit. If a unit marked as prey is taken out, they grant Veil.",
       "gold_cost": 30,
       "max_feats": 1,
       "can_use_magic": false,
@@ -1892,7 +1892,7 @@
       "rarity": "rare",
       "party_limit": 1,
       "requires_hand": false,
-      "abilities": "As a bonus action, this unit may blow on the war horn to generate 1 Valor.",
+      "abilities": "As a bonus action, this unit may blow on the war horn to generate 1 Veil.",
       "stat_modifiers": {
         "haste": 0,
         "move": 0,
@@ -1997,8 +1997,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2020,7 +2019,6 @@
       },
       "equip_override": [],
       "veil_cost": 1,
-      "valor_cost": 0,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2041,8 +2039,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2063,8 +2060,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 2,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2085,8 +2081,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2107,8 +2102,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2129,8 +2123,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2151,8 +2144,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2173,8 +2165,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2196,7 +2187,6 @@
       },
       "equip_override": [],
       "veil_cost": 1,
-      "valor_cost": 0,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2217,8 +2207,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 2,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2242,8 +2231,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2265,7 +2253,6 @@
       },
       "equip_override": [],
       "veil_cost": 1,
-      "valor_cost": 0,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2287,8 +2274,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2298,8 +2284,7 @@
       "name": "Superior stamina",
       "ability_description": "May run as a bonus action",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "allowed_classes": [
         "cmt1yo3sij8m",
         "cmt1yrzdvdwh"
@@ -2322,7 +2307,6 @@
       "ability_description": "Unit may use a move action to move through solid wall terrain as if it were difficult terrain.",
       "gold_cost": 0,
       "veil_cost": 1,
-      "valor_cost": 0,
       "allowed_classes": [
         "cmt1yo3sij8m"
       ],
@@ -2343,8 +2327,7 @@
       "name": "Arrow Storm",
       "ability_description": "Select 3 willow enclave units. Each selected unit may make a shoot action.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 6,
+      "veil_cost": 3,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2363,8 +2346,7 @@
       "name": "Hidden in plain site",
       "ability_description": "When a  willow enclave unit would be the target of a ranged spell or shoot action, you may use this ability if the targeted unit has the benefit of obscuring terrain and is within 1\" of a piece of terrain. The targeted unit cannot be made the target of the attack.",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2383,8 +2365,7 @@
       "name": "Healing sprouts",
       "ability_description": "Choose a point on the battlefield. Every unit within 3\" of that point regains 1 wound.",
       "gold_cost": 0,
-      "veil_cost": 3,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2403,8 +2384,7 @@
       "name": "Stalking from the veil",
       "ability_description": "You may select a willow enclave unit who is within 1\" of a piece of terrain. Remove that unit from the battlefield and re-deploy them anywhere on the battlefield within 1\" of a piece of terrain.",
       "gold_cost": 0,
-      "veil_cost": 5,
-      "valor_cost": 0,
+      "veil_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2423,8 +2403,7 @@
       "name": "Quickfire bow",
       "ability_description": "After a willow enclave unit has made a shoot action, if this attack hits, you may immediately make a free shoot action against a unit within 6\" of the original target.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2443,8 +2422,7 @@
       "name": "Swift Footed charge",
       "ability_description": "After a willow enclave unit makes a melee attack action, you may use this feat to make a free retreat action.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 1,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2463,8 +2441,7 @@
       "name": "Determined Charge",
       "ability_description": "When a barrow moor kingdom unit ends a charge move, they may use this ability to add advantage to their hit roll and Brutal to their wound roll.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2483,8 +2460,7 @@
       "name": "SHOW NO FEAR!",
       "ability_description": "Remove all negative conditions from all Barrowmorr Kingdoms units on the battlefield.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 3,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2503,8 +2479,7 @@
       "name": "Spirit of the lost king",
       "ability_description": "Choose a veil rift on the battlefield. All friendly units within that rift regain 1 wound and may make a free attack action.",
       "gold_cost": 0,
-      "veil_cost": 4,
-      "valor_cost": 2,
+      "veil_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2523,8 +2498,7 @@
       "name": "Veils Bite",
       "ability_description": "When a friendly Barrowmoor Kingdoms unit is incapacitated, you may use this ability to make an attack action with them before removing them from the battlefield",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 2,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2543,8 +2517,7 @@
       "name": "Veil Aegis",
       "ability_description": "Target a veil rift. Friendly barrow moor Kingdoms units gain Aegis 15+ until end of turn while standing in the selected veil rift.",
       "gold_cost": 0,
-      "veil_cost": 5,
-      "valor_cost": 0,
+      "veil_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2563,8 +2536,7 @@
       "name": "Counter Assault",
       "ability_description": "When a friendly Barrowmoor Kingdoms unit is made the target of a charge, you may use this ability to declare a charge  with the target unit against the charging unit. This charge stuns the target.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 3,
+      "veil_cost": 1,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2582,8 +2554,7 @@
       "id": "fmtsvyemyvzt",
       "name": "Hunters Ambush",
       "ability_description": "After an attack hits, you may use this ability to immediately deal x wounds to the target where x is your Veil reserve rounded up.",
-      "veil_cost": 0,
-      "valor_cost": 4,
+      "veil_cost": 2,
       "gold_cost": 0,
       "allowed_classes": [],
       "restriction_type": "guild",
@@ -2603,7 +2574,6 @@
       "name": "BattleCasting",
       "ability_description": "This unit may make a spell attack action in the same turn it charges and makes a melee attack action.",
       "veil_cost": 0,
-      "valor_cost": 0,
       "gold_cost": 0,
       "allowed_classes": [],
       "restriction_type": "guild",
@@ -2623,8 +2593,7 @@
       "name": "Blessed Ground",
       "ability_description": "If a healing spell targets a unit within your sanctuary, you may have the affects apply to all units in your sanctuary.",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "allowed_classes": [
@@ -2645,8 +2614,7 @@
       "name": "Swift Action",
       "ability_description": "Raise the haste of a unit by 2 this turn.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zprswgf7",
       "allowed_classes": [],
@@ -2665,8 +2633,7 @@
       "name": "Enraged Horde",
       "ability_description": "All non elite red banner units in combat with  an enemy unit may make a free attack action, reactions cannot be used for this attack.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 4,
+      "veil_cost": 2,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2685,8 +2652,7 @@
       "name": "Dark Arts",
       "ability_description": "remove a non-elite unit from the battlefield (this unit is killed in campaign play). You may re-deploy an elite unit that is not a hero who was previously incapacitated on any board edge. ",
       "gold_cost": 0,
-      "veil_cost": 6,
-      "valor_cost": 0,
+      "veil_cost": 3,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2705,8 +2671,7 @@
       "name": "Intimidating Warcry",
       "ability_description": "At the start of the turn, Lower an enemy units haste value by 2.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 3,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2725,8 +2690,7 @@
       "name": "Veil Thorns",
       "ability_description": "When a wounded Red Banner unit finishes a charge action in the combat zone of an enemy unit, you may use this ability to inflict  damage to the target equal to half the wounds on the charging unit rounded up.",
       "gold_cost": 0,
-      "veil_cost": 3,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2745,8 +2709,7 @@
       "name": "Brothers of the sea",
       "ability_description": "If a Red banner unit becomes the target of a charge, you may select 2 friendly Red banner units within 8\" of the charged unit and move them into the combat zone of the charging unit, this may happen before or after the charge is resolved.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2765,8 +2728,7 @@
       "name": "Arcane Ambush",
       "ability_description": "2 red banner units may make a free move action, this move may also pass through terrain freely.",
       "gold_cost": 0,
-      "veil_cost": 3,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2786,7 +2748,6 @@
       "ability_description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
       "gold_cost": 0,
       "veil_cost": 1,
-      "valor_cost": 0,
       "restriction_type": "guild",
       "restriction_id": "gmt2d27ly0mf",
       "allowed_classes": [],
@@ -2805,8 +2766,7 @@
       "name": "Rallying Cry",
       "ability_description": "All  friendly units within 3\" of this unit may make 1 free action",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 2,
       "restriction_type": "guild",
       "restriction_id": "gmt89aimxl4r",
       "allowed_classes": [],
@@ -2825,8 +2785,7 @@
       "name": "Coastal Fog",
       "ability_description": "The Red Banner creates an eerie fog in a section of the battlefield. Choose a point on the battlefield, for the rest of the turn Shoot and cast actions targeting units wholly within the area have disadvantage.",
       "gold_cost": 0,
-      "veil_cost": 5,
-      "valor_cost": 0,
+      "veil_cost": 2,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2845,8 +2804,7 @@
       "name": "Skedaddle",
       "ability_description": "When a Red Banner unit becomes the target of a ranged attack, You may use this feat to grant disadvantage on the hit roll.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 3,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zviucpcj",
       "allowed_classes": [],
@@ -2865,8 +2823,7 @@
       "name": "For the Lost King!",
       "ability_description": "All Barrowmoor units regain 1 wound, enemy units within 6\" of any Barrowmoor units are stunned.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 6,
+      "veil_cost": 3,
       "restriction_type": "faction",
       "restriction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
@@ -2885,8 +2842,7 @@
       "name": "Call of the Veil",
       "ability_description": "Choose a veil rift on the battlefield. Target veil rift erupts in violent screaming. All enemy units within 3\" of it must make a morale check.",
       "gold_cost": 0,
-      "veil_cost": 4,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1ygkuhwdn",
       "allowed_classes": [],
@@ -2906,7 +2862,6 @@
       "ability_description": "You may re-deploy this rogue to a target unit they can see within 12\" setting them up within their combat zone. The next hit result for the rogue may automatically become a 20.",
       "gold_cost": 0,
       "veil_cost": 3,
-      "valor_cost": 3,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -2927,8 +2882,7 @@
       "name": "Summon the swamp",
       "ability_description": "At the beginning of the round, you may use this feat. For the rest of the round enemy units move as if they were in difficult terrain.",
       "gold_cost": 0,
-      "veil_cost": 6,
-      "valor_cost": 0,
+      "veil_cost": 3,
       "restriction_type": "faction",
       "restriction_id": "fmt1ygkuhwdn",
       "party_wide": false,
@@ -2947,8 +2901,7 @@
       "name": "Rift Jump",
       "ability_description": "If a unit begins their activation within a veil rift. they may make a free run action.",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "faction",
       "restriction_id": "fmt1zprswgf7",
       "party_wide": false,
@@ -2967,8 +2920,7 @@
       "name": "Frenzy",
       "ability_description": "When the Berzerker incapacitates an enemy unit  you may use this feat to charge as a free action.",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -2989,8 +2941,7 @@
       "name": "Blood Aura",
       "ability_description": "For the rest of the round, when the berzerker would take a wound, you may place the wound on another friendly unit within 6\".",
       "gold_cost": 0,
-      "veil_cost": 3,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3011,8 +2962,7 @@
       "name": "Battle Shout",
       "ability_description": "Remove all negative conditions from friendly units within 8\" of the berzerker. Stun all enemy units within 8\". If this is used while enraged, enemy units who are stunned by this ability must also pass a morale check.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 3,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3033,8 +2983,7 @@
       "name": "Revelry",
       "ability_description": "At the beginning of a round, you may use this feat to raise the haste of a unity within 6\" of the bard by 1 for the rest of the round.",
       "gold_cost": 0,
-      "veil_cost": 0,
-      "valor_cost": 2,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3055,8 +3004,7 @@
       "name": "Divine Performance",
       "ability_description": "When the bard performs, you may use this feat to change 1 result of a die to any number.",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3077,8 +3025,7 @@
       "name": "Debilitating Comedy",
       "ability_description": "Target a unit within 12\" visible to the bard. All enemy units within 6\" of that unit must pass a morale check or become frightened and take 1 wound.",
       "gold_cost": 0,
-      "veil_cost": 2,
-      "valor_cost": 0,
+      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3099,8 +3046,7 @@
       "name": "Crescendo",
       "ability_description": "Remove a veil rift from the game, every unit within 3\" of that rifts location takes 2 wounds and is frightened. This feat may only be used once a game.",
       "gold_cost": 0,
-      "veil_cost": 6,
-      "valor_cost": 0,
+      "veil_cost": 3,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3122,7 +3068,6 @@
       "ability_description": "When the bard performs, you may heal 1 wound from a target friendly unit within 6\".",
       "gold_cost": 0,
       "veil_cost": 1,
-      "valor_cost": 0,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3251,7 +3196,7 @@
       "range": 12,
       "type": "Ranged Attack",
       "damage": "d8",
-      "description": "If this attack hits, make another wound roll with 1D10+1D6 basic damage for any unit within 3\" of target. (this does not create Valor or Veil) ",
+      "description": "If this attack hits, make another wound roll with 1D10+1D6 basic damage for any unit within 3\" of target. (this does not create Veil) ",
       "keywords": [
         "kmt1yx2bzu9n",
         "kmuefdo78dyo"
@@ -4073,7 +4018,7 @@
         "mind": 2,
         "spirit": 4
       },
-      "abilities": "MordHau Grip (1 Valor) : Add +2 to the units hit roll and change its attack die to a D10.",
+      "abilities": "MordHau Grip (1 Veil) : Add +2 to the units hit roll and change its attack die to a D10.",
       "description": "\"My empire is my blood, and I will see yours spilled before I fall\"",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
@@ -4109,7 +4054,7 @@
         "mind": 2,
         "spirit": 3
       },
-      "abilities": "Leg Shot(1 Valor): Shoot actions stun their targets if they hit.",
+      "abilities": "Leg Shot(1 Veil): Shoot actions stun their targets if they hit.",
       "description": "\"Beats a guard post at East-Rock\"",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
@@ -4143,7 +4088,7 @@
         "mind": 2,
         "spirit": 3
       },
-      "abilities": "Steel intervention(x Valor): If a unit within 3\" of an armorer would be wounded. you may spend x valor, for every valor spent roll a D20. on a 15+ negate 1 wound.",
+      "abilities": "Steel intervention(x Veil): If a unit within 3\" of an armorer would be wounded. you may spend x veil, for every veil spent roll a D20. on a 15+ negate 1 wound.",
       "description": "\"stand strong m'lord!\"",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
@@ -4181,7 +4126,7 @@
         "mind": 1,
         "spirit": 3
       },
-      "abilities": "For the Lost King!(1 Valor): Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge.",
+      "abilities": "For the Lost King!(1 Veil): Target of this units charge this turn may not react to melee attacks from this unit, and this unit has advantage hit rolls against the target of their charge.",
       "description": "\"one foot in front of the other!\"",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
@@ -4199,8 +4144,7 @@
         {
           "name": "",
           "description": "",
-          "veil_cost": 0,
-          "valor_cost": 1
+          "veil_cost": 0
         }
       ],
       "keyword_values": {},
@@ -4222,7 +4166,7 @@
         "mind": 3,
         "spirit": 5
       },
-      "abilities": "Guardian(1 Valor): When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in combat with an enemy unit.",
+      "abilities": "Guardian(1 Veil): When a friendly unit within 10\" of the Gryphon is made the target of a charge, the Gryphon may make a reaction to move to that friendly unit ending in combat with an enemy unit.",
       "description": "\"KA-KAW! MOTHERFUCKER!\"",
       "custom_weapon_name": "Claws",
       "custom_weapon_damage": "d8",
@@ -4258,7 +4202,7 @@
         "mind": 3,
         "spirit": 4
       },
-      "abilities": "Spotter(1 Valor): As a reaction, this unit may grant another unit within 3\" making a shoot action a +2 to their hit roll.",
+      "abilities": "Spotter(1 Veil): As a reaction, this unit may grant another unit within 3\" making a shoot action a +2 to their hit roll.",
       "description": "\"The last thing you hear is the whistle of the arrow\"",
       "custom_weapon_name": "",
       "custom_weapon_damage": "",
@@ -4297,7 +4241,7 @@
         "mind": 3,
         "spirit": 3
       },
-      "abilities": "Swift Footed (1 Valor): This unit may shoot in a turn it also made a run action.",
+      "abilities": "Swift Footed (1 Veil): This unit may shoot in a turn it also made a run action.",
       "description": "\"The willow knows the way\"",
       "spell_ids": [],
       "weapon_proficiency": "pmu4p6t1afpa",
@@ -4332,7 +4276,7 @@
         "mind": 3,
         "spirit": 3
       },
-      "abilities": "Duck (1 Valor): If a halfling levy is within 1\" of terrain and is the target of a ranged cast or shoot action, they may use this ability to duck and no longer be an eligible target for the rest of that units activation.",
+      "abilities": "Duck (1 Veil): If a halfling levy is within 1\" of terrain and is the target of a ranged cast or shoot action, they may use this ability to duck and no longer be an eligible target for the rest of that units activation.",
       "description": "As brave as they are hungry, halflings are usually coaxed into service with copious amounts of food.",
       "spell_ids": [],
       "keywords": [
@@ -4385,8 +4329,7 @@
         {
           "name": "BeastShape",
           "description": "As a bonus action, the Druid transforms shape into a fearsome bear.  When this happens, you may activate the bear-form druid as if they had just activated.",
-          "veil_cost": 1,
-          "valor_cost": 0
+          "veil_cost": 1
         }
       ],
       "keyword_values": {},
@@ -4431,8 +4374,7 @@
         {
           "name": "Healing Roots",
           "description": "When this unit activates you may use this feat to heal 1 wound from all other friendly units within 6\".",
-          "veil_cost": 1,
-          "valor_cost": 0
+          "veil_cost": 1
         }
       ],
       "keyword_values": {
@@ -4460,7 +4402,7 @@
         "mind": 1,
         "spirit": 5
       },
-      "abilities": "MOVE!(2 Valor): All non-elite units within 3\" of a marauder may make one standard move action. they must end this move action still within 3\" of the Maurader.",
+      "abilities": "MOVE!(2 Veil): All non-elite units within 3\" of a marauder may make one standard move action. they must end this move action still within 3\" of the Maurader.",
       "description": "",
       "spell_ids": [],
       "keywords": [
@@ -4629,7 +4571,7 @@
         "mind": 2,
         "spirit": 2
       },
-      "abilities": "hail of arrows(2 Valor): Every friendly non-elite unit within 3\" may make a free shoot action at the target of this unit.",
+      "abilities": "hail of arrows(2 Veil): Every friendly non-elite unit within 3\" may make a free shoot action at the target of this unit.",
       "description": "",
       "spell_ids": [],
       "keywords": [
@@ -4797,8 +4739,7 @@
         {
           "name": "Smite",
           "description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
-          "veil_cost": 1,
-          "valor_cost": 0
+          "veil_cost": 1
         }
       ],
       "description": "",
@@ -4839,8 +4780,7 @@
         {
           "name": "BattleCasting",
           "description": "May make a Cast action in the same turn as a charge an melee action.",
-          "veil_cost": 0,
-          "valor_cost": 0
+          "veil_cost": 0
         }
       ],
       "description": "",
@@ -4943,7 +4883,7 @@
       "customAbilities": [
         {
           "name": "Circling the skies",
-          "description": "The Bog-Wyrm is circling the skies above the battlefield and does engage until it is needed. Once a party has amassed 4 valor the dragon descends into the fray. For the rest of the game, whenever the Bog-Wyrm activates reduce your valor by 1. If this cost cannot be paid then the Wyrm Leaves the battlefield."
+          "description": "The Bog-Wyrm is circling the skies above the battlefield and does engage until it is needed. Once a party has amassed 4 veil the dragon descends into the fray. For the rest of the game, whenever the Bog-Wyrm activates reduce your veil by 1. If this cost cannot be paid then the Wyrm Leaves the battlefield."
         }
       ],
       "customFeats": [],
@@ -5127,8 +5067,7 @@
         {
           "name": "Ambush Strike",
           "description": "After finishing a charge from the ambusher ability, this unit may make a free melee attack action",
-          "veil_cost": 0,
-          "valor_cost": 1
+          "veil_cost": 0
         }
       ],
       "description": "",
