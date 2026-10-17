@@ -128,6 +128,30 @@ body{ background:var(--paper-vignette), var(--paper-splatter), var(--paper-mottl
 .lede{ color:var(--muted); font-size:15px; max-width:74ch; margin:0 0 22px; }
 
 .play-layout{ display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:start; }
+.play-layout.landing{ grid-template-columns:1fr; }
+.play-layout.landing .sidebar{ display:none; }
+.landing-wrap{ max-width:980px; margin:8px auto 0; }
+.landing-title{ font-family:var(--font-display); font-size:30px; font-weight:700; margin:0 0 6px; color:var(--ink); }
+.landing-sub{ color:var(--muted); font-size:15px; margin:0 0 22px; max-width:640px; }
+.landing-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+.landing-card{ cursor:pointer; border-left-width:6px; padding:20px 22px; }
+.landing-card .opt-name{ font-size:21px; }
+.landing-foot{ display:flex; flex-wrap:wrap; gap:14px 24px; align-items:flex-end; margin-top:26px; padding-top:18px; border-top:1px solid var(--rule); }
+.acc-head{ cursor:pointer; align-items:center; margin-bottom:0; user-select:none; }
+.acc-head:focus-visible{ outline:2px solid var(--pink); outline-offset:3px; border-radius:4px; }
+.acc.open > .acc-head{ margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+.acc{ padding:14px 22px; margin-bottom:12px; }
+.acc.open{ padding:18px 24px 22px; }
+.acc-summary{ margin-left:auto; font-size:13.5px; color:var(--ink); text-align:right; max-width:55%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.acc-summary.empty{ color:var(--muted); font-style:italic; }
+.acc.open .acc-summary{ display:none; }
+.acc-chev{ margin-left:12px; color:var(--muted); font-size:13px; transition:transform .15s; }
+.acc.open .acc-chev{ transform:rotate(180deg); }
+.acc-head .step-count{ margin-left:10px; }
+.acc.open .acc-head .step-count{ margin-left:auto; }
+.acc-tools{ display:flex; gap:8px; justify-content:flex-end; margin:-6px 0 10px; }
+@media (max-width:640px){ .acc-summary{ max-width:42%; font-size:12.5px; } }
+
 @media (max-width: 920px){ .play-layout{ grid-template-columns:1fr; } .sidebar{ position:static; } }
 
 .step{ background:var(--panel); background-image:var(--noise-texture); background-blend-mode:normal; border:1px solid var(--rule); border-radius:5px; padding:20px 24px; margin-bottom:18px; }
@@ -506,6 +530,12 @@ button:focus-visible{ outline:2px solid var(--btn-silver-bright); outline-offset
 .admin-tabs button.active{ position:relative; overflow:hidden; background:var(--btn-silver); border-color:var(--btn-silver); color:var(--on-accent); box-shadow:0 0 10px var(--btn-silver-glow);  }
 .admin-tabs button:not(.active):hover{ border-color:var(--cyan); color:var(--cyan-bright); }
 .admin-io{ display:flex; gap:8px; }
+.admin-filters{ display:flex; flex-wrap:wrap; gap:10px 14px; align-items:flex-end; margin:0 0 14px; padding:10px 12px; border:1px solid var(--rule); border-radius:6px; background:color-mix(in srgb, var(--bg) 40%, transparent); }
+.af-field{ display:flex; flex-direction:column; gap:4px; font-size:11.5px; color:var(--muted); font-family:var(--font-display); }
+.af-field select, .af-field input{ font-size:13px; padding:6px 8px; background:var(--bg); color:var(--ink); border:1px solid var(--rule); border-radius:4px; min-width:130px; max-width:210px; }
+.af-field.af-search input{ min-width:200px; }
+.af-field select:focus, .af-field input:focus{ outline:2px solid var(--pink); outline-offset:1px; }
+
 .theme-preset-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; }
 .theme-preset-card{
   background:var(--panel); background-image:var(--noise-texture); background-blend-mode:normal;
@@ -713,6 +743,7 @@ let guildStepExpanded = false;
 let adminTab = 'factions';
 let adminSortCol = null;   // index into the current tab's cols array, or null for insertion order
 let adminSortDir = 1;      // 1 = ascending, -1 = descending
+let adminFilters = {};     // { tab: { q:'search text', <filterKey>:'value' } } — persists while switching tabs, display-only
 let editingId = null;
 // Which related entity (if any) is currently expanded for inline editing inside a Faction/Guild's
 // own panel — e.g. { tab:'feats', id:'...' } — separate from editingId above so opening one never
@@ -1331,16 +1362,22 @@ function heroDisplayName(hero){
   const cls = getHeroClass(hero);
   return cls ? cls.name : 'Unnamed Hero';
 }
+// The School Focus class feature (Wizard) is now a single choice: the Hero's Signature Spell, which is
+// treated as 1 level lower for its Mind cost. Older lists may carry the retired 'mind_discount' and
+// 'scroll' effects; normalizeHeroFocus() folds those into this one on load.
 const SCHOOL_FOCUS_EFFECTS = [
-  { key:'mind_discount', name:'Arcane Insight', desc:"Gain +1 Mind when casting your chosen Spell from this School — effectively 1 Mind cheaper to cast." },
-  { key:'level_reduction', name:'Lesser Casting', desc:"Your chosen Spell from this School is treated as 1 level lower for its Mind cost." },
-  { key:'scroll', name:'Scribe a Scroll', desc:"Immediately craft a scroll copy of your chosen Spell from this School, at half the usual cost." },
+  { key:'level_reduction', name:'Signature Spell', desc:"Treated as 1 level lower for its Mind cost." },
 ];
+function normalizeHeroFocus(f){
+  if(!f || !f.spellId) return null;
+  const sp = byId(gameData.spells, f.spellId);
+  return { school: sp ? sp.school : (f.school||''), effectType:'level_reduction', spellId:f.spellId };
+}
 function schoolFocusEffectName(key){ const e = SCHOOL_FOCUS_EFFECTS.find(x=>x.key===key); return e ? e.name : key; }
 function heroSpellCost(hero, spell){
   const f = hero.schoolFocus;
   let cost = spell.level;
-  if(f && (f.effectType==='mind_discount' || f.effectType==='level_reduction') && f.spellId===spell.id){
+  if(f && f.spellId===spell.id){
     cost = Math.max(0, cost - 1);
   }
   return cost;
@@ -1588,7 +1625,8 @@ function showStatus(msg){
 // every other eligibility rule in this app works — e.g. editing a Feat's allowed_classes later
 // doesn't retroactively strip it from Heroes who have it).
 function selectFaction(id){
-  if(list.factionId === id) id = null; // clicking the already-selected Faction again clears it
+  if(list.factionId === id){ factionStepExpanded = false; renderPlay(); return; } // re-picking the current Faction just closes the picker
+  window.scrollTo(0,0);
   list.factionId = id || null;
   list.guildId = null;
   list.factionFeatIds = [];
@@ -1616,7 +1654,7 @@ function normalizeListObject(raw){
   // an older export/save may still have individual heroes.guildId values from before that change.
   // There's no reliable way to pick "the" party Guild from potentially differing per-Hero picks,
   // so those are just dropped; guildId only comes from the List's own (new) field, if present.
-  const importedHeroes = raw.heroes.map(h => { const merged = Object.assign({ schoolFocus:null, pactHirelingId:null }, h); delete merged.masteryWeaponIds; delete merged.guildId; return merged; });
+  const importedHeroes = raw.heroes.map(h => { const merged = Object.assign({ schoolFocus:null, pactHirelingId:null }, h); merged.schoolFocus = normalizeHeroFocus(merged.schoolFocus); delete merged.craftedScrollItemId; delete merged.masteryWeaponIds; delete merged.guildId; return merged; });
   return {
     goldCap: typeof raw.goldCap === 'number' ? raw.goldCap : 500,
     factionId: raw.factionId || null,
@@ -1719,10 +1757,11 @@ function addHero(){
   const hero = { instanceId: genId('hero'), name:'', classId:null, weaponIds:[], armorId:null, itemIds:[], featIds:[], spellIds:[], schoolFocus:null, pactHirelingId:null, craftedScrollItemId:null };
   list.heroes.push(hero);
   editingHeroId = hero.instanceId;
+  resetHeroAcc('hero:class');
   renderPlay();
 }
-function editHero(instanceId){ editingHeroId = instanceId; renderPlay(); }
-function backToRoster(){ editingHeroId = null; renderPlay(); }
+function editHero(instanceId){ editingHeroId = instanceId; const h = list.heroes.find(x => x.instanceId===instanceId); resetHeroAcc(h && !h.classId ? 'hero:class' : null); renderPlay(); }
+function backToRoster(){ editingHeroId = null; resetHeroAcc(null); renderPlay(); }
 function removeHero(instanceId){
   const hero = list.heroes.find(h => h.instanceId===instanceId);
   if(!confirm('Remove '+(hero&&hero.name?hero.name:'this Hero')+' from the list?')) return;
@@ -1764,6 +1803,7 @@ function selectHeroClass(instanceId, classId){
   }
   hero.classId = classId;
   hero.weaponIds = []; hero.armorId = null; hero.featIds = []; hero.spellIds = []; hero.schoolFocus = null; hero.pactHirelingId = null;
+  resetHeroAcc('hero:weapons'); // class chosen \u2014 move on to the next section
   renderPlay();
 }
 // A Warlock's Familial Pact (or any other Class with has_pact set): pick exactly one Hireling
@@ -1863,75 +1903,12 @@ function toggleHeroFeat(instanceId, featId){
   hero.featIds.push(featId);
   renderPlay();
 }
-function setHeroFocusSchool(instanceId, school){
-  const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
-  hero.schoolFocus = school ? { school:school, effectType:'', spellId:'' } : null;
-  renderPlay();
-}
-function setHeroFocusEffect(instanceId, effectType){
-  const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
-  if(!hero.schoolFocus || !hero.schoolFocus.school){ showStatus('Choose a Focus School first.'); return; }
-  hero.schoolFocus.effectType = (hero.schoolFocus.effectType===effectType) ? '' : effectType;
-  renderPlay();
-}
 function setHeroFocusSpell(instanceId, spellId){
   const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
-  if(!hero.schoolFocus || !hero.schoolFocus.effectType){ showStatus('Choose a Focus effect first.'); return; }
-  hero.schoolFocus.spellId = (hero.schoolFocus.spellId===spellId) ? '' : spellId;
+  if(hero.schoolFocus && hero.schoolFocus.spellId===spellId){ hero.schoolFocus = null; renderPlay(); return; }
+  const sp = byId(gameData.spells, spellId); if(!sp) return;
+  hero.schoolFocus = { school: sp.school, effectType:'level_reduction', spellId: spellId };
   renderPlay();
-}
-// "Scribe a Scroll" is one of the three School Focus effects, but on its own it was just
-// descriptive text — nothing actually produced a scroll. This turns the chosen Spell into a real
-// Item (so it uses every bit of existing Item plumbing — slots, hands, Admin editing) and drops it
-// straight into the shared Party Inventory, exactly as the Wizard's signature ability describes.
-// Crafting again after switching Spells updates that same Item in place rather than spawning a
-// duplicate, so it stays wherever it currently lives (Party Inventory, or already handed off to a
-// Hero) instead of leaving an orphaned copy behind.
-function craftFocusScroll(instanceId){
-  const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
-  const focus = hero.schoolFocus;
-  if(!focus || focus.effectType!=='scroll' || !focus.spellId){ showStatus('Choose a Focus School, the Scribe a Scroll effect, and a Spell first.'); return; }
-  const spell = byId(gameData.spells, focus.spellId);
-  if(!spell){ showStatus('That Spell no longer exists.'); return; }
-  const scrollName = 'Scroll of '+spell.name;
-  const abilitiesText = 'Consume to cast '+spell.name+' ('+spell.school+', Lvl '+spell.level+') without spending Mind. Single use — discard after casting.';
-  let item = hero.craftedScrollItemId ? byId(gameData.items, hero.craftedScrollItemId) : null;
-  if(item){
-    item.name = scrollName;
-    item.abilities = abilitiesText;
-    showStatus('Updated \u2014 '+scrollName+'.');
-  } else {
-    item = {
-      id: genId('items'), name: scrollName, slots: 1, gold_cost: 0, rarity:'common',
-      requires_hand: false, abilities: abilitiesText,
-      stat_modifiers: { haste:0, move:0, body:0, mind:0, spirit:0 },
-      restriction_type:'none', restriction_id:'',
-    };
-    gameData.items.push(item);
-    hero.craftedScrollItemId = item.id;
-    list.partyInventory.push({ instanceId: genId('pinv'), itemId: item.id });
-    showStatus(scrollName+' crafted \u2014 added to the Party Inventory.');
-  }
-  renderPlay();
-}
-// Shown under the Spell picker only once a Spell is chosen for the "Scribe a Scroll" effect —
-// either a Craft button, or a confirmation of where the scroll currently is.
-function renderCraftScrollPanel(hero){
-  const focus = hero.schoolFocus;
-  const spell = byId(gameData.spells, focus.spellId);
-  if(!spell) return '';
-  const scrollName = 'Scroll of '+spell.name;
-  const existing = hero.craftedScrollItemId ? byId(gameData.items, hero.craftedScrollItemId) : null;
-  const inSync = existing && existing.name === scrollName;
-  if(inSync){
-    const inPartyInv = list.partyInventory.some(p => p.itemId===existing.id);
-    const carryingHero = list.heroes.find(h => h.itemIds.includes(existing.id));
-    const where = inPartyInv ? 'Currently sitting in the Party Inventory.'
-      : carryingHero ? 'Currently carried by '+escapeHtml(carryingHero.name||'a Hero')+'.'
-      : 'Crafted, but not currently held by anyone \u2014 check Admin \u2192 Items if it seems to be missing.';
-    return '<div class="step-sub" style="margin-top:14px;"><span style="color:var(--cyan-bright);">&#10003; '+escapeHtml(scrollName)+' has been crafted.</span> '+where+'</div>';
-  }
-  return '<div style="margin-top:14px;"><button class="btn primary" onclick="craftFocusScroll(\''+hero.instanceId+'\')">'+(existing?'Update Crafted Scroll':'Craft Scroll')+' &rarr; Party Inventory</button></div>';
 }
 function toggleHeroSpell(instanceId, spellId){
   const hero = list.heroes.find(h => h.instanceId===instanceId); if(!hero) return;
@@ -1984,8 +1961,91 @@ function cardAttrs(fn){
   return 'tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();this.click();}" onclick="'+fn+'"';
 }
 
+/* ============================= ACCORDIONS ============================= */
+// Collapsible sections for the builder. Any step renderer that returns '<div class="step"><div class="step-head">…</div>…</div>'
+// can be wrapped: its head becomes a clickable bar (with a one-line summary of the current choice
+// while closed) and the rest of the step is only rendered while open. Hero sections ('hero:*') behave
+// like an accordion — opening one closes the others — unless "Expand all" is on.
+let accOpen = {};
+let heroAccAll = false;
+function accIsOpen(key){ return key.indexOf('hero:')===0 && heroAccAll ? true : !!accOpen[key]; }
+function toggleAcc(key){
+  if(key.indexOf('hero:')===0){
+    heroAccAll = false;
+    const was = !!accOpen[key];
+    Object.keys(accOpen).forEach(k => { if(k.indexOf('hero:')===0) delete accOpen[k]; });
+    if(!was) accOpen[key] = true;
+  } else { if(accOpen[key]) delete accOpen[key]; else accOpen[key] = true; }
+  renderPlay();
+}
+function resetHeroAcc(openKey){
+  heroAccAll = false;
+  Object.keys(accOpen).forEach(k => { if(k.indexOf('hero:')===0) delete accOpen[k]; });
+  if(openKey) accOpen[openKey] = true;
+}
+function setHeroAccAll(on){ resetHeroAcc(null); heroAccAll = !!on; renderPlay(); }
+function accWrap(key, stepHtml, summary, emptySummary){
+  if(!stepHtml) return '';
+  const open = accIsOpen(key);
+  const start = '<div class="step"><div class="step-head">';
+  if(stepHtml.indexOf(start)!==0) return stepHtml;
+  const headEnd = stepHtml.indexOf('</div>', start.length) + 6;
+  const headInner = stepHtml.slice(start.length, headEnd-6);
+  const rest = stepHtml.slice(headEnd, stepHtml.length-6);
+  const sum = '<span class="acc-summary'+(emptySummary?' empty':'')+'">'+summary+'</span>';
+  return '<div class="step acc'+(open?' open':'')+'">'
+    + '<div class="step-head acc-head" aria-expanded="'+open+'" '+cardAttrs("toggleAcc('"+key+"')")+'>'+headInner+sum+'<span class="acc-chev">&#9660;</span></div>'
+    + (open ? '<div class="acc-body">'+rest+'</div>' : '')
+    + '</div>';
+}
+function heroAcc(hero, section, stepHtml){
+  const names = ids => ids.map(id => escapeHtml((byId(gameData.weapons,id)||{}).name||'')).filter(Boolean);
+  let sum = '', empty = false;
+  const cls = getHeroClass(hero);
+  if(section==='class'){ sum = cls ? escapeHtml(cls.name)+' · '+cls.gold_cost+'g' : 'Choose a class'; empty = !cls; }
+  else if(!cls){ sum = 'Choose a class first'; empty = true; }
+  else if(section==='weapons'){ const n = names(hero.weaponIds); sum = n.length ? n.join(', ') : 'None chosen'; empty = !n.length; }
+  else if(section==='armor'){ const a = hero.armorId ? byId(gameData.armor, hero.armorId) : null; sum = a ? escapeHtml(a.name) : 'None chosen'; empty = !a; }
+  else if(section==='items'){ const n = hero.itemIds.map(id => (byId(gameData.items,id)||{}).name).filter(Boolean).map(escapeHtml); sum = n.length ? n.join(', ') : 'None chosen'; empty = !n.length; }
+  else if(section==='feats'){ const n = hero.featIds.map(id => (byId(gameData.feats,id)||{}).name).filter(Boolean).map(escapeHtml); sum = n.length ? n.join(', ') : 'None chosen'; empty = !n.length; }
+  else if(section==='spells'){ const n = hero.spellIds.map(id => (byId(gameData.spells,id)||{}).name).filter(Boolean).map(escapeHtml); sum = n.length ? n.join(', ') : 'None chosen'; empty = !n.length; }
+  else if(section==='focus'){ const sp = hero.schoolFocus && hero.schoolFocus.spellId ? byId(gameData.spells, hero.schoolFocus.spellId) : null; sum = sp ? escapeHtml(sp.name) : 'Choose a spell'; empty = !sp; }
+  else if(section==='pact'){ const m = hero.pactHirelingId ? byId(gameData.hirelings, hero.pactHirelingId) : null; sum = m ? escapeHtml(m.name) : 'Choose a minion'; empty = !m; }
+  return accWrap('hero:'+section, stepHtml, sum, empty);
+}
+
+function renderFactionLanding(){
+  const cards = gameData.factions.slice().sort((a,b) => a.name.localeCompare(b.name)).map(f => {
+    const guildCount = gameData.guilds.filter(g => g.faction_id === f.id).length;
+    const col = (typeof factionColors==='function' && factionColors(f.id)) || null;
+    return '<div class="opt-card landing-card" style="'+(col?'border-left-color:'+col.main+';':'')+'" '+cardAttrs("selectFaction('"+f.id+"')")+'>'
+      + '<div class="opt-name"'+(col?' style="color:'+(themeIsLight()?col.textLight:col.text)+';"':'')+'>'+escapeHtml(f.name)+'</div>'
+      + '<div class="opt-tags"><span class="tag">'+guildCount+' Guild'+(guildCount!==1?'s':'')+'</span></div>'
+      + (f.description? '<div class="opt-desc">'+highlightCurrency(escapeHtml(f.description))+'</div>':'')
+      + '</div>';
+  }).join('');
+  return '<div class="landing-wrap">'
+    + '<h2 class="landing-title">Choose Your Faction</h2>'
+    + '<p class="landing-sub">Your faction decides which guilds, hirelings and feats you can bring. Pick one to start building your list — you can change it later.</p>'
+    + '<div class="landing-grid">'+(cards||'<p class="empty-note">No factions yet — add one in Admin Mode.</p>')+'</div>'
+    + '<div class="landing-foot">'
+      + '<label class="field" style="margin:0;"><span>Game size (starting Gold)</span><select onchange="list.goldCap=parseInt(this.value); renderPlay();">'
+        + [500,750,1000].map(v => '<option value="'+v+'" '+(list.goldCap===v?'selected':'')+'>'+v+'g'+(v===500?' — recommended for beginners':'')+'</option>').join('')
+      + '</select></label>'
+      + '<label class="btn ghost file-btn" style="margin:0;">Load a saved list<input type="file" accept="application/json" onchange="importList(this.files[0])" style="display:none"></label>'
+    + '</div></div>';
+}
+
 function renderPlay(){
   saveListToStorage();
+  const layout = document.querySelector('.play-layout');
+  if(!list.factionId){
+    if(layout) layout.classList.add('landing');
+    document.getElementById('playSteps').innerHTML = renderFactionLanding();
+    document.getElementById('sidebar').innerHTML = '';
+    return;
+  }
+  if(layout) layout.classList.remove('landing');
   let html = renderFactionStep() + renderGuildStep() + renderTopControls() + renderFactionFeatPicker() + renderGuildFeatPicker() + renderPlayTabs();
   if(playTab === 'characters'){
     const hero = editingHeroId ? list.heroes.find(h => h.instanceId === editingHeroId) : null;
@@ -2003,6 +2063,9 @@ function renderPlay(){
 }
 
 function renderTopControls(){
+  return accWrap('party:settings', renderTopControlsFull(), list.goldCap+'g', false);
+}
+function renderTopControlsFull(){
   return '<div class="step">'
     + '<div class="step-head"><span class="step-num">SET</span><span class="step-title">List Settings</span></div>'
     + '<div class="top-controls">'
@@ -2041,13 +2104,23 @@ function renderFactionStep(){
   }).join('');
   return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">01</span><span class="step-title">Faction</span><span class="step-count">'+(list.factionId?'1/1':'0/1')+'</span></div>'
     + '<div class="step-sub">Choose your faction.</div>'
-    + '<div class="option-grid">'+(cards||'<p class="empty-note">No factions yet — add one in Admin Mode.</p>')+'</div></div>';
+    + '<div class="option-grid">'+(cards||'<p class="empty-note">No factions yet — add one in Admin Mode.</p>')+'</div>'
+    + (fac ? '<button class="btn ghost small" style="margin-top:12px;" onclick="toggleFactionStepExpanded()">Keep '+escapeHtml(fac.name)+'</button>' : '')
+    + '</div>';
 }
 // Guild is a party-wide choice, sibling to Faction — not a per-Hero pick. Only shows Guilds
 // belonging to the chosen Faction; the empty state distinguishes "no Faction chosen yet" from
 // "this Faction genuinely has no Guilds", same distinction the old per-Hero version made.
 function renderGuildStep(){
   const guild = getGuild();
+  if(!guild && !guildStepExpanded){
+    const avail = gameData.guilds.filter(g => g.faction_id === list.factionId && guildEligible(g)).length;
+    if(!avail) return '';
+    return '<div class="step step-collapsed">'
+      + '<div class="step-head"><span class="step-num">02</span><span class="step-title">Guild</span><span class="tag">Optional</span>'
+      + '<span class="acc-summary empty" style="margin-left:auto;max-width:none;">'+avail+' available \u2014 none chosen</span>'
+      + '<button class="btn ghost small" style="margin-left:12px;" onclick="toggleGuildStepExpanded()">Choose</button></div></div>';
+  }
   if(guild && !guildStepExpanded){
     const classCount = (guild.allowed_classes||[]).length;
     return '<div class="step step-emphasis step-collapsed">'
@@ -2077,7 +2150,9 @@ function renderGuildStep(){
     : 'This Faction has no Guilds yet — add one in Admin Mode.';
   return '<div class="step step-emphasis"><div class="step-head"><span class="step-num">02</span><span class="step-title">Guild</span><span class="step-count">'+(list.guildId?'1/1':'0/1')+'</span></div>'
     + '<div class="step-sub">Your party may be comprised of members from your factions many guilds, choose one if you wish</div>'
-    + '<div class="option-grid">'+(cards||'<p class="empty-note">'+emptyMsg+'</p>')+'</div></div>';
+    + '<div class="option-grid">'+(cards||'<p class="empty-note">'+emptyMsg+'</p>')+'</div>'
+    + (guildStepExpanded ? '<button class="btn ghost small" style="margin-top:12px;" onclick="toggleGuildStepExpanded()">Done</button>' : '')
+    + '</div>';
 }
 // Shown once a Guild is selected — a quick-reference summary of everything THIS Guild specifically
 // unlocks: Feats, Hirelings, and equipment (Weapons/Armor/Items) restricted to it. Reuses the same
@@ -2109,6 +2184,11 @@ function renderGuildUnlocksPanel(guild){
 // normal Class/Guild gate entirely (see featLockReason). Nothing shows if the Faction has no
 // Faction Feats assigned to it yet.
 function renderFactionFeatPicker(){
+  const html = renderFactionFeatPickerFull(); if(!html) return '';
+  const n = (list.factionFeatIds||[]).length;
+  return accWrap('party:facfeats', html, n ? n+' picked' : 'None chosen', !n);
+}
+function renderFactionFeatPickerFull(){
   const fac = getFaction();
   if(!fac) return '';
   const pool = gameData.feats.filter(f => f.restriction_type==='faction' && f.restriction_id === fac.id);
@@ -2143,6 +2223,11 @@ function toggleFactionFeat(featId){
 // auto-granted Feat (guild.feat_id, shown in renderGuildAbilityPanel) — that one applies automatically
 // with no picking involved; this is a chosen pool, mirroring Faction Feats exactly but Guild-scoped.
 function renderGuildFeatPicker(){
+  const html = renderGuildFeatPickerFull(); if(!html) return '';
+  const n = (list.guildFeatIds||[]).length;
+  return accWrap('party:guildfeats', html, n ? n+' picked' : 'None chosen', !n);
+}
+function renderGuildFeatPickerFull(){
   const guild = getGuild();
   if(!guild) return '';
   const pool = gameData.feats.filter(f => f.restriction_type==='guild' && f.restriction_id === guild.id && f.party_wide);
@@ -2215,14 +2300,15 @@ function renderHeroEditor(hero){
     + '<label class="field"><span>Hero name</span><input type="text" value="'+escapeAttr(hero.name)+'" oninput="updateHeroName(\''+hero.instanceId+'\', this.value)" placeholder="Unnamed Hero"></label>'
     + '<button class="btn '+(isLeader?'primary':'ghost')+' small" style="margin-top:8px;" onclick="setPartyLeader(\''+hero.instanceId+'\')">'+(isLeader?'\u2605 Party Leader (+1 Haste)':'Make Party Leader (+1 Haste)')+'</button>'
     + '</div></div>'
-    + renderHeroClassStep(hero)
-    + renderHeroWeaponStep(hero)
-    + renderHeroArmorStep(hero)
-    + renderHeroItemStep(hero)
-    + renderHeroFeatStep(hero)
-    + (cls && cls.can_use_magic ? renderHeroSpellStep(hero) : '')
-    + (cls && cls.can_use_magic && cls.school_focus ? renderHeroSchoolFocusStep(hero) : '')
-    + (cls && cls.has_pact ? renderHeroPactStep(hero) : '')
+    + '<div class="acc-tools"><button class="btn ghost small" onclick="setHeroAccAll('+(heroAccAll?'false':'true')+')">'+(heroAccAll?'Collapse all':'Expand all')+'</button></div>'
+    + heroAcc(hero,'class',renderHeroClassStep(hero))
+    + heroAcc(hero,'weapons',renderHeroWeaponStep(hero))
+    + heroAcc(hero,'armor',renderHeroArmorStep(hero))
+    + heroAcc(hero,'items',renderHeroItemStep(hero))
+    + heroAcc(hero,'feats',renderHeroFeatStep(hero))
+    + (cls && cls.can_use_magic ? heroAcc(hero,'spells',renderHeroSpellStep(hero)) : '')
+    + (cls && cls.can_use_magic && cls.school_focus ? heroAcc(hero,'focus',renderHeroSchoolFocusStep(hero)) : '')
+    + (cls && cls.has_pact ? heroAcc(hero,'pact',renderHeroPactStep(hero)) : '')
     + '<button class="btn primary" style="margin-top:14px" onclick="backToRoster()">Finish Hero</button>';
 }
 // The Familial Pact panel: only rendered for Classes with has_pact set (e.g. Warlock). Shows every
@@ -2526,39 +2612,20 @@ function renderHeroSpellStep(hero){
 
 function renderHeroSchoolFocusStep(hero){
   const cls = getHeroClass(hero);
-  const focus = hero.schoolFocus || { school:'', effectType:'', spellId:'' };
-  const abilityName = cls && cls.signature_ability ? abilityTitle(cls.signature_ability) : 'School Focus';
-
-  const schoolSelect = '<label class="field"><span>Focus School</span><select onchange="setHeroFocusSchool(\''+hero.instanceId+'\', this.value)">'
-    + '<option value="">— choose —</option>'
-    + gameData.spellSchools.filter(sc => classSchoolAllowed(cls, sc.name)).map(sc => '<option value="'+escapeAttr(sc.name)+'" '+(focus.school===sc.name?'selected':'')+'>'+escapeHtml(sc.name)+'</option>').join('')
-    + '</select></label>';
-
-  const effectCards = SCHOOL_FOCUS_EFFECTS.map(et => {
-    const selected = focus.effectType===et.key;
-    const disabled = !focus.school;
-    return '<div class="opt-card '+(selected?'selected':'')+' '+(disabled?'locked':'')+'" '+cardAttrs("setHeroFocusEffect('"+hero.instanceId+"','"+et.key+"')")+'>'
-      + '<div class="opt-name">'+et.name+'</div>'
-      + '<div class="opt-desc">'+et.desc+'</div>'
-      + (disabled? '<div class="opt-lock-note">Choose a School first</div>':'')
+  const focus = hero.schoolFocus || { spellId:'' };
+  const abilityName = cls && cls.signature_ability_label ? cls.signature_ability_label : (cls && cls.signature_ability ? abilityTitle(cls.signature_ability) : 'Signature Spell');
+  const spells = gameData.spells.filter(sp => spellEligible(hero, sp)).sort((x,y) => (x.level-y.level) || x.name.localeCompare(y.name));
+  const cards = spells.map(sp => {
+    const selected = focus.spellId===sp.id;
+    const cost = Math.max(0, sp.level-1);
+    return '<div class="opt-card '+(selected?'selected':'')+'" '+cardAttrs("setHeroFocusSpell('"+hero.instanceId+"','"+sp.id+"')")+'>'
+      + '<div class="opt-name">'+escapeHtml(sp.name)+'</div>'
+      + '<div class="opt-tags"><span class="tag">Lvl '+sp.level+' &rarr; '+cost+' Mind</span><span class="tag">'+escapeHtml(sp.school)+'</span><span class="tag">'+escapeHtml(sp.type)+'</span><span class="tag">Range '+spellRangeText(sp)+'</span></div>'
       + '</div>';
   }).join('');
-
-  const schoolSpells = focus.school ? gameData.spells.filter(s => s.school===focus.school && spellEligible(hero, s)) : [];
-  const spellCards = schoolSpells.map(s => {
-    const selected = focus.spellId===s.id;
-    return '<div class="opt-card '+(selected?'selected':'')+'" '+cardAttrs("setHeroFocusSpell('"+hero.instanceId+"','"+s.id+"')")+'>'
-      + '<div class="opt-name">'+escapeHtml(s.name)+'</div>'
-      + '<div class="opt-tags"><span class="tag">Lvl '+s.level+'</span><span class="tag">'+escapeHtml(s.type)+'</span><span class="tag">Range '+spellRangeText(s)+'</span></div>'
-      + '</div>';
-  }).join('');
-
   return '<div class="step"><div class="step-head"><span class="step-num">07</span><span class="step-title">'+escapeHtml(abilityName)+'</span></div>'
-    + '<div class="step-sub">Choose a School, how it empowers you, and which Spell from that School it applies to.</div>'
-    + '<div class="top-controls" style="margin-bottom:14px;">'+schoolSelect+'</div>'
-    + '<div class="option-grid" style="margin-bottom:'+(focus.school?'14px':'0')+';">'+effectCards+'</div>'
-    + (focus.school && focus.effectType ? '<div class="step-sub" style="margin-top:10px;">Now pick the Spell this applies to:</div><div class="option-grid">'+(spellCards||'<p class="empty-note">No Spells exist for this School yet.</p>')+'</div>' : '')
-    + (focus.effectType==='scroll' && focus.spellId ? renderCraftScrollPanel(hero) : '')
+    + '<div class="step-sub">Choose your Signature Spell. It is treated as 1 level lower for its Mind cost.</div>'
+    + '<div class="option-grid">'+(cards||'<p class="empty-note">No eligible Spells for this Class yet.</p>')+'</div>'
     + '</div>';
 }
 
@@ -3597,6 +3664,147 @@ function deleteEntry(tab, id){
   renderAdmin();
 }
 
+
+/* ============================= ADMIN FILTERS ============================= */
+// Display-only filtering for the Admin tables. Nothing here touches gameData; each tab gets its own
+// set of dropdowns (Faction, Guild, Class, Keyword, ...) plus a free-text search over every column.
+function adminEffGuildId(e){ return e && e.restriction_type==='guild' ? e.restriction_id : ''; }
+function adminEffFactionId(e){
+  if(!e) return '';
+  if(e.restriction_type==='faction') return e.restriction_id;
+  if(e.restriction_type==='guild'){ const g = byId(gameData.guilds, e.restriction_id); return g ? g.faction_id : ''; }
+  return '';
+}
+function adminUniq(arr){ return Array.from(new Set(arr.filter(v => v!==undefined && v!==null && v!==''))); }
+function adminFilterDefs(tab){
+  const NONE = '__none';
+  const facOpts = (noneLabel) => [[NONE, noneLabel]].concat(gameData.factions.map(f => [f.id, f.name]));
+  const guildOpts = (noneLabel) => [[NONE, noneLabel]].concat(gameData.guilds.map(g => [g.id, g.name]));
+  const classOpts = () => gameData.classes.map(c => [c.id, c.name]);
+  const kwOpts = () => gameData.keywords.map(k => [k.id, k.name]).sort((a,b)=>a[1].localeCompare(b[1]));
+  const rarityOpts = () => RARITY_OPTIONS.map(r => [r.key, r.label]);
+  const valOpts = (arr, fmt) => adminUniq(arr).sort((a,b) => (typeof a==='number' && typeof b==='number') ? a-b : String(a).localeCompare(String(b))).map(v => [String(v), fmt ? fmt(v) : String(v)]);
+  const restrFaction = { key:'faction', label:'Faction', options:()=>facOpts('No faction restriction'),
+    test:(e,v)=> v===NONE ? !adminEffFactionId(e) : adminEffFactionId(e)===v };
+  const restrGuild = { key:'guild', label:'Guild', options:()=>guildOpts('No guild restriction'),
+    test:(e,v)=> v===NONE ? !adminEffGuildId(e) : adminEffGuildId(e)===v };
+  const kw = { key:'keyword', label:'Keyword', options:kwOpts, test:(e,v)=> (e.keywords||[]).includes(v) };
+  const rarity = { key:'rarity', label:'Rarity', options:rarityOpts, test:(e,v)=> (e.rarity||'common')===v };
+  const allowsClass = { key:'class', label:'Class', options:classOpts,
+    test:(e,v)=> !(e.allowed_classes||[]).length || e.allowed_classes.includes(v) };
+  const defs = {
+    factions: [],
+    classes: [
+      { key:'magic', label:'Magic', options:()=>[['yes','Can use magic'],['no','No magic']], test:(c,v)=> v==='yes' ? !!c.can_use_magic : !c.can_use_magic },
+      { key:'school', label:'School', options:()=>gameData.spellSchools.map(sc=>[sc.name,sc.name]),
+        test:(c,v)=> !!c.can_use_magic && (c.allowed_schools==null || c.allowed_schools.includes(v)) },
+      { key:'guild', label:'Guild', options:()=>guildOpts('Not in any guild').slice(1),
+        test:(c,v)=> { const g = byId(gameData.guilds, v); return !!g && (!(g.allowed_classes||[]).length || g.allowed_classes.includes(c.id)); } },
+      kw,
+    ],
+    guilds: [
+      { key:'faction', label:'Faction', options:()=>facOpts('No faction'), test:(g,v)=> v===NONE ? !g.faction_id : g.faction_id===v },
+      { key:'class', label:'Class', options:classOpts, test:(g,v)=> !(g.allowed_classes||[]).length || g.allowed_classes.includes(v) },
+    ],
+    weapons: [
+      restrFaction, restrGuild, rarity,
+      { key:'category', label:'Category', options:()=>valOpts(gameData.weapons.map(w=>w.category)), test:(w,v)=> w.category===v },
+      { key:'type', label:'Melee / Ranged', options:()=>valOpts(gameData.weapons.map(w=>w.type)), test:(w,v)=> w.type===v },
+      kw,
+    ],
+    armor: [
+      restrFaction, restrGuild, rarity,
+      { key:'category', label:'Category', options:()=>valOpts(gameData.armor.map(a=>a.category)), test:(a,v)=> a.category===v },
+      kw,
+    ],
+    items: [ restrFaction, restrGuild, rarity ],
+    feats: [
+      { key:'faction', label:'Faction', options:()=>facOpts('No faction restriction'),
+        test:(f,v)=>{ const gl = guildForFeat(f.id); const fid = adminEffFactionId(f) || (gl ? gl.faction_id : ''); return v===NONE ? !fid : fid===v; } },
+      { key:'guild', label:'Guild', options:()=>guildOpts('No guild restriction'),
+        test:(f,v)=>{ const gl = guildForFeat(f.id); const gid = adminEffGuildId(f) || (gl ? gl.id : ''); return v===NONE ? !gid : gid===v; } },
+      allowsClass,
+      { key:'cost', label:'Veil cost', options:()=>valOpts(gameData.feats.map(f=>f.veil_cost||0), n=> n===0 ? 'Free' : n+' Veil'), test:(f,v)=> String(f.veil_cost||0)===v },
+    ],
+    wounds: [],
+    spellSchools: [],
+    spells: [
+      { key:'school', label:'School', options:()=>gameData.spellSchools.map(sc=>[sc.name,sc.name]), test:(s,v)=> s.school===v },
+      { key:'level', label:'Level', options:()=>valOpts(gameData.spells.map(s=>s.level)), test:(s,v)=> String(s.level)===v },
+      allowsClass, restrFaction, restrGuild,
+      { key:'type', label:'Type', options:()=>valOpts(gameData.spells.map(s=>s.type)), test:(s,v)=> s.type===v },
+      kw,
+    ],
+    hirelings: [
+      { key:'faction', label:'Faction', options:()=>facOpts('Any Faction'), test:(h,v)=> v===NONE ? !h.faction_id : h.faction_id===v },
+      { key:'guild', label:'Guild', options:()=>guildOpts('No guild'), test:(h,v)=> v===NONE ? !h.guild_id : h.guild_id===v },
+      kw,
+      { key:'minion', label:'Warlock Minion', options:()=>[['yes','Minions only'],['no','Not minions']], test:(h,v)=> v==='yes' ? !!h.is_warlock_minion : !h.is_warlock_minion },
+    ],
+    keywords: [],
+    proficiencyTiers: [],
+  };
+  return defs[tab] || [];
+}
+function adminActiveFilterCount(tab){
+  const st = adminFilters[tab] || {};
+  return Object.keys(st).filter(k => st[k]).length;
+}
+function adminApplyFilters(tab, data, cols){
+  const st = adminFilters[tab];
+  if(!st) return data;
+  const defs = adminFilterDefs(tab);
+  const q = (st.q||'').trim().toLowerCase();
+  return data.filter(item => {
+    for(const d of defs){ if(st[d.key] && !d.test(item, st[d.key])) return false; }
+    if(q){
+      const hay = cols.map(c => String(c.get(item)).replace(/<[^>]*>/g,' ')).join(' ').replace(/&[a-z#0-9]+;/gi,' ').toLowerCase();
+      if(!q.split(/\s+/).every(w => hay.includes(w))) return false;
+    }
+    return true;
+  });
+}
+function adminFilterBarHTML(tab){
+  const defs = adminFilterDefs(tab);
+  const st = adminFilters[tab] || {};
+  const sel = defs.map(d => {
+    const opts = d.options();
+    // Count what each option would show given the OTHER active filters, so empty choices are visible up front.
+    const others = defs.filter(o => o!==d && st[o.key]);
+    const pool = (gameData[tab]||[]).filter(it => others.every(o => o.test(it, st[o.key])));
+    return '<label class="af-field">'+d.label
+      + '<select onchange="setAdminFilter(\''+tab+'\',\''+d.key+'\',this.value)" id="af_'+d.key+'">'
+      + '<option value="">All</option>'
+      + opts.map(o => '<option value="'+escapeAttr(o[0])+'"'+(st[d.key]===o[0]?' selected':'')+'>'+escapeHtml(o[1])+' ('+pool.filter(it => d.test(it, o[0])).length+')</option>').join('')
+      + '</select></label>';
+  }).join('');
+  const n = adminActiveFilterCount(tab);
+  return '<div class="admin-filters">'
+    + '<label class="af-field af-search">Search<input type="search" id="af_q" placeholder="Filter by any text…" value="'+escapeAttr(st.q||'')+'" oninput="setAdminFilter(\''+tab+'\',\'q\',this.value)"></label>'
+    + sel
+    + (n ? '<button class="btn ghost small" onclick="clearAdminFilters(\''+tab+'\')">Clear filters ('+n+')</button>' : '')
+    + '</div>';
+}
+// Re-renders only the table section (never the edit form below it), then puts focus/caret back so
+// typing in the search box isn't interrupted.
+function refreshAdminTable(){
+  const el = document.getElementById('adminTableSection');
+  if(!el) return renderAdmin();
+  const a = document.activeElement;
+  const aid = a && a.id && a.id.indexOf('af_')===0 ? a.id : null;
+  const pos = aid && a.selectionStart!=null ? a.selectionStart : null;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderAdminTable(adminTab);
+  el.replaceWith(tmp.firstElementChild);
+  if(aid){ const n = document.getElementById(aid); if(n){ n.focus(); if(pos!=null && n.setSelectionRange){ try{ n.setSelectionRange(pos,pos); }catch(e){} } } }
+}
+function setAdminFilter(tab, key, val){
+  if(!adminFilters[tab]) adminFilters[tab] = {};
+  adminFilters[tab][key] = val;
+  refreshAdminTable();
+}
+function clearAdminFilters(tab){ adminFilters[tab] = {}; refreshAdminTable(); }
+
 function renderAdminTable(tab){
   const configs = {
     factions: { data: gameData.factions, cols: [
@@ -3732,6 +3940,8 @@ function renderAdminTable(tab){
       return ((av||0) - (bv||0)) * adminSortDir;
     });
   }
+  const totalCount = cfg.data.length;
+  data = adminApplyFilters(tab, data, cfg.cols);
   const rows = data.map(item =>
     '<tr>' + cfg.cols.map(c => '<td>'+c.get(item)+'</td>').join('')
     + '<td class="row-actions"><button class="btn ghost small" onclick="startEdit(\''+tab+'\',\''+item.id+'\')">Edit</button>'
@@ -3743,11 +3953,13 @@ function renderAdminTable(tab){
     const arrow = active ? (adminSortDir===1?' &#9650;':' &#9660;') : '';
     return '<th class="sortable-col'+(active?' active':'')+'" '+cardAttrs("setAdminSort('"+tab+"',"+i+")")+'>'+c.label+arrow+'</th>';
   }).join('');
-  return '<div class="step">'
-    + '<div class="step-head"><span class="step-title">'+tab[0].toUpperCase()+tab.slice(1)+'</span><span class="step-count">'+cfg.data.length+'</span></div>'
+  const filtered = data.length !== totalCount;
+  return '<div class="step" id="adminTableSection">'
+    + '<div class="step-head"><span class="step-title">'+tab[0].toUpperCase()+tab.slice(1)+'</span><span class="step-count">'+(filtered ? data.length+' of '+totalCount : totalCount)+'</span></div>'
+    + adminFilterBarHTML(tab)
     + (adminSortCol!=null ? '<div class="step-sub">Sorted by '+escapeHtml(cfg.cols[adminSortCol].label)+' ('+(adminSortDir===1?'ascending':'descending')+'). <button class="btn ghost small" onclick="clearAdminSort()">Clear sort</button></div>' : '<div class="step-sub">Click any underlined column header to sort by it.</div>')
     + '<table class="ledger"><thead><tr>'+headerCells+'<th></th></tr></thead>'
-    + '<tbody>'+(rows||'<tr><td colspan="'+(cfg.cols.length+1)+'" class="empty-note">No entries yet.</td></tr>')+'</tbody></table>'
+    + '<tbody>'+(rows||'<tr><td colspan="'+(cfg.cols.length+1)+'" class="empty-note">'+(totalCount ? 'No entries match the current filters.' : 'No entries yet.')+'</td></tr>')+'</tbody></table>'
     + '<button class="btn primary" style="margin-top:14px" onclick="startAdd(\''+tab+'\')">+ Add '+SINGULAR[tab]+'</button>'
     + '</div>';
 }
@@ -3969,7 +4181,7 @@ function classFields(e){
       + '<label class="field"><span>Spirit</span><input type="number" name="spirit" value="'+(s.spirit||0)+'"></label>'
     + '</div>'
     + '<label class="chk" style="display:flex;margin:2px 0 16px;"><input type="checkbox" name="can_use_magic" '+(e&&e.can_use_magic?'checked':'')+'> Can use Magic (shows the Spells step during character creation)</label>'
-    + '<label class="chk" style="display:flex;margin:2px 0 16px;"><input type="checkbox" name="school_focus" '+(e&&e.school_focus?'checked':'')+'> Has School Focus (Wizard-style: pick a School, an effect, and a Spell it applies to)</label>'
+    + '<label class="chk" style="display:flex;margin:2px 0 16px;"><input type="checkbox" name="school_focus" '+(e&&e.school_focus?'checked':'')+'> Has Signature Spell (Wizard-style: the Hero picks one Spell, treated as 1 level lower for its Mind cost)</label>'
     + '<label class="chk" style="display:flex;margin:2px 0 16px;"><input type="checkbox" name="has_pact" '+(e&&e.has_pact?'checked':'')+'> Has Familial Pact (Warlock-style: shows a special panel at the bottom of the Hero builder to pick 1 Hireling tagged "Warlock Minion" in Admin, free of gold cost)</label>'
     + '<fieldset class="check-group"><legend>Schools of Magic (which Schools this Class may pick Spells from — only applies if Can use Magic is checked; forced to None otherwise)</legend>'
       + '<label class="chk"><input type="checkbox" name="allowed_schools_none" '+(isNoneState?'checked':'')+' onchange="if(this.checked){this.form.querySelectorAll(\'input[name=allowed_schools]\').forEach(function(cb){cb.checked=false;});}"> None (this Class cannot pick Spells from any School)</label>'

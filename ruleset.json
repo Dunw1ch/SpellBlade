@@ -283,7 +283,7 @@
       "id": "cmt1ypdwalh2",
       "name": "Wizard",
       "description": "",
-      "signature_ability": "Choose a school of magic to be your focus gain the following in the chosen school\n- Reduce the spell slot level of a spell. (lvl 3 spell would only take 2 slots)\n- Choose a spell from that school as your signature spell. Reduce its mana cost by 1.\n- You may craft scrolls of that chosen school at half the cost. (in a one off skirmish game, you may add 1 of these to your parties inventory)",
+      "signature_ability": "Choose one spell as your signature spell. It is treated as 1 level lower for its Mind cost (a lvl 3 spell would only take 2 Mind).",
       "gold_cost": 30,
       "max_feats": 1,
       "can_use_magic": true,
