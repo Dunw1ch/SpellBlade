@@ -188,6 +188,26 @@
       "name": "Enchantment",
       "description": "Enchantments are perpetual and remain on the battlefield even if the caster perishes. A caster may only have 1 enchantment of the same name active at a time.",
       "parameterized": false
+    },
+    {
+      "id": "kmvsvjql7mhw",
+      "name": "Critical x+",
+      "description": "This weapon scores a critical wound on a a result of x or higher.",
+      "parameterized": true,
+      "value_min": 1,
+      "value_max": 12,
+      "value_default": 1,
+      "value_suffix": ""
+    },
+    {
+      "id": "kmvsvkn5cppd",
+      "name": "Brutal X+",
+      "description": "Hit results of x+ are treated as brutal hits.",
+      "parameterized": true,
+      "value_min": 1,
+      "value_max": 20,
+      "value_default": 1,
+      "value_suffix": ""
     }
   ],
   "factions": [
@@ -490,160 +510,7 @@
       }
     }
   ],
-  "guilds": [
-    {
-      "id": "gmt2d27ly0mf",
-      "name": "Church of the Lost King",
-      "faction_id": "fmt1ygkuhwdn",
-      "gold_cost": 50,
-      "ability_description": "Parties of this guild cannot have Rogues or Warlocks. Guild members gain access to the Smite feat. This Guild may hire the Clergy Zealot, and upgrade the Man-At-Arms unit to a Paladin. This Guild has access to the Armor of the first paladin, as well as many other arms and items.",
-      "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "feat_id": ""
-    },
-    {
-      "id": "gmt2dkbaff4f",
-      "name": "Wyrm Hunters Guild",
-      "faction_id": "fmt1zprswgf7",
-      "gold_cost": 50,
-      "ability_description": "The Willows Famed wyrm hunters are adept monster hunters. ",
-      "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2",
-        "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [
-        "Heavy Ranged"
-      ],
-      "feat_id": ""
-    },
-    {
-      "id": "gmt3487n6owa",
-      "name": "Pact of the Wild Roots",
-      "faction_id": "fmt1zprswgf7",
-      "gold_cost": 50,
-      "ability_description": "parties of the wild roots guild cannot contain Berzerkers or warlocks.",
-      "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2a7xiucb2"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "feat_id": ""
-    },
-    {
-      "id": "gmt89aimxl4r",
-      "name": "Marauders Guild",
-      "faction_id": "fmt1zviucpcj",
-      "gold_cost": 50,
-      "ability_description": "The Marauders Guild specializes in the pack tactics of the red banners army. Mauraders",
-      "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2a5vwinpr",
-        "cmt2a7xiucb2",
-        "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "feat_id": ""
-    },
-    {
-      "id": "gmthncg4ljqh",
-      "name": "Way of the forbidden past",
-      "faction_id": "fmt1zviucpcj",
-      "gold_cost": 50,
-      "ability_description": "Parties of this guild cannot take Bards or Clerics. Members of this guild gain access to the \"Dark Ritual\" party feat.",
-      "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1yo3sij8m",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt2a5vwinpr",
-        "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "feat_id": ""
-    },
-    {
-      "id": "gmthnvht5rb7",
-      "name": "BattleMages Guild",
-      "faction_id": "fmt1ygkuhwdn",
-      "gold_cost": 50,
-      "ability_description": "Parties of this guild may not recruit Rogues or Berzerkers. Battlemages may equip Heavy armor and gain access to The battlecasting feat. The BattleMage Guild allows your armorer to be upgraded to a BattleMage, and for your crossbowmen to be upgraded to BattleMage Apprentice.",
-      "allowed_classes": [
-        "cmt1ykznv7cm",
-        "cmt1ypdwalh2",
-        "cmt1yrzdvdwh",
-        "cmt1yu3wj5sl",
-        "cmt2a7xiucb2",
-        "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [
-        "Heavy Armor"
-      ],
-      "feat_id": ""
-    }
-  ],
+  "guilds": [],
   "weapons": [
     {
       "id": "wmt1z35fsbp8",
@@ -699,7 +566,7 @@
     },
     {
       "id": "wmt20jq62wlh",
-      "name": "LongSword (2H)",
+      "name": "GreatSword",
       "category": "Martial",
       "type": "Melee",
       "range": null,
@@ -719,7 +586,10 @@
       "restriction_type": "none",
       "restriction_id": "",
       "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
+      "accuracy_mod_value": 0,
+      "party_limit": 0,
+      "abilities": "",
+      "keyword_values": {}
     },
     {
       "id": "wmt20oqnznc2",
@@ -914,7 +784,7 @@
       "damage": "d8",
       "gold_cost": 15,
       "keywords": [
-        "kmthp637nf2k"
+        "kmthp6vrwobc"
       ],
       "rarity": "common",
       "stat_modifiers": {
@@ -929,7 +799,8 @@
       "party_limit": 0,
       "abilities": "",
       "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
+      "accuracy_mod_value": 0,
+      "keyword_values": {}
     },
     {
       "id": "wmt2cqjwnr0k",
@@ -977,12 +848,15 @@
       },
       "restriction_type": "none",
       "restriction_id": "",
-      "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
+      "accuracy_mod_type": "override",
+      "accuracy_mod_value": 6,
+      "party_limit": 0,
+      "abilities": "",
+      "keyword_values": {}
     },
     {
       "id": "wmt33diwnsi8",
-      "name": "LongSword (1H)",
+      "name": "LongSword",
       "category": "Martial",
       "type": "Melee",
       "range": null,
@@ -1002,7 +876,8 @@
       "party_limit": 0,
       "abilities": "",
       "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
+      "accuracy_mod_value": 0,
+      "keyword_values": {}
     },
     {
       "id": "wmt33qeguvqf",
@@ -1014,9 +889,7 @@
       "gold_cost": 25,
       "rarity": "common",
       "keywords": [
-        "kmt1yxnqybek",
         "kmt2248t93dp",
-        "kmt9exwc6xbm",
         "kmthp637nf2k"
       ],
       "stat_modifiers": {
@@ -1031,7 +904,8 @@
       "party_limit": 0,
       "abilities": "",
       "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
+      "accuracy_mod_value": 0,
+      "keyword_values": {}
     },
     {
       "id": "wmt4p14bgi9o",
@@ -1185,115 +1059,6 @@
       },
       "restriction_type": "none",
       "restriction_id": "",
-      "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
-    },
-    {
-      "id": "wmu1p8h7sivh",
-      "name": "Judge Blade",
-      "category": "Martial",
-      "type": "Melee",
-      "range": null,
-      "damage": "d8",
-      "gold_cost": 20,
-      "rarity": "common",
-      "party_limit": 2,
-      "abilities": "Smite causes 2 wounds instead of 1.",
-      "keywords": [],
-      "keyword_values": {},
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmt2d27ly0mf",
-      "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
-    },
-    {
-      "id": "wmu1pt04vuw6",
-      "name": "Mage Sword",
-      "category": "Martial",
-      "type": "Melee",
-      "range": null,
-      "damage": "d8",
-      "gold_cost": 15,
-      "rarity": "common",
-      "party_limit": 0,
-      "abilities": "",
-      "keywords": [
-        "kmt1ywt3xv6u"
-      ],
-      "keyword_values": {},
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmthnvht5rb7",
-      "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
-    },
-    {
-      "id": "wmu5lpxk3j3q",
-      "name": "Iron Cleaver",
-      "category": "Simple",
-      "type": "Melee",
-      "range": null,
-      "damage": "d6",
-      "gold_cost": 20,
-      "rarity": "common",
-      "party_limit": 2,
-      "abilities": "",
-      "keywords": [
-        "kmt1yxnqybek",
-        "kmtczhtlagix"
-      ],
-      "keyword_values": {
-        "kmtczhtlagix": 1
-      },
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmt89aimxl4r",
-      "accuracy_mod_type": "none",
-      "accuracy_mod_value": 0
-    },
-    {
-      "id": "wmu5t280tl94",
-      "name": "Beast Tether",
-      "category": "Simple",
-      "type": "Ranged",
-      "range": 12,
-      "damage": "d6",
-      "gold_cost": 20,
-      "rarity": "common",
-      "party_limit": 2,
-      "abilities": "When this attack hits, you may move the target up to 6\" directly towards the unit that attacked with this weapon.",
-      "keywords": [
-        "kmthp637nf2k"
-      ],
-      "keyword_values": {},
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmt2dkbaff4f",
       "accuracy_mod_type": "none",
       "accuracy_mod_value": 0
     },
@@ -1460,8 +1225,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "restriction_type": "guild",
-      "restriction_id": "gmthnvht5rb7",
+      "restriction_type": "none",
+      "restriction_id": "",
       "party_limit": 0,
       "abilities": "",
       "keyword_values": {}
@@ -1559,53 +1324,6 @@
       },
       "restriction_type": "none",
       "restriction_id": ""
-    },
-    {
-      "id": "amu1p9x4rmph",
-      "name": "Plate of the first Paladin",
-      "category": "Heavy",
-      "armor_value": 10,
-      "gold_cost": 40,
-      "rarity": "legendary",
-      "party_limit": 1,
-      "abilities": "Veil of the lost king: This armor has aegis +10 while standing on a veil rift. ",
-      "keywords": [
-        "kmt3kfnljcm0",
-        "kmthzf1225ee"
-      ],
-      "keyword_values": {
-        "kmthzf1225ee": 10
-      },
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmt2d27ly0mf"
-    },
-    {
-      "id": "amu5lm87sl05",
-      "name": "Captains Vest",
-      "category": "Light",
-      "armor_value": 7,
-      "gold_cost": 20,
-      "rarity": "common",
-      "party_limit": 1,
-      "abilities": "Equipped unit and all units within 3\" cannot be frightened.",
-      "keywords": [],
-      "keyword_values": {},
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "restriction_type": "guild",
-      "restriction_id": "gmt89aimxl4r"
     }
   ],
   "items": [
@@ -1938,8 +1656,8 @@
         "mind": 0,
         "spirit": 2
       },
-      "restriction_type": "guild",
-      "restriction_id": "gmt2d27ly0mf"
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "imu1pvaxhfx5",
@@ -1957,8 +1675,8 @@
         "mind": 0,
         "spirit": 0
       },
-      "restriction_type": "guild",
-      "restriction_id": "gmthnvht5rb7"
+      "restriction_type": "none",
+      "restriction_id": ""
     },
     {
       "id": "imu5lp1xnic7",
@@ -1976,8 +1694,27 @@
         "mind": 0,
         "spirit": 0
       },
-      "restriction_type": "guild",
-      "restriction_id": "gmt89aimxl4r"
+      "restriction_type": "none",
+      "restriction_id": ""
+    },
+    {
+      "id": "imvsve6muo6m",
+      "name": "Hunting Sheath",
+      "slots": 1,
+      "gold_cost": 10,
+      "rarity": "common",
+      "party_limit": 0,
+      "requires_hand": false,
+      "abilities": "While in the combat zone of an enemy unit, this item may be used to make a melee attack as though they had a hunting knife.",
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": ""
     }
   ],
   "feats": [
@@ -2557,8 +2294,8 @@
       "veil_cost": 2,
       "gold_cost": 0,
       "allowed_classes": [],
-      "restriction_type": "guild",
-      "restriction_id": "gmt2dkbaff4f",
+      "restriction_type": "none",
+      "restriction_id": "",
       "stat_modifiers": {
         "haste": 0,
         "move": 0,
@@ -2576,8 +2313,8 @@
       "veil_cost": 0,
       "gold_cost": 0,
       "allowed_classes": [],
-      "restriction_type": "guild",
-      "restriction_id": "gmthnvht5rb7",
+      "restriction_type": "none",
+      "restriction_id": "",
       "stat_modifiers": {
         "haste": 0,
         "move": 0,
@@ -2748,8 +2485,8 @@
       "ability_description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
       "gold_cost": 0,
       "veil_cost": 1,
-      "restriction_type": "guild",
-      "restriction_id": "gmt2d27ly0mf",
+      "restriction_type": "none",
+      "restriction_id": "",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2767,8 +2504,8 @@
       "ability_description": "All  friendly units within 3\" of this unit may make 1 free action",
       "gold_cost": 0,
       "veil_cost": 2,
-      "restriction_type": "guild",
-      "restriction_id": "gmt89aimxl4r",
+      "restriction_type": "none",
+      "restriction_id": "",
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -4687,79 +4424,10 @@
       "replaces": ""
     },
     {
-      "id": "hmts98c3kvux",
-      "name": "Veteran Man-At-Arms",
-      "faction_id": "fmt1ygkuhwdn",
-      "guild_id": "",
-      "veteran_of": "hmt20lgvlh3b",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt33qeguvqf",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "pmu4p6t1afpa",
-      "gold_cost": 70,
-      "armor_value": 10,
-      "stats": {
-        "haste": 11,
-        "move": 6,
-        "body": 4,
-        "mind": 3,
-        "spirit": 4
-      },
-      "customAbilities": [],
-      "customFeats": [],
-      "description": "",
-      "spell_ids": [],
-      "keywords": [],
-      "keyword_values": {},
-      "replaces": ""
-    },
-    {
-      "id": "hmts99jrw8zl",
-      "name": "Paladin",
-      "faction_id": "fmt1ygkuhwdn",
-      "guild_id": "gmt2d27ly0mf",
-      "veteran_of": "hmt20lgvlh3b",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt33qeguvqf",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "",
-      "gold_cost": 75,
-      "armor_value": 10,
-      "stats": {
-        "haste": 10,
-        "move": 6,
-        "body": 4,
-        "mind": 3,
-        "spirit": 5
-      },
-      "customAbilities": [],
-      "customFeats": [
-        {
-          "name": "Smite",
-          "description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
-          "veil_cost": 1
-        }
-      ],
-      "description": "",
-      "spell_ids": [
-        "smt3iv1pdcze"
-      ],
-      "keywords": [
-        "kmt5h9et9rwt",
-        "kmthzf1225ee"
-      ],
-      "keyword_values": {
-        "kmthzf1225ee": 16
-      },
-      "replaces": ""
-    },
-    {
       "id": "hmtswqcsn8i6",
       "name": "BattleMage",
       "faction_id": "",
-      "guild_id": "gmthnvht5rb7",
+      "guild_id": "",
       "veteran_of": "hmt34wwc6rq9",
       "is_warlock_minion": false,
       "weapon_id": "wmt21xj74ru5",
@@ -4788,38 +4456,6 @@
         "smt3ii4sy2go",
         "smt1z671pdru",
         "smt333q99ynw"
-      ],
-      "keywords": [],
-      "keyword_values": {},
-      "replaces": ""
-    },
-    {
-      "id": "hmtswtbl020e",
-      "name": "BattleMage Apprentice",
-      "faction_id": "fmt1ygkuhwdn",
-      "guild_id": "gmthnvht5rb7",
-      "veteran_of": "hmt20qanmco6",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt1z35fsbp8",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "pmu4p69e5g9y",
-      "gold_cost": 50,
-      "armor_value": 8,
-      "stats": {
-        "haste": 13,
-        "move": 6,
-        "body": 2,
-        "mind": 4,
-        "spirit": 4
-      },
-      "customAbilities": [],
-      "customFeats": [],
-      "description": "",
-      "spell_ids": [
-        "smt1z671pdru",
-        "smt3ijheonus",
-        "smt32v8kvjgh"
       ],
       "keywords": [],
       "keyword_values": {},
@@ -4902,7 +4538,7 @@
       "id": "hmu1pdn1b1ao",
       "name": "Clergy Zealot",
       "faction_id": "fmt1ygkuhwdn",
-      "guild_id": "gmt2d27ly0mf",
+      "guild_id": "",
       "veteran_of": "",
       "replaces": "",
       "is_warlock_minion": false,
@@ -4938,7 +4574,7 @@
       "id": "hmu5l080o585",
       "name": "Gnoll Berzerker",
       "faction_id": "fmt1zviucpcj",
-      "guild_id": "gmt89aimxl4r",
+      "guild_id": "",
       "veteran_of": "",
       "replaces": "hmt89dqlb9u7",
       "is_warlock_minion": false,
@@ -5001,80 +4637,6 @@
         "smt3il3oq67h"
       ],
       "keywords": [],
-      "keyword_values": {}
-    },
-    {
-      "id": "hmu5t02sb383",
-      "name": "Monster Hunter",
-      "faction_id": "fmt1zprswgf7",
-      "guild_id": "gmt2dkbaff4f",
-      "veteran_of": "",
-      "replaces": "hmt516geko9y",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt222uut9oa",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "pmu4p6lb2xxf",
-      "gold_cost": 50,
-      "armor_value": 8,
-      "stats": {
-        "haste": 12,
-        "move": 6,
-        "body": 3,
-        "mind": 2,
-        "spirit": 3
-      },
-      "customAbilities": [
-        {
-          "name": "Focus",
-          "description": "This unit gains +2 to hit if they have not moved this turn."
-        }
-      ],
-      "customFeats": [],
-      "description": "",
-      "spell_ids": [],
-      "keywords": [],
-      "keyword_values": {}
-    },
-    {
-      "id": "hmu5t8xbs26n",
-      "name": "Halfling Ambusher",
-      "faction_id": "fmt1zprswgf7",
-      "guild_id": "gmt2dkbaff4f",
-      "veteran_of": "",
-      "replaces": "hmt55yxmz7w7",
-      "is_warlock_minion": false,
-      "weapon_id": "wmt55u30py6d",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "",
-      "gold_cost": 0,
-      "armor_value": 6,
-      "stats": {
-        "haste": 12,
-        "move": 6,
-        "body": 2,
-        "mind": 3,
-        "spirit": 3
-      },
-      "customAbilities": [
-        {
-          "name": "Ambusher",
-          "description": "As a reaction, this unit may make a charge action when an enemy unit finishes a move action within 6\" of this unit."
-        }
-      ],
-      "customFeats": [
-        {
-          "name": "Ambush Strike",
-          "description": "After finishing a charge from the ambusher ability, this unit may make a free melee attack action",
-          "veil_cost": 0
-        }
-      ],
-      "description": "",
-      "spell_ids": [],
-      "keywords": [
-        "kmt7z51ibt3v"
-      ],
       "keyword_values": {}
     },
     {
