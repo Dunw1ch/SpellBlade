@@ -1721,7 +1721,7 @@
     {
       "id": "fmt1z7n52e7j",
       "name": "SlipKnife",
-      "ability_description": "Add a +1D6 modifier to your wound roll.",
+      "ability_description": "Make an extra attack, Add a +1D6 modifier to the wound roll.",
       "gold_cost": 10,
       "allowed_classes": [
         "cmt1yo3sij8m"
@@ -1742,10 +1742,10 @@
     {
       "id": "fmt1z8ish7gm",
       "name": "Arcane Strike",
-      "ability_description": "Add the ARCANE keyword to this wound roll.",
+      "ability_description": "Make a free attack action. Add the ARCANE keyword to this wound roll.",
       "gold_cost": 5,
       "allowed_classes": [
-        "cmt1ykznv7cm"
+        "cmt2a5vwinpr"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -1763,7 +1763,7 @@
     {
       "id": "fmt218egkaek",
       "name": "ShieldBash",
-      "ability_description": "If this unit wins a clash, attacker is Stunned and takes 1 wound.",
+      "ability_description": "When made the target of a melee attack, attacker is Stunned and takes 1 wound.",
       "gold_cost": 5,
       "allowed_classes": [
         "cmt1ykznv7cm"
@@ -1866,27 +1866,6 @@
       "party_wide": false
     },
     {
-      "id": "fmt59uk5osbj",
-      "name": "Firm Stance",
-      "ability_description": "May use melee attack modifiers when making a clash reaction.",
-      "gold_cost": 10,
-      "allowed_classes": [
-        "cmt1ykznv7cm"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
-      "restriction_type": "none",
-      "restriction_id": "",
-      "party_wide": false
-    },
-    {
       "id": "fmt59v8uecj3",
       "name": "Prepared Shot",
       "ability_description": "May add shoot attack modifiers when making a sentry reaction.",
@@ -1929,27 +1908,6 @@
       "party_wide": false
     },
     {
-      "id": "fmt884jsd39d",
-      "name": "Overzealous Assault",
-      "ability_description": "This unit may make a free attack action",
-      "gold_cost": 20,
-      "allowed_classes": [
-        "cmt1ykznv7cm"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 2,
-      "restriction_type": "none",
-      "restriction_id": "",
-      "party_wide": false
-    },
-    {
       "id": "fmt889c9yndl",
       "name": "Arcane Affliction",
       "ability_description": "Raise your mana by 1",
@@ -1959,27 +1917,6 @@
         "cmt1yu3wj5sl",
         "cmt2a7xiucb2",
         "cmt2ahfasbmg"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
-      "restriction_type": "none",
-      "restriction_id": "",
-      "party_wide": false
-    },
-    {
-      "id": "fmt88vsuvlwx",
-      "name": "Unnatural Speed",
-      "ability_description": "When declaring a charge, automatically gain a charge bonus of 6.",
-      "gold_cost": 10,
-      "allowed_classes": [
-        "cmt1ykznv7cm"
       ],
       "stat_modifiers": {
         "haste": 0,
@@ -2269,63 +2206,6 @@
       "party_wide": false
     },
     {
-      "id": "fmtljkoscq7y",
-      "name": "Counter Assault",
-      "ability_description": "When a friendly Barrowmoor Kingdoms unit is made the target of a charge, you may use this ability to declare a charge  with the target unit against the charging unit. This charge stuns the target.",
-      "gold_cost": 0,
-      "veil_cost": 1,
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn",
-      "party_wide": false
-    },
-    {
-      "id": "fmtsvyemyvzt",
-      "name": "Hunters Ambush",
-      "ability_description": "After an attack hits, you may use this ability to immediately deal x wounds to the target where x is your Veil reserve rounded up.",
-      "veil_cost": 2,
-      "gold_cost": 0,
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "party_wide": false
-    },
-    {
-      "id": "fmtsw6grxm2m",
-      "name": "BattleCasting",
-      "ability_description": "This unit may make a spell attack action in the same turn it charges and makes a melee attack action.",
-      "veil_cost": 0,
-      "gold_cost": 0,
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "party_wide": false
-    },
-    {
       "id": "fmtsymi9v55m",
       "name": "Blessed Ground",
       "ability_description": "If a healing spell targets a unit within your sanctuary, you may have the affects apply to all units in your sanctuary.",
@@ -2480,44 +2360,6 @@
       "party_wide": false
     },
     {
-      "id": "fmu1oyo6erbt",
-      "name": "Smite",
-      "ability_description": "After an attack wounds a target, you may invoke the wrath of the lost king. Roll a D10, if the result is greater than that units spirit, they take 1 wound and must make a morale check.",
-      "gold_cost": 0,
-      "veil_cost": 1,
-      "restriction_type": "none",
-      "restriction_id": "",
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "party_wide": false
-    },
-    {
-      "id": "fmu5lispqx5j",
-      "name": "Rallying Cry",
-      "ability_description": "All  friendly units within 3\" of this unit may make 1 free action",
-      "gold_cost": 0,
-      "veil_cost": 2,
-      "restriction_type": "none",
-      "restriction_id": "",
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "party_wide": false
-    },
-    {
       "id": "fmu5m2q45nro",
       "name": "Coastal Fog",
       "ability_description": "The Red Banner creates an eerie fog in a section of the battlefield. Choose a point on the battlefield, for the rest of the turn Shoot and cast actions targeting units wholly within the area have disadvantage.",
@@ -2558,7 +2400,7 @@
     {
       "id": "fmu5nybu45wk",
       "name": "For the Lost King!",
-      "ability_description": "All Barrowmoor units regain 1 wound, enemy units within 6\" of any Barrowmoor units are stunned.",
+      "ability_description": "May move all friendly units 6\" this move may end within engagement range of enemy units.",
       "gold_cost": 0,
       "veil_cost": 3,
       "restriction_type": "faction",
@@ -2819,6 +2661,27 @@
         "spirit": 0
       },
       "equip_override": []
+    },
+    {
+      "id": "fmvyrelmvai6",
+      "name": "Signature Caster",
+      "ability_description": "Your signature spell does not require an action to cast this round.",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1ypdwalh2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
     }
   ],
   "spellSchools": [
@@ -2957,27 +2820,6 @@
       "description": "",
       "keywords": [
         "kmt1yxnqybek",
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt32wnb3uwy",
-      "name": "Shocking Grasp",
-      "level": 2,
-      "school": "Destruction",
-      "range": 0,
-      "type": "Melee Attack",
-      "damage": "d10",
-      "description": "Target must take a DC15+Body check or be stunned.",
-      "keywords": [
-        "kmt1yx2bzu9n",
         "kmuefdo78dyo"
       ],
       "allowed_classes": [],
@@ -3175,26 +3017,6 @@
       "keyword_values": {}
     },
     {
-      "id": "smt3i63qshfj",
-      "name": "Restore",
-      "level": 2,
-      "school": "Restoration",
-      "range": 12,
-      "type": "Bonus Cast",
-      "damage": "",
-      "description": "Remove any negative condition from target unit.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Bonus Action"
-      ],
-      "keyword_values": {}
-    },
-    {
       "id": "smt3i7f0tli0",
       "name": "Greater Healing Word",
       "level": 3,
@@ -3216,27 +3038,6 @@
       "keyword_values": {}
     },
     {
-      "id": "smt3i8vcxfgh",
-      "name": "Calm",
-      "level": 3,
-      "school": "Restoration",
-      "range": 12,
-      "type": "Cast Reaction",
-      "damage": "",
-      "description": "If an allied unit within 12\" would become frightened, you may react with calm and negate the affect.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action",
-        "Reaction"
-      ],
-      "keyword_values": {}
-    },
-    {
       "id": "smt3iaxf6vfm",
       "name": "Greater Ward",
       "level": 3,
@@ -3253,26 +3054,6 @@
       "restriction_id": "",
       "action_types": [
         "Reaction"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt3iclxw167",
-      "name": "Revivify",
-      "level": 4,
-      "school": "Restoration",
-      "range": 0,
-      "type": "Cast",
-      "damage": "",
-      "description": "Choose an allied unit that was removed from the battlefield this game. Return them to the battlefield within 3\" of the caster with 1D4 wounds remaining.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
       ],
       "keyword_values": {}
     },
@@ -3417,26 +3198,6 @@
       "keyword_values": {}
     },
     {
-      "id": "smt3iv1pdcze",
-      "name": "Guiding Light",
-      "level": 3,
-      "school": "Conjuration",
-      "range": 12,
-      "type": "Cast Action",
-      "damage": "",
-      "description": "Choose a point on the battlefield. A guiding light erupts from the center of that point out 6\". All attacks against units wholly within this area have advantage. Units inside the area  cannot target units outside of it.",
-      "keywords": [
-        "kmuefd0mmacc"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
       "id": "smt3iwvfzf1i",
       "name": "Eldritch Apparition",
       "level": 3,
@@ -3445,26 +3206,6 @@
       "type": "Bonus Cast",
       "damage": "",
       "description": "Summon a terrifying visage in front of  a creature you can see within 12\". They must immediately make a morale check with disadvantage.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Bonus Action"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt3j2rx6ey6",
-      "name": "Mind Shatter",
-      "level": 3,
-      "school": "Conjuration",
-      "range": 18,
-      "type": "Bonust Cast",
-      "damage": "d10",
-      "description": "Target creature with a display of lights sounds and senses. Roll 1D10, if the result is higher than the targets Mind stat, they take 1 wound and are stunned.",
       "keywords": [
         "kmuefdo78dyo"
       ],
@@ -3517,26 +3258,6 @@
       "keyword_values": {}
     },
     {
-      "id": "smt3jao2lrts",
-      "name": "Acidic Armor",
-      "level": 2,
-      "school": "Transmutation",
-      "range": 12,
-      "type": "Cast Action",
-      "damage": "",
-      "description": "Target units armor is reduce by D4 until this spell ends.",
-      "keywords": [
-        "kmuefek86w4k"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
       "id": "smt3jdl4us8i",
       "name": "Mudify",
       "level": 1,
@@ -3577,26 +3298,6 @@
       "keyword_values": {}
     },
     {
-      "id": "smt3jozuy64l",
-      "name": "Alter Self",
-      "level": 2,
-      "school": "Transmutation",
-      "range": null,
-      "type": "Cast Reaction",
-      "damage": "",
-      "description": "When made the target of an attack. Caster may attempt to disguise themselves as an ally of the attacker. Attacker must pass a DC15 mind check or they remain tricked and must choose a new target.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Reaction"
-      ],
-      "keyword_values": {}
-    },
-    {
       "id": "smt3jrcrr148",
       "name": "Gaseous Form",
       "level": 2,
@@ -3607,86 +3308,6 @@
       "description": "Target becomes a gaseous cloud. While in this form attacks against them have disadvantage. The effect ends when the target finishes an a move or any action or when the caster activates.",
       "keywords": [
         "kmuefd0mmacc"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt3ju4elqu7",
-      "name": "Set Ablaze",
-      "level": 2,
-      "school": "Transmutation",
-      "range": 18,
-      "type": "Cast Action",
-      "damage": "",
-      "description": "Target a piece of terrain that is no larger than 6\"x6\" the piece of terrain catches fire with arcane flames. Any unit within 1\" of the terrain must immediately take environmental+1d6 damage.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt3jvbsf0ur",
-      "name": "Animate Object",
-      "level": 2,
-      "school": "Transmutation",
-      "range": 12,
-      "type": "Cast Action",
-      "damage": "",
-      "description": "Target a piece of terrain no larger than 3\"x3\". Grant it sentience. it gains the stat block of a familiar.",
-      "keywords": [
-        "kmuefek86w4k"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt3jz8eh4xi",
-      "name": "Water incantation",
-      "level": 3,
-      "school": "Transmutation",
-      "range": 12,
-      "type": "Cast Action",
-      "damage": "",
-      "description": "Target a piece of terrain no bigger than 6\"x6\". It splashes out in all directions as its form is transfused into liquid. all units within 6\" of the terrain piece are swept away to an area wholly outside of 6\" of the terrain piece.",
-      "keywords": [
-        "kmuefdo78dyo"
-      ],
-      "allowed_classes": [],
-      "restriction_type": "none",
-      "restriction_id": "",
-      "action_types": [
-        "Action"
-      ],
-      "keyword_values": {}
-    },
-    {
-      "id": "smt3k0pzsf28",
-      "name": "Portal",
-      "level": 3,
-      "school": "Transmutation",
-      "range": 24,
-      "type": "Cast Action",
-      "damage": "",
-      "description": "The caster and any creature within 3\" of them are removed from the battlefield and re-deployed anywhere on the battlefield wholly within 24\" of their last location.",
-      "keywords": [
-        "kmuefdo78dyo"
       ],
       "allowed_classes": [],
       "restriction_type": "none",
@@ -4178,8 +3799,7 @@
       "abilities": "The materna's spells have the reaction keyword",
       "description": "",
       "spell_ids": [
-        "smt3hqdl1tu3",
-        "smt3i63qshfj"
+        "smt3hqdl1tu3"
       ],
       "keywords": [],
       "customAbilities": [
@@ -4670,8 +4290,7 @@
       "description": "With colleges Nestled atop the many volcanoes that dot the archipelagos of Aldemar,  mages of the red banner excel at harnessing the elements.",
       "spell_ids": [
         "smt1z671pdru",
-        "smt3ijheonus",
-        "smt3ju4elqu7"
+        "smt3ijheonus"
       ],
       "keywords": [
         "kmt3kgiuotcm"
