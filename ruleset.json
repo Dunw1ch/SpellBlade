@@ -39,7 +39,8 @@
     {
       "id": "kmt225dzlf96",
       "name": "Shield",
-      "description": "+1 Armor to bearer."
+      "description": "if a unit carrying an item with this keyword makes a clash reaction and rolls a higher result than the attacker, cancel the attack action.",
+      "parameterized": false
     },
     {
       "id": "kmt2dkp4wrnh",
@@ -63,8 +64,9 @@
     },
     {
       "id": "kmt33bw7cmpm",
-      "name": "Reach",
-      "description": "You may make a melee attack with a range of 3\", attacks made this way have disadvantage"
+      "name": "Polearm",
+      "description": "Charge rolls made against a unit carrying an item with this keyword have disadvantage",
+      "parameterized": false
     },
     {
       "id": "kmt34cz6qk9m",
@@ -1086,6 +1088,33 @@
       "restriction_id": "",
       "accuracy_mod_type": "override",
       "accuracy_mod_value": 7
+    },
+    {
+      "id": "wmwibo4gslre",
+      "name": "Hand Crossbow",
+      "category": "Martial",
+      "type": "Ranged",
+      "range": 12,
+      "damage": "d4",
+      "gold_cost": 15,
+      "rarity": "common",
+      "party_limit": 0,
+      "abilities": "",
+      "keywords": [
+        "kmt1z27eyq8o"
+      ],
+      "keyword_values": {},
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "restriction_type": "none",
+      "restriction_id": "",
+      "accuracy_mod_type": "none",
+      "accuracy_mod_value": 0
     }
   ],
   "armor": [
@@ -2959,7 +2988,7 @@
       "name": "OakFlesh",
       "level": 1,
       "school": "Restoration",
-      "range": 0,
+      "range": 6,
       "type": "Cast Reaction",
       "damage": "",
       "description": "As a reaction to an attack that hit, may raise the armor value of the castor or a friendly unit within 6\" by 1d4.",
@@ -3654,48 +3683,6 @@
       "replaces": ""
     },
     {
-      "id": "hmt560up4fce",
-      "name": "Druid",
-      "faction_id": "fmt1zprswgf7",
-      "weapon_id": "wmt2mgstaff1",
-      "custom_weapon_name": "",
-      "custom_weapon_damage": "",
-      "weapon_proficiency": "",
-      "gold_cost": 70,
-      "armor_value": 6,
-      "stats": {
-        "haste": 13,
-        "move": 6,
-        "body": 3,
-        "mind": 3,
-        "spirit": 3
-      },
-      "abilities": "The Druid may shapeshift into a bear form as a Bonus action. They lose the ability to spellcast. However their armor value becomes 10, and their weapon value is Dual Claws with Mastery and 1d8 damage.",
-      "description": "Long study of nature has lead the druids to master the magics that bore life to the creatures of the willow.",
-      "spell_ids": [
-        "smt34c4wdbms",
-        "smt3jdl4us8i",
-        "smt32rf32diy"
-      ],
-      "keywords": [
-        "kmt3kfnljcm0",
-        "kmt5h9et9rwt"
-      ],
-      "is_warlock_minion": false,
-      "customAbilities": [],
-      "customFeats": [
-        {
-          "name": "BeastShape",
-          "description": "As a bonus action, the Druid transforms shape into a fearsome bear.  When this happens, you may activate the bear-form druid as if they had just activated.",
-          "veil_cost": 1
-        }
-      ],
-      "keyword_values": {},
-      "guild_id": "",
-      "veteran_of": "",
-      "replaces": ""
-    },
-    {
       "id": "hmt5hi6faoi6",
       "name": "Willow Titan",
       "faction_id": "fmt1zprswgf7",
@@ -4156,7 +4143,7 @@
     },
     {
       "id": "hmu1pdn1b1ao",
-      "name": "Clergy Zealot",
+      "name": "Priest of the Lost King",
       "faction_id": "fmt1ygkuhwdn",
       "guild_id": "",
       "veteran_of": "",
@@ -4167,24 +4154,25 @@
       "custom_weapon_damage": "",
       "weapon_proficiency": "pmu4p69e5g9y",
       "gold_cost": 40,
-      "armor_value": 6,
+      "armor_value": 8,
       "stats": {
         "haste": 13,
         "move": 6,
         "body": 2,
-        "mind": 3,
-        "spirit": 4
+        "mind": 4,
+        "spirit": 3
       },
       "customAbilities": [
         {
-          "name": "Unnerving Hymn",
-          "description": "Enemy units within 6\" of a Clergy Zealot may not be the target of healing spells."
+          "name": "Inspiring Hymn",
+          "description": "Other friendly units within 3\" of the Priest gain +1 spirit."
         }
       ],
       "customFeats": [],
       "description": "",
       "spell_ids": [
-        "smt3hp7zw36s",
+        "smt3ii4sy2go",
+        "smt3ijheonus",
         "smt3hrc5hrw8"
       ],
       "keywords": [],
@@ -4242,7 +4230,7 @@
         "move": 6,
         "body": 2,
         "mind": 3,
-        "spirit": 4
+        "spirit": 3
       },
       "customAbilities": [
         {
@@ -4253,8 +4241,8 @@
       "customFeats": [],
       "description": "",
       "spell_ids": [
-        "smt3hp7zw36s",
-        "smt3il3oq67h"
+        "smt3ifmk57h3",
+        "smt3hqdl1tu3"
       ],
       "keywords": [],
       "keyword_values": {}
@@ -4312,7 +4300,7 @@
       "gold_cost": 30,
       "armor_value": 6,
       "stats": {
-        "haste": 13,
+        "haste": 14,
         "move": 6,
         "body": 2,
         "mind": 4,
@@ -4320,18 +4308,94 @@
       },
       "customAbilities": [
         {
-          "name": "MurkDweller",
-          "description": "The WetlandMage may target a unit with the mudify spell even if they are not the target of a charge if that unit is charging a friendly unit within 3\"."
+          "name": "MarshBugs",
+          "description": "When this unit activates, all enemy units within 3\" of this unit are fatigued."
         }
       ],
       "customFeats": [],
       "description": "",
       "spell_ids": [
-        "smt32oa9flfu",
-        "smt3jdl4us8i",
-        "smt3il3oq67h"
+        "smt3il3oq67h",
+        "smt32rf32diy"
+      ],
+      "keywords": [
+        "kmt3kfnljcm0"
+      ],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmwib84znvxv",
+      "name": "WarSage",
+      "faction_id": "fmt1zprswgf7",
+      "guild_id": "",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "wmt2mgstaff1",
+      "custom_weapon_name": "",
+      "custom_weapon_damage": "",
+      "weapon_proficiency": "pmu4p6lb2xxf",
+      "gold_cost": 40,
+      "armor_value": 10,
+      "stats": {
+        "haste": 12,
+        "move": 6,
+        "body": 2,
+        "mind": 4,
+        "spirit": 3
+      },
+      "customAbilities": [
+        {
+          "name": "BarkFlesh",
+          "description": "This units OakFlesh spell increases armor by 1d6 instead of 1d4."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [
+        "smt3hp7zw36s",
+        "smt3hqdl1tu3"
       ],
       "keywords": [],
+      "keyword_values": {}
+    },
+    {
+      "id": "hmwibh1s2owq",
+      "name": "High Desert Dryad",
+      "faction_id": "fmt1zprswgf7",
+      "guild_id": "",
+      "veteran_of": "",
+      "replaces": "",
+      "is_warlock_minion": false,
+      "weapon_id": "",
+      "custom_weapon_name": "Rocky Fist",
+      "custom_weapon_damage": "d10",
+      "weapon_proficiency": "pmu4p6lb2xxf",
+      "gold_cost": 45,
+      "armor_value": 8,
+      "stats": {
+        "haste": 11,
+        "move": 6,
+        "body": 3,
+        "mind": 2,
+        "spirit": 3
+      },
+      "customAbilities": [
+        {
+          "name": "Shatter Wall",
+          "description": "On the beginning of a dryads turn if it has a wall currently in place, it may remove it from the battlefield to cast rock spike from its location."
+        }
+      ],
+      "customFeats": [],
+      "description": "",
+      "spell_ids": [
+        "smt32v8kvjgh",
+        "smt3ionjjmul"
+      ],
+      "keywords": [
+        "kmt3kg2lfx39",
+        "kmt5h8ghtsk6"
+      ],
       "keyword_values": {}
     }
   ],
