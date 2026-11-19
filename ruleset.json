@@ -210,6 +210,12 @@
       "value_max": 20,
       "value_default": 1,
       "value_suffix": ""
+    },
+    {
+      "id": "kmwmve8cafsa",
+      "name": "Flying",
+      "description": "This unit is capable of flight. When making move actions, you may measure over terrain diagonally, and do not need to make jump or climb checks for any reason.",
+      "parameterized": false
     }
   ],
   "factions": [
@@ -410,7 +416,7 @@
       "id": "cmt2a5vwinpr",
       "name": "Berzerker",
       "description": "\"RAWWWWAHAHAHAHA\"",
-      "signature_ability": "The Berzerker takes 1 wound and creates 1 Veil, and enters rage until the end of their activation. While in rage you gain the following:\n- When you make a melee attack action, you may make another\n- You may re-roll wound rolls\n- You cannot be fatigued.",
+      "signature_ability": "The Berzerker takes 1 wound and creates 1 Veil, and enters rage until the end of their activation. While in rage you gain the following:\n- When you make a melee attack action, you may make another\n- You may re-roll wound rolls\n- You may re-roll charge rolls\n- You cannot be fatigued.",
       "gold_cost": 30,
       "max_feats": 1,
       "can_use_magic": false,
@@ -1673,8 +1679,8 @@
       "id": "imu1pkzju6fj",
       "name": "Relic of the past",
       "slots": 1,
-      "gold_cost": 0,
-      "rarity": "common",
+      "gold_cost": 20,
+      "rarity": "rare",
       "party_limit": 0,
       "requires_hand": false,
       "abilities": "Raises this units spirit by 2",
@@ -1714,8 +1720,8 @@
       "gold_cost": 10,
       "rarity": "common",
       "party_limit": 1,
-      "requires_hand": false,
-      "abilities": "Move all friendly units 4\"",
+      "requires_hand": true,
+      "abilities": "All friendly units within 6\" may make a free move action of 4\"",
       "stat_modifiers": {
         "haste": 0,
         "move": 0,
@@ -1805,7 +1811,7 @@
         "spirit": 0
       },
       "equip_override": [],
-      "veil_cost": 1,
+      "veil_cost": 2,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -1827,27 +1833,6 @@
       },
       "equip_override": [],
       "veil_cost": 2,
-      "restriction_type": "none",
-      "restriction_id": "",
-      "party_wide": false
-    },
-    {
-      "id": "fmt349jbmv7y",
-      "name": "SharpShooter",
-      "ability_description": "Remove negative modifiers for intervening terrain.",
-      "gold_cost": 10,
-      "allowed_classes": [
-        "cmt1yrzdvdwh"
-      ],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "veil_cost": 1,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false
@@ -2066,9 +2051,9 @@
     {
       "id": "fmtkq51jkt90",
       "name": "Healing sprouts",
-      "ability_description": "Choose a point on the battlefield. Every unit within 3\" of that point regains 1 wound.",
+      "ability_description": "At the beginning of a round, Choose a point on the battlefield. Every unit within 3\" of that point regains 1 wound.",
       "gold_cost": 0,
-      "veil_cost": 1,
+      "veil_cost": 2,
       "allowed_classes": [],
       "stat_modifiers": {
         "haste": 0,
@@ -2143,25 +2128,6 @@
       "id": "fmtkr2t9hr20",
       "name": "Determined Charge",
       "ability_description": "When a barrow moor kingdom unit ends a charge move, they may use this ability to add advantage to their hit roll and Brutal to their wound roll.",
-      "gold_cost": 0,
-      "veil_cost": 1,
-      "allowed_classes": [],
-      "stat_modifiers": {
-        "haste": 0,
-        "move": 0,
-        "body": 0,
-        "mind": 0,
-        "spirit": 0
-      },
-      "equip_override": [],
-      "restriction_type": "faction",
-      "restriction_id": "fmt1ygkuhwdn",
-      "party_wide": false
-    },
-    {
-      "id": "fmtkr6v1ibro",
-      "name": "SHOW NO FEAR!",
-      "ability_description": "Remove all negative conditions from all Barrowmorr Kingdoms units on the battlefield.",
       "gold_cost": 0,
       "veil_cost": 1,
       "allowed_classes": [],
@@ -2487,7 +2453,7 @@
     },
     {
       "id": "fmv496f1ouea",
-      "name": "Summon the swamp",
+      "name": "Barrowmoors call",
       "ability_description": "At the beginning of the round, you may use this feat. For the rest of the round enemy units move as if they were in difficult terrain.",
       "gold_cost": 0,
       "veil_cost": 3,
@@ -2697,6 +2663,86 @@
       "ability_description": "Your signature spell does not require an action to cast this round.",
       "gold_cost": 0,
       "veil_cost": 1,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1ypdwalh2"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmwmvkckx566",
+      "name": "Summon WidowGrass",
+      "ability_description": "Once per round choose a point on the battlefield. Bushels of poisonous widow grass erupt from that point in an area of 6\". All enemy units within that area must make a DC12 body check or take a 1 poison damage. ",
+      "gold_cost": 0,
+      "veil_cost": 2,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmwmvmyxm18p",
+      "name": "ToadVenom strike",
+      "ability_description": "A unit in combat may make a free attack action with the poison keyword. This cannot target the same unit in a round.",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "restriction_type": "faction",
+      "restriction_id": "fmt1ygkuhwdn",
+      "party_wide": false,
+      "allowed_classes": [],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmwmvqfhctey",
+      "name": "Leg Shot",
+      "ability_description": "Make a free attack action against your prey. This attack has the brutal and stunning wounds keyword.",
+      "gold_cost": 0,
+      "veil_cost": 1,
+      "restriction_type": "none",
+      "restriction_id": "",
+      "party_wide": false,
+      "allowed_classes": [
+        "cmt1yrzdvdwh"
+      ],
+      "stat_modifiers": {
+        "haste": 0,
+        "move": 0,
+        "body": 0,
+        "mind": 0,
+        "spirit": 0
+      },
+      "equip_override": []
+    },
+    {
+      "id": "fmwmw0tc2d31",
+      "name": "Repetitious Study ",
+      "ability_description": "The wizard my cast its signature spell as a bonus action. This feat costs veil equal to the spells level.",
+      "gold_cost": 0,
+      "veil_cost": 0,
       "restriction_type": "none",
       "restriction_id": "",
       "party_wide": false,
@@ -3698,7 +3744,7 @@
         "move": 6,
         "body": 5,
         "mind": 3,
-        "spirit": 5
+        "spirit": 7
       },
       "abilities": "Before the game this unit may only be deployed along the middle of the battlefield. It is treated as stunned until an ally makes a DC15+Spirit check within 6\" of the Willow Titan. ",
       "description": "These hulking monsters do the landscape, hiding in plain sight, ready to be awakened.",
@@ -3706,8 +3752,7 @@
       "keywords": [
         "kmt3kfnljcm0",
         "kmt3kg2lfx39",
-        "kmthf2lgdq93",
-        "kmthzf1225ee"
+        "kmthf2lgdq93"
       ],
       "customAbilities": [
         {
@@ -3722,9 +3767,7 @@
           "veil_cost": 1
         }
       ],
-      "keyword_values": {
-        "kmthzf1225ee": 15
-      },
+      "keyword_values": {},
       "guild_id": "",
       "veteran_of": "",
       "replaces": ""
