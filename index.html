@@ -73,12 +73,6 @@ body{ background:var(--paper-vignette), var(--paper-splatter), var(--paper-mottl
   position:sticky; top:0; z-index:10;
   display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
   padding:22px 32px; min-height:150px;
-  /* Commissioned artwork as a full-bleed banner, with a theme-tinted overlay layered on top (see
-     --bg-alt-overlay in THEME_VARS) so it reads correctly under ANY theme, not just the one it was
-     picked against — the overlay is the same color the topbar's flat background used to be, just
-     translucent, so switching themes re-tints the art instead of leaving it looking mismatched. */
-  /* Cream wash fading left-to-right so the title stays crisp while the artwork shows at full
-     strength on the right, plus a soft fade at the bottom edge into the page. */
   background-image:
     linear-gradient(to bottom, rgba(0,0,0,0) 78%, color-mix(in srgb, var(--bg) 85%, transparent) 100%),
     linear-gradient(90deg, color-mix(in srgb, var(--bg) 96%, transparent) 0%, color-mix(in srgb, var(--bg) 78%, transparent) 28%, color-mix(in srgb, var(--bg) 8%, transparent) 70%, rgba(0,0,0,0) 100%),
@@ -678,22 +672,20 @@ table.print-weapon-table tr:last-child td, table.print-spell-table tr:last-child
 </div>
 
 <header class="topbar">
-  <div class="brand-title">SpellBlade</div>
+  <div class="">SpellBlade</div>
   <nav class="mode-tabs">
     <button data-mode="play" class="active" onclick="switchMode('play')">List Builder</button>
     <button data-mode="battle" onclick="switchMode('battle')">Battle Mode</button>
     <button data-mode="campaign" onclick="switchMode('campaign')">Campaign</button>
     <button data-mode="rules" onclick="switchMode('rules')">Rules</button>
-    <button data-mode="admin" onclick="switchMode('admin')">Admin Mode</button>
+   
   </nav>
 </header>
 
 <main class="wrap">
-  <p class="lede">Welcome to the SpellBlade Alpha listbuilder. Below choose your faction, and optionally a guild if you wish to add
-  another twist to your playstyle. Party Wide feats are available at all times, barring you can pay their cost. 
-  Heroes are special elite characters that are the core of your party, choose their gear and give
-  them feats to excel in battle. Hirelings are your factions available warriors to hire for adventuring, they may be upgraded if you
-  have the gold! Onec you are done, you can head to the battle mode and use that during play, or print out a PDF of your list.</p>
+  <p class="lede">Welcome to the SpellBlade Alpha listbuilder! Spellblade is a fantasy skirmish game made by fans and passionate gamers.
+  Below you may choose your faction from the beginning three. This game is currently in Alpha and there will be odd issues with balancing here and there.
+  Once you are done, you can head to the battle mode to reference your list during play, or print out a PDF!</p>
 
   <section id="playPanel" class="mode-panel">
     <div class="play-layout">
@@ -719,7 +711,7 @@ table.print-weapon-table tr:last-child td, table.print-spell-table tr:last-child
     <div id="adminContent"></div>
   </section>
 
-  <footer class="foot">AI DISCLOSURE: Some front end elements of this application were made with the assistance of an AI model. ALL ART is original and commissioned by real artists. All mechanics, text, and writing were made and playtested by fellow humans. .</footer>
+  <footer class="foot">AI DISCLOSURE: Some front end elements of this application were made with the assistance of an AI model. ALL ART is original and commissioned by real artists. All mechanics, text, and writing were made and playtested by fellow humans.</footer>
 </main>
 
 <div id="printSheet"></div>
