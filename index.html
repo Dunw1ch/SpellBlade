@@ -2198,7 +2198,7 @@ function renderFactionFeatPickerFull(){
       + '</div>';
   }).join('');
   return '<div class="step"><div class="step-head"><span class="step-title">Faction Feats — '+escapeHtml(fac.name)+'</span><span class="step-count">'+picked.length+'/4</span></div>'
-    + '<div class="step-sub">Choose up to 4 — these apply to the whole party automatically and use no Hero\u2019s Feat slots. They\u2019re listed on the Battle sheet, not in each Hero\u2019s Feats step.</div>'
+    + '<div class="step-sub">Here are your party wide feats. You are allowed to pick up to 4.</div>'
     + '<div class="option-grid">'+cards+'</div></div>';
 }
 function toggleFactionFeat(featId){
@@ -2278,7 +2278,7 @@ function renderRoster(){
   return '<div class="step">'
     + '<div class="step-head"><span class="step-title">Heroes</span><span class="step-count">'+list.heroes.length+'</span></div>'
     + '<div class="step-sub">Add as many Heroes as your list\'s gold allows. Exactly one Hero may be the Party Leader, who gets +1 Haste.</div>'
-    + '<div class="roster-list">'+(cards||'<p class="empty-note">No Heroes yet — add one below.</p>')+'</div>'
+    + '<div class="roster-list">'+(cards||'<p class="empty-note">Add a Hero below and begin our parties journey!</p>')+'</div>'
     + '<button class="btn primary" style="margin-top:14px" onclick="addHero()">+ Add Hero</button>'
     + '</div>';
 }
